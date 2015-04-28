@@ -1,4 +1,4 @@
-class GenericWork < ActiveFedora::Base
+class Video < ActiveFedora::Base
   include CurationConcern::Work
   include CurationConcern::WithGenericFiles
   include CurationConcern::WithLinkedResources
@@ -8,18 +8,19 @@ class GenericWork < ActiveFedora::Base
   include CurationConcern::WithEditors
 
   include CurationConcern::WithMetaTags
+
   def special_meta_tag_fields
-    %i(description language)
+    %i(description language date_digitized)
   end
 
   include ActiveFedora::RegisteredAttributes
 
-  has_metadata "descMetadata", type: DatasetDatastream
+  has_metadata "descMetadata", type: VideoRdfDatastream
 
   include CurationConcern::RemotelyIdentifiedByDoi::Attributes
 
   class_attribute :human_readable_short_description
-  self.human_readable_short_description = "Deposit any non-text-based document ."
+  self.human_readable_short_description = "Works that include video, film, slide, or audio are referred to as time-based media."
 
   attribute :alternate_title,
     datastream: :descMetadata, multiple: true
@@ -37,6 +38,7 @@ class GenericWork < ActiveFedora::Base
     datastream: :descMetadata, multiple: true
 
   attribute :date_created,
+    default: Date.today.to_s("%Y-%m-%d"),
     datastream: :descMetadata, multiple: false
 
   attribute :creator,
@@ -48,6 +50,9 @@ class GenericWork < ActiveFedora::Base
   attribute :date_uploaded,
     datastream: :descMetadata, multiple: false
 
+  attribute :date_digitized,
+    datastream: :descMetadata, multiple: false
+
   attribute :description,
     datastream: :descMetadata, multiple: false
 
@@ -56,6 +61,7 @@ class GenericWork < ActiveFedora::Base
     editable: false
 
   attribute :language,
+    default: ['English'],
     datastream: :descMetadata, multiple: true
 
   attribute :note,
@@ -80,11 +86,11 @@ class GenericWork < ActiveFedora::Base
     default: "All rights reserved",
     validates: { presence: { message: 'You must select a license for your work.' } }
 
-  attribute :source,
-    datastream: :descMetadata, multiple: false
-
   attribute :subject,
     datastream: :descMetadata, multiple: true
+
+  attribute :type,
+    datastream: :descMetadata, multiple: false
 
   attribute :title,
     datastream: :descMetadata, multiple: false,

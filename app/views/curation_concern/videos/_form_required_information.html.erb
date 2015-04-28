@@ -1,0 +1,52 @@
+<div class="row with-headroom">
+  <div class="span12">
+    <fieldset class="required">
+      <legend>
+        Basic Description
+        <small>Required information</small>
+      </legend>
+      
+      <p class='help-inline'><%= I18n.t('sufia.work.add_multiples') %></p>
+
+      <div class="row">
+          <div class="span6">
+            <%= f.input :title, 
+                        as: :text,
+                        input_html: { class: 'input-xxxlarge', rows: '1' } %>
+          </div>
+          <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.title.help', work_type: curation_concern.human_readable_type) %>
+      </div>
+
+      <div class="row">
+        <div class="span6">
+          <%= f.input :creator, 
+                      as: :multi_value, 
+                      label: 'Author',
+                      required: true %>
+        </div>
+        <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.creator.help', work_type: curation_concern.human_readable_type) %>
+      </div>
+
+      <div class="row">
+        <div class="span6">
+          <%= f.input :publisher,
+            as: :multi_value,
+            label: I18n.t('sufia.work.input_field.publisher.label'),
+            input_html: { class: 'input-xlarge', id: 'publisher' }
+          %>
+        </div>
+        <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.publisher.help', work_type: curation_concern.human_readable_type) %>
+      </div>
+
+      <div class="row">
+        <div class="span6">
+          <%= f.input :date_digitized,
+            label: 'Date Digitized',
+            placeholder: "YYYY-MM-DD"
+          %>
+        </div>
+        <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.date_digitized.help', work_type: curation_concern.human_readable_type) %>
+      </div>
+    </fieldset>
+  </div>
+</div>
