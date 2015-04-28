@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'classify_concerns/new.html.erb' do
-  let(:classes) { [GenericWork, Article, Dataset, Image, Document, Spam] }
+  let(:classes) { [GenericWork, Article, Dataset, Image, Document, Video, Spam] }
   it 'displays curation_concerns with access' do
     classes.each do |klass|
       allow(view).to receive(:can?).with(:create, klass) { true }
