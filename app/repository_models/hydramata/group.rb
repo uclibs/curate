@@ -9,11 +9,14 @@ class Hydramata::Group < ActiveFedora::Base
   class_attribute :human_readable_short_description
 
   has_and_belongs_to_many :members, class_name: "::Person", property: :has_member, inverse_of: :is_member_of
-  has_and_belongs_to_many :works, class_name: "::ActiveFedora::Base", property: :is_editor_group_of, inverse_of: :has_editor_group
+  has_and_belongs_to_many :editable_works, class_name: "::ActiveFedora::Base", property: :is_editor_group_of, inverse_of: :has_editor_group
+  alias_method :works, :editable_works
+  has_and_belongs_to_many :readable_works, class_name: "::ActiveFedora::Base", property: :is_reader_group_of, inverse_of: :has_reader_group
   before_destroy :remove_associations
   has_metadata "descMetadata", type: GroupMetadataDatastream
   accepts_nested_attributes_for :members, allow_destroy: true, reject_if: :all_blank
-  accepts_nested_attributes_for :works, allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :editable_works, allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :readable_works, allow_destroy: true, reject_if: :all_blank
 
   has_attributes :title, :date_uploaded, :date_modified, :description, datastream: :descMetadata, multiple: false
   validates :title, presence: true
@@ -40,7 +43,7 @@ class Hydramata::Group < ActiveFedora::Base
     self.save!
     self.remove_member_privileges(candidate)
   end
-  
+
   def to_s
     title
   end
@@ -90,7 +93,8 @@ class Hydramata::Group < ActiveFedora::Base
 
   def remove_associations
     remove_members
-    remove_works
+    remove_editable_works
+    remove_readable_works
     remove_privileges
   end
 
@@ -106,9 +110,15 @@ class Hydramata::Group < ActiveFedora::Base
     end
   end
 
-  def remove_works
-    self.works.each do |work|
+  def remove_editable_works
+    self.editable_works.each do |work|
       work.remove_editor_group(self)
+    end
+  end
+
+  def remove_readable_works
+    self.readable_works.each do |work|
+      work.remove_reader_group(self)
     end
   end
 

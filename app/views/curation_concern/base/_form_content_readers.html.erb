@@ -1,0 +1,21 @@
+<div class="set-readers">
+  <fieldset id="set-readers">
+    <legend>
+      Additional Readers
+      <small>Select any other individuals or groups which may view or download this content.</small>
+    </legend>
+    <div class="row">
+      <div class="span6" id="requires-information">
+        <%= render "linked_readers", curation_concern: curation_concern, f: f %>
+      </div>
+      <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.reader.individual.help')  %>
+    </div>
+
+    <div class="row">
+      <div class="span6" id="additional-information">
+              <%= render "linked_reader_groups", curation_concern: curation_concern, f: f %>
+      </div>
+      <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.reader.group.help')  %>
+    </div>
+  </fieldset>
+</div>

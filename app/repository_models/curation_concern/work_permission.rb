@@ -1,13 +1,13 @@
 class CurationConcern::WorkPermission
-  def self.create(work, action, editors, groups)
-    update_editors(work, editors, action)
-    update_groups(work, groups, action)
+  def self.create(work, action, editors, readers, edit_groups, read_groups)
+    update_editors_and_readers(work, editors, readers, action)
+    update_groups(work, edit_groups, read_groups, action)
     true
   end
 
   private
 
-    def self.decide_editorship_action(attributes_collection, action_type)
+    def self.decide_action(attributes_collection, action_type)
       sorted = { remove: [], create: [] }
       return sorted unless attributes_collection
       if attributes_collection.is_a? Hash
@@ -32,7 +32,6 @@ class CurationConcern::WorkPermission
       sorted
     end
 
-    private
     def self.has_destroy_flag?(hash)
       ["1", "true"].include?(hash['_destroy'].to_s)
     end
@@ -41,21 +40,30 @@ class CurationConcern::WorkPermission
       ::User.find_by_repository_id(person_id)
     end
 
-    def self.editor_group(group_id)
+    def self.group(group_id)
       Hydramata::Group.find(group_id)
     end
 
-    def self.update_editors(work, editors, action)
-      collection = decide_editorship_action(editors, action)
+    def self.update_editors_and_readers(work, editors, readers, action)
+      collection = decide_action(editors, action)
       work.remove_editors(collection[:remove].map { |u| user(u) })
       work.add_editors(collection[:create].map { |u| user(u) })
+
+      collection = decide_action(readers, action)
+      work.remove_readers(collection[:remove].map { |u| user(u) })
+      work.add_readers(collection[:create].map { |u| user(u) })
+
       work.save!
     end
 
     # This is extremely expensive because add_editor_group causes a save each time.
-    def self.update_groups(work, editor_groups, action)
-      collection = decide_editorship_action(editor_groups, action)
-      work.remove_editor_groups(collection[:remove].map { |grp| editor_group(grp) })
-      work.add_editor_groups(collection[:create].map { |grp| editor_group(grp) })
+    def self.update_groups(work, editor_groups, reader_groups, action)
+      collection = decide_action(editor_groups, action)
+      work.remove_editor_groups(collection[:remove].map { |grp| group(grp) })
+      work.add_editor_groups(collection[:create].map { |grp| group(grp) })
+
+      collection = decide_action(reader_groups, action)
+      work.remove_reader_groups(collection[:remove].map { |grp| group(grp) })
+      work.add_reader_groups(collection[:create].map { |grp| group(grp) })
     end
 end

@@ -36,7 +36,7 @@ class DelegateEditorCleanupWorker
         work.editor_ids -= [grantee.pid]
         work.save!
 
-        grantee.work_ids -= [work.pid]
+        grantee.editable_work_ids -= [work.pid]
         grantee.save!
 
         work.synchronize_link_and_file_permissions
