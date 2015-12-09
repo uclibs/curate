@@ -66,6 +66,13 @@
   -moz-background-clip: padding-box;
   background-clip: padding-box;
   outline: none;
+
+  p {
+    padding-left: 30px;
+  }
+  h1{
+    padding-left: 30px;
+  }
 }
 
 .modal.fade.in {

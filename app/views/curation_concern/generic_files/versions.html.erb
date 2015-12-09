@@ -2,6 +2,7 @@
   <% if curation_concern.persisted? %>
     <fieldset>
       <legend> Versioning</legend>
+      <p>The Rollback feature keeps track of any edits you have made to an attached file, and allows you to revert back to those previous states. You can always undo this by again using Rollback and selecting the most recent edit.</p>
       <%#
         TODO - Cleanup up this violation of Law of Demeter
         curation_concern.versions should yield a version object

@@ -29,6 +29,8 @@ en:
       input_field:
         abstract:
           help:         "<p>Enter the abstract of your %{work_type}. There is no character limit for this field.</p>"
+        actions:
+          help:         "<h1>Actions Help Information</h1><p>Edit - Replace the attached file, or simply change its title.</p><p>Rollback - revert to any previous changes you may have made with edit.</p><p>Delete - removes the file from this work.</p><p>Download - allows you to save the file to your computer</p>"
         alternate_title:
           help:         "<p>Enter an alternate title for your %{work_type}. An alternate title could include acronyms, abbreviations, or a series title.</p>"
         bibliographic_citation:
