@@ -36,13 +36,7 @@ class DelegateEditorAssignWorker
         grantee.work_ids += [work.pid]
         grantee.save!
 
-        if work.respond_to?(:generic_files)
-	        work.generic_files.each do |file|
-            file.edit_users = work.edit_users
-            file.edit_groups = work.edit_groups
-            file.save!
-          end    
-        end
+        work.synchronize_link_and_file_permissions
       end
     end
   end
