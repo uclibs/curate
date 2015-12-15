@@ -39,6 +39,14 @@ class DelegateEditorCleanupWorker
           grantee.work_ids -= [work.pid]
           grantee.save!
 
+          if work.respond_to?(:linked_resources)
+            work.linked_resources.each do |link|
+              link.edit_users = work.edit_users
+              link.edit_groups = work.edit_groups
+              link.save!
+            end    
+          end
+
           if work.respond_to?(:generic_files)
 	          work.generic_files.each do |file|
               file.edit_users = work.edit_users
