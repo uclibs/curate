@@ -29,7 +29,7 @@ class DelegateEditorAssignWorker
 
     type = [Article, Dataset, Document, GenericWork, Image]
     type.each do |klass|
-      klass.find_each('owner_tesim' => grantor.email) do |work|
+      klass.find_each('owner_sim' => grantor.email) do |work|
         work.edit_users += [grantee.email]
         work.save!
 
@@ -41,7 +41,7 @@ class DelegateEditorAssignWorker
             file.edit_users = work.edit_users
             file.edit_groups = work.edit_groups
             file.save!
-          end    
+          end
         end
       end
     end
