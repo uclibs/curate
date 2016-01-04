@@ -377,7 +377,7 @@ class CatalogController < ApplicationController
     
     def show_only_owned(solr_parameters, user_parameters)
        if params[:works] == 'owned'
-         solr_parameters[:fq] << "owner_tesim: #{current_user.email}"
+         solr_parameters[:fq] << "owner_sim: #{current_user.email}"
        end
     end
 
