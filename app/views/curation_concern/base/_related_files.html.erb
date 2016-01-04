@@ -5,11 +5,13 @@
   </caption>
   <thead>
     <tr>
+      <%=render 'modal_help_dialog', modal_text: I18n.t('sufia.work.input_field.actions.help'), modal_id: "rollbackHelp", modal_title: "Help" %>
       <th>File</th>
       <th>Filename</th>
       <th>Date Uploaded</th>
       <th>Visibility</th>
-      <th>Actions</th>
+      <th>Actions <%= link_to '?', '#', data: { toggle: "modal", target: "#rollbackHelp" } %>
+      </th>
     </tr>
   </thead>
   <tbody>
