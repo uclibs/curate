@@ -31,22 +31,16 @@ class DelegateEditorCleanupWorker
     type.each do |klass|
       klass.find_each('edit_access_person_ssim' => grantee.email) do |work|
         next unless work.owner != grantee.email
-          work.edit_users -= [grantee.email]
-          work.editor_ids += [grantor.pid]
-          work.editor_ids -= [grantee.pid]
-          work.save!
+        work.edit_users -= [grantee.email]
+        work.editor_ids += [grantor.pid]
+        work.editor_ids -= [grantee.pid]
+        work.save!
 
-          grantee.work_ids -= [work.pid]
-          grantee.save!
+        grantee.work_ids -= [work.pid]
+        grantee.save!
 
-          if work.respond_to?(:generic_files)
-	          work.generic_files.each do |file|
-              file.edit_users = work.edit_users
-              file.edit_groups = work.edit_groups
-              file.save!
-            end
-          end    
-        end
+        work.synchronize_link_and_file_permissions
       end
     end
   end
+end

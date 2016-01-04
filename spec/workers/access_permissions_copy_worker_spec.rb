@@ -12,6 +12,7 @@ describe AccessPermissionsCopyWorker do
   let(:file) { Rack::Test::UploadedFile.new(__FILE__, 'text/plain', false) }
   let(:generic_file_1) { FactoryGirl.create_generic_file(:generic_work, user, file) } 
   let(:generic_file_2) { FactoryGirl.create_generic_file(:generic_work, user, file) } 
+  let(:linked_resource) { FactoryGirl.create(:linked_resource, batch: generic_work, user: user) }
 
   it 'should raise error when no pid' do
     expect{
@@ -31,7 +32,7 @@ describe AccessPermissionsCopyWorker do
       generic_work.save
     end
 
-    it 'should apply group/editors permissions to attached files' do
+    it 'should apply group/editors permissions to attached files and links' do
       expect(generic_file_1.reload.edit_groups).to be_empty
       expect(generic_file_2.reload.edit_groups).to be_empty
 
@@ -41,6 +42,9 @@ describe AccessPermissionsCopyWorker do
       expect(generic_file_1.edit_users).to eq [user.user_key]
       expect(generic_file_2.edit_users).to eq [user.user_key]
 
+      expect(linked_resource.reload.edit_users).to eq [user.user_key]
+      expect(linked_resource.edit_groups).to be_empty
+
       AccessPermissionsCopyWorker.new(generic_work.pid).run
 
       generic_file_1.reload.edit_groups.should == [group_1.pid, group_2.pid]
@@ -48,6 +52,9 @@ describe AccessPermissionsCopyWorker do
 
       expect(generic_file_1.edit_users).to eq [user.user_key, another_user.user_key]
       expect(generic_file_2.edit_users).to eq [user.user_key, another_user.user_key]
+
+      expect(linked_resource.reload.edit_users).to eq [user.user_key, another_user.user_key]
+      expect(linked_resource.edit_groups).to eq [group_1.pid, group_2.pid]
     end
   end
 end

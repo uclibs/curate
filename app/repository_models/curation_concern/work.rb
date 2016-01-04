@@ -18,5 +18,25 @@ module CurationConcern
       return solr_doc
     end
 
+    def synchronize_link_and_file_permissions
+      assets = self.attached_files_and_links
+      unless assets.nil?
+        assets.each do |asset|
+          asset.edit_users = self.edit_users
+          asset.edit_groups = self.edit_groups
+          asset.save!
+        end
+      end
+    end
+
+    def attached_files_and_links
+      files = self.generic_files
+      links = self.linked_resources
+      return nil if files.blank? and links.blank?
+      return links if files.nil? 
+      return files if links.nil? 
+      files + links
+    end
+
   end
 end
