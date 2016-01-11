@@ -49,6 +49,10 @@ module CurationConcern
       collection == self ? false : true
     end
 
+    def sortable_title
+      title.sub(/^(the|a|an)\s+/i, '')
+    end
+
 protected
 
     # A searchable date field that is derived from the (text) field date_created

@@ -22,4 +22,12 @@ describe CurationConcern::Model do
       reloaded_work.to_solr["collection_sim"].should_not == [profile.pid]
     end
   end
+
+  describe '#sortable_title' do
+    let(:work) { FactoryGirl.create(:generic_work, title: "A title") }
+
+    it 'filters articles from the beginning of titles' do
+      expect(work.sortable_title).to eq("title")
+    end
+  end
 end
