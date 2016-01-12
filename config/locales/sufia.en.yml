@@ -85,3 +85,5 @@ en:
             Image:      "Hold Shift or Command to select multiple files"
             Document:  "A PDF is preferred. Hold Shift or Command to select multiple files" 
             Dataset:   "Hold Shift or Command to select multiple files"
+	    Video:  "Hold Shift or Command to selelct multiple files"
+
