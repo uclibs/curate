@@ -61,3 +61,9 @@
   <h2>Files</h2>
   <p class="center"><em>This <%= curation_concern.human_readable_type %> has no files associated with it. You can add one using the "Attach a File" button below.</em></p>
 <% end %>
+
+<% curation_concern.generic_files.each do |generic_file| %>
+  <% if generic_file.filename[".pdf"] %>
+    <%= link_to 'Download Adobe Acrobat Reader', 'https://get.adobe.com/reader/otherversions/', :target => "_blank"%>
+  <% end %>
+<% end %>

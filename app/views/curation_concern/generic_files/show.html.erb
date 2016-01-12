@@ -5,6 +5,10 @@
 <%= render partial: 'media_display', locals: {generic_file: curation_concern, dom_class_name: 'representative_image'} %>
 <%= render "attributes", curation_concern: curation_concern %>
 
+<% if curation_concern.filename[".pdf"] %>
+	<%= link_to 'Download Adobe Acrobat Reader', 'https://get.adobe.com/reader/otherversions/', :target => "_blank"%>
+<% end %>
+
   <div class="form-actions">
     <%= link_to "Download this File", download_path(curation_concern), class: 'btn btn-primary' %>
     <% if can? :edit, curation_concern %>
