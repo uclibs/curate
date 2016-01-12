@@ -38,7 +38,7 @@ module Curate::CollectionsHelper
   #     When set to false, the creators are not listed.
   def list_items_in_collection(collection, terminate=false, options={})
     content_tag :ul, class: 'collection-listing' do
-      collection.members.inject('') do |output, member|
+      (collection.members.sort_by { |member| member.sortable_title }).inject('') do |output, member|
         output << member_line_item(collection, member, terminate, options)
       end.html_safe
     end
