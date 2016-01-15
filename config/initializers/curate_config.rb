@@ -16,6 +16,7 @@ Curate.configure do |config|
   # config.characterization_runner = lambda {|filename| … }
 
   # # Used to load values for constructing SOLR searches
-  search_config_file = File.join(Rails.root, 'config', 'search_config.yml')
-  config.search_config = YAML::load(File.open(search_config_file))[Rails.env].with_indifferent_access
+  # # Not necessary for Gem
+  # search_config_file = File.join(Rails.root, 'config', 'search_config.yml')
+  # config.search_config = YAML::load(File.open(search_config_file))[Rails.env].with_indifferent_access
 end

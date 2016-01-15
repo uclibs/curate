@@ -7,9 +7,13 @@ class Video < ActiveFedora::Base
   include CurationConcern::Embargoable
   include CurationConcern::WithEditors
 
+  def special_meta_tag_fields
+    %i(description language)
+  end
+
   include ActiveFedora::RegisteredAttributes
 
-  has_metadata "descMetadata", type: DatasetDatastream
+  has_metadata "descMetadata", type: VideoRdfDatastream
 
   include CurationConcern::RemotelyIdentifiedByDoi::Attributes
 
@@ -72,10 +76,6 @@ class Video < ActiveFedora::Base
     editable: true
 
   attribute :requires,
-    datastream: :descMetadata, multiple: false,
-    editable: true
-
-  attribute :extent,
     datastream: :descMetadata, multiple: false,
     editable: true
 

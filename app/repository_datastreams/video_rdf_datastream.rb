@@ -28,6 +28,10 @@ class VideoRdfDatastream < ActiveFedora::NtriplesRDFDatastream
       index.as :stored_searchable
     end
 
+    map.date_digitized(:to => "date#digitized", :in => RDF::QualifiedDC) do |index|
+      index.as :stored_searchable
+    end
+
     map.date_modified(to: "modified", in: RDF::DC) do |index|
       index.type :date
       index.as :stored_sortable
