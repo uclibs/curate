@@ -14,7 +14,7 @@ class Video < ActiveFedora::Base
   include CurationConcern::RemotelyIdentifiedByDoi::Attributes
 
   class_attribute :human_readable_short_description
-  self.human_readable_short_description = "Deposit any non-text-based document (other than a dataset or image)."
+  self.human_readable_short_description = "Works that include video, film, slide, or audio are referred to as time-based media."
 
   attribute :alternate_title,
     datastream: :descMetadata, multiple: true
@@ -42,6 +42,9 @@ class Video < ActiveFedora::Base
     datastream: :descMetadata, multiple: false
 
   attribute :date_uploaded,
+    datastream: :descMetadata, multiple: false
+
+  attribute :date_digitized,
     datastream: :descMetadata, multiple: false
 
   attribute :description,
@@ -72,16 +75,20 @@ class Video < ActiveFedora::Base
     datastream: :descMetadata, multiple: false,
     editable: true
 
+  attribute :extent,
+    datastream: :descMetadata, multiple: false,
+    editable: true
+
   attribute :rights,
     datastream: :descMetadata, multiple: false,
     default: "All rights reserved",
     validates: { presence: { message: 'You must select a license for your work.' } }
 
-  attribute :source,
-    datastream: :descMetadata, multiple: false
-
   attribute :subject,
     datastream: :descMetadata, multiple: true
+
+  attribute :type,
+    datastream: :descMetadata, multiple: false
 
   attribute :title,
     datastream: :descMetadata, multiple: false,
