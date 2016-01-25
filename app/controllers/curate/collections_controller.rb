@@ -124,7 +124,7 @@ class Curate::CollectionsController < ApplicationController
     # Because the collection, profile_collection, and profile_section are not
     # proper citizens
     container = params[:collection] || params[:profile_collection] || params[:profile_section]
-    @collection.file = container[:file] if container.has_key?(:file)
+    @collection.file = container[:file] if container != nil and container.has_key?(:file)
   end
 
   def add_to_profile

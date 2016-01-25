@@ -114,11 +114,12 @@ module ParamsHelper
   end
 
   def check_java_script_parameters?()
+    blacklist = ['javascript:alert', '<script>']
     params.clone.each do |key, value|
         if value.is_a?(Hash)
           value.clone.each do |k,v|
             unless defined?(v) == nil
-              if v.to_s.include?('javascript:alert')
+              if blacklist.any? { |w| v.to_s =~ /#{w}/ }
                 return_404
                 return false
                 break
@@ -127,7 +128,7 @@ module ParamsHelper
           end
         else
           unless defined?(value) == nil
-            if value.to_s.include?('javascript:alert')
+              if blacklist.any? { |w| value.to_s =~ /#{w}/ }
               return_404
               return false
               break

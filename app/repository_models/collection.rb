@@ -11,6 +11,8 @@ class Collection < ActiveFedora::Base
   attr_accessor :mime_type
   attr_accessor :file
 
+  validates :title, script_tag: true
+
   makes_derivatives :generate_derivatives
 
   before_save :add_profile_image, :only => [ :create, :update ]
