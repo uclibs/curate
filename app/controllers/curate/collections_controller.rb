@@ -29,6 +29,7 @@ class Curate::CollectionsController < ApplicationController
   before_filter :authenticate_user!, except: :show
   before_filter :force_update_user_profile!
   before_filter :check_parameters?
+  before_filter :params_contain_blacklisted_strings?
 
   rescue_from Hydra::AccessDenied, CanCan::AccessDenied do |exception|
     case exception.action
