@@ -7,6 +7,8 @@ class Person < ActiveFedora::Base
   include CurationConcern::Work
   include Hydra::Derivatives
 
+  include Hydra::AccessControls::Permissions
+
   has_and_belongs_to_many :groups, class_name: "::Hydramata::Group", property: :is_member_of, inverse_of: :has_member
   has_and_belongs_to_many :works, class_name: "::ActiveFedora::Base", property: :is_editor_of, inverse_of: :has_editor
   has_metadata name: "descMetadata", type: PersonMetadataDatastream, control_group: 'M'
@@ -119,7 +121,18 @@ class Person < ActiveFedora::Base
   def to_solr(solr_doc={}, opts={})
     super(solr_doc, opts)
     Solrizer.set_field(solr_doc, 'generic_type', 'Person', :facetable)
-    solr_doc['read_access_group_ssim'] = 'public'
+
+    #New users are created without public read access
+    unless self.read_groups == ['make_public']
+      solr_doc['read_access_group_ssim'] = ''
+      self.read_groups = []
+    else
+      #After user owns a work, they will become public
+      solr_doc['read_access_group_ssim'] = 'public'
+      self.set_read_groups(['public'],['make_public'])
+      self.save!
+    end
+
     solr_doc['has_user_bsi'] = !!User.exists?(repository_id: pid)
     solr_doc[Solrizer.solr_name('representative', :stored_searchable)] = self.representative
     solr_doc[Solrizer.solr_name('representative_image_url', :stored_searchable)] = self.representative_image_url

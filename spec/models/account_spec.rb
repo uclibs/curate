@@ -120,7 +120,6 @@ describe Account do
         expect(user.person).to be_persisted
         expect(user.person).to eq(subject.person)
 
-        expect(subject.person.read_groups).to include(Hydra::AccessControls::AccessRight::PERMISSION_TEXT_VALUE_PUBLIC)
         expect(subject.person.edit_users).to include(user.user_key)
         expect(subject.person.depositor).to eq user.user_key
         expect(subject.person.name).to eq expected_name
