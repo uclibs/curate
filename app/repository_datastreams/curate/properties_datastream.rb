@@ -12,6 +12,9 @@ class Curate::PropertiesDatastream < ActiveFedora::OmDatastream
 
     #This attribute should hold the selected file which represent the work.
     t.representative
+
+    #This attribute stores the remote URI for managing the identifier
+    t.identifier_url
   end
 
   def self.xml_template

@@ -60,6 +60,8 @@ en:
           help:         "<p>Enter a summary of your %{work_type}. There is no character limit for this field.</p>"
         date_photographed:
           help:         "<p>Date %{work_type} taken.  Format as: YYYY or YYYY-MM or YYYY-MM-DD.</p>"
+        doi:
+          help:         "<p>The Access Rights of your work may impact your DOI. Please read this <a href=\"/faq_request#faq_1010\" target=\"_blank\">Scholar@UC FAQ page entry</a> for more information</p>"
         genre:
           help:         "<p>Select a genre matching your %{work_type}.</p>"
         inscription:

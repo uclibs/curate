@@ -18,6 +18,23 @@ module CurationConcern
       return solr_doc
     end
 
+    def doi_status
+      if self.visibility == Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC 
+        "public"
+      else
+        if self.locally_managed_remote_identifier?
+          "unavailable"
+        else
+          "reserved"
+        end
+      end
+    end
+
+    def locally_managed_remote_identifier?
+      return true unless self.identifier_url.nil?
+      false
+    end
+
     def synchronize_link_and_file_permissions
       assets = self.attached_files_and_links
       unless assets.nil?

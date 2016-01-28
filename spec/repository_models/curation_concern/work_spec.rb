@@ -7,6 +7,96 @@ describe CurationConcern::Work do
     end
   end
 
+  describe '#locally_managed_remote_identifier?' do
+    let(:work) { FactoryGirl.build(:generic_work) }
+
+    context 'when #identifier_url is set' do
+      before { work.stub(:identifier_url).and_return("http://example.org") }
+      it 'is true' do
+        expect(work.locally_managed_remote_identifier?).to eq(true)
+      end
+    end
+
+    context 'when #identifier_url is not set' do
+      before { work.stub(:identifier_url).and_return(nil) }
+      it 'is false' do
+        expect(work.locally_managed_remote_identifier?).to eq(false)
+      end
+    end
+  end
+
+  describe '#doi_status' do
+    let(:work) { FactoryGirl.build(:generic_work) }
+
+    context 'when the work is public' do
+      before { work.stub(:visibility).and_return(Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC) }
+      context 'and a DOI has already been minted' do
+        before { work.stub(:locally_managed_remote_identifier?).and_return(true) }
+        it 'is "public"' do
+          expect(work.doi_status).to eq("public")
+        end
+      end
+
+      context 'and a DOI has not already been minted' do
+        before { work.stub(:locally_managed_remote_identifier?).and_return(false) }
+        it 'is "public"' do
+          expect(work.doi_status).to eq("public")
+        end
+      end
+    end
+
+    context 'when the work is embargoed' do
+      before { work.stub(:visibility).and_return(Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_EMBARGO) }
+      context 'and a DOI has already been minted' do
+        before { work.stub(:locally_managed_remote_identifier?).and_return(true) }
+        it 'is "unavailable"' do
+          expect(work.doi_status).to eq("unavailable")
+        end
+      end
+
+      context 'and a DOI has already been minted' do
+        before { work.stub(:locally_managed_remote_identifier?).and_return(false) }
+        it 'is "reserved"' do
+          expect(work.doi_status).to eq("reserved")
+        end
+      end
+    end
+
+    context 'when the work is authenticated' do
+      before { work.stub(:visibility).and_return(Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED) }
+      context 'and a DOI has already been minted' do
+        before { work.stub(:locally_managed_remote_identifier?).and_return(true) }
+        it 'is "unavailable"' do
+          expect(work.doi_status).to eq("unavailable")
+        end
+      end
+
+      context 'and a DOI has not already been minted' do
+        before { work.stub(:locally_managed_remote_identifier?).and_return(false) }
+        it 'is "reserved"' do
+          expect(work.doi_status).to eq("reserved")
+        end
+      end
+    end
+
+    context 'when the work is restricted' do
+      before { work.stub(:visibility).and_return(Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE) }
+      context 'and a DOI has already been minted' do
+        before { work.stub(:locally_managed_remote_identifier?).and_return(true) }
+        it 'is "unavailable"' do
+          expect(work.doi_status).to eq("unavailable")
+        end
+      end
+
+      context 'and a DOI has already been minted' do
+        before { work.stub(:locally_managed_remote_identifier?).and_return(false) }
+        it 'is "reserved"' do
+          expect(work.doi_status).to eq("reserved")
+        end
+      end
+    end
+  end
+
   describe "#attached_files_and_links" do
     let(:work) { FactoryGirl.create(:generic_work) }
 
