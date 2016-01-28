@@ -40,7 +40,6 @@
 //= require curate/browse_everything_implement
 //= require curate/validate_doi
 //= require curate/hidden_upload
-
 // Initialize plugins and Bootstrap dropdowns on jQuery's ready event as well as
 // Turbolinks's page change event.
 Blacklight.onLoad(function() {

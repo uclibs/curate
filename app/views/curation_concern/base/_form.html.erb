@@ -1,4 +1,4 @@
-<%= simple_form_for [:curation_concern, curation_concern] do |f| %>
+<%= simple_form_for [:curation_concern, curation_concern], html: { onsubmit: 'event.preventDefault(); validateAllFields();', name: "new_work_form" } do |f| %>
   
   <% if f.error_notification -%>
     <div class="alert alert-error fade in">
@@ -28,8 +28,13 @@
   <%= render 'form_contributor_agreement', curation_concern: curation_concern, contributor_agreement: contributor_agreement %>
 
   <div class="row">
+    <br>
+    <div id="invalid-input-alert" style="visibility: hidden;" class="alert fade in">
+        Sorry, a few required fields are empty or blank. Please recheck your submission before proceeding.
+        <a class="close" data-dismiss="alert" href="#">&times;</a>
+      </div>
     <div class="span12 form-actions">
-      <%= f.submit class: 'btn btn-primary require-contributor-agreement' %>
+      <%= f.submit class: 'btn btn-primary require-contributor-agreement'  %>
       <%- if curation_concern.new_record? -%>
         <%= link_to 'Cancel', root_path, class: 'btn btn-link' %>
       <%- else -%>
