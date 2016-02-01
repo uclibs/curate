@@ -44,4 +44,12 @@ describe CurationConcern::CollectionModel do
       end
     end
   end
+
+  describe '#sortable_title' do
+    let(:collection) { FactoryGirl.create(:collection, title: "A title") }
+
+    it 'filters articles from the beginning of titles' do
+      expect(collection.sortable_title).to eq("title")
+    end
+  end
 end
