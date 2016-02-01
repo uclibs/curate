@@ -31,7 +31,6 @@ function validateAllFields() {
 	if (valid) {
 		document.forms['new_work_form'].submit();
 		return true;
-		//document.forms['new_work_form'].submit();
 	}
 	else return false;
 }
