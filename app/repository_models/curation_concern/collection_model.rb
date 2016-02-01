@@ -28,6 +28,10 @@ module CurationConcern
       self.title.present? ? title : "No Title"
     end
 
+    def sortable_title
+      title.sub(/^(the|a|an)\s+/i, '').downcase
+    end
+
     def to_solr(solr_doc={}, opts={})
       super
       Solrizer.set_field(solr_doc, 'generic_type', human_readable_type, :facetable)
