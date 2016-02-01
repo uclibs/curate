@@ -41,9 +41,8 @@
       <div class="row">
         <div class="span6">
           <%= f.input :date_digitized,
-            as: :date,
-            input_html: { class: 'input-xlarge', id: 'date_digitized' } %>
-            label: I18n.t('sufia.work.input_field.date_digitized.label'),
+            label: 'Date Digitized',
+            placeholder: "YYYY-MM-DD"
           %>
         </div>
         <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.date_digitized.help', work_type: curation_concern.human_readable_type) %>

@@ -15,7 +15,7 @@ module CurationConcern
     def meta_tag_fields
       (%i(bibliographic_citation coverage_spatial coverage_temporal
          creator date_created date_modified
-         date_uploaded date_digitzed identifier publisher
+         date_uploaded identifier publisher
          requires subject title) + special_meta_tag_fields).uniq
     end
 

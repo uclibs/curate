@@ -7,8 +7,10 @@ class Video < ActiveFedora::Base
   include CurationConcern::Embargoable
   include CurationConcern::WithEditors
 
+  include CurationConcern::WithMetaTags
+
   def special_meta_tag_fields
-    %i(description language)
+    %i(description language date_digitized)
   end
 
   include ActiveFedora::RegisteredAttributes
