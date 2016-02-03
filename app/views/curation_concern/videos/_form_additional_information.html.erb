@@ -15,6 +15,17 @@
         </div>
         <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.date_created.help', work_type: curation_concern.human_readable_type) %>
       </div>
+      <!-- digitized here -->
+
+      <div class="row">
+        <div class="span6">
+          <%= f.input :date_digitized,
+            label: 'Date Digitized',
+            placeholder: "YYYY-MM-DD"
+          %>
+        </div>
+        <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.date_digitized.help', work_type: curation_concern.human_readable_type) %>
+      </div>
 
       <div class="row">
         <div class="span6">
