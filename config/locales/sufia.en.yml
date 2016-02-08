@@ -46,7 +46,7 @@ en:
         date_created:
           help:         "<p>Date when the contents of the %{work_type} were created. Enter date formatted as: YYYY or YYYY-MM or YYYY-MM-DD.</p><p>Examples:</p><ul><li>January 30, 1950 would be entered 1950-01-30</li></ul>"
         date_digitized:
-          help:         "<p>Date when the contents of the %{work_type} were created (born digital), digitized, or converted to digital format. Format as: YYYY or YYYY-MM or YYYY-MM-DD.</p><p>Examples:</p><ul><li>April 1, 2015 would be entered 2015-04-01</li></ul>"
+          help:         "<p>Date when the contents of the %{work_type} were created, digitized, or converted to digital format. Format as: YYYY or YYYY-MM or YYYY-MM-DD.</p><p>Examples:</p><ul><li>April 1, 2015 would be entered 2015-04-01</li></ul>"
         description:
           help:         "<p>Enter a summary of your %{work_type}. There is no character limit for this field.</p>"
         date_photographed:
@@ -87,4 +87,4 @@ en:
             Image:      "Hold Shift or Command to select multiple files"
             Document:  "A PDF is preferred. Hold Shift or Command to select multiple files" 
             Dataset:   "Hold Shift or Command to select multiple files"
-            Video:  "Hold Shift or Command to selelct multiple files"
+            Video:  "Hold Shift or Command to select multiple files"
