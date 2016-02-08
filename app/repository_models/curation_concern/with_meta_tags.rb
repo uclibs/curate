@@ -47,6 +47,8 @@ module CurationConcern
         add_meta_tag('DC.Date.Modified', self.send(field))
       when :date_uploaded
         add_meta_tag('DC.Date.dateSubmitted', self.send(field))
+      when :date_digitized
+        add_meta_tag('citation_digitized', self.send(field))
       when :description
         add_meta_tag('DC.Description', self.send(field))
       when :identifier
