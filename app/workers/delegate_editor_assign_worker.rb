@@ -33,7 +33,7 @@ class DelegateEditorAssignWorker
         work.edit_users += [grantee.email]
         work.save!
 
-        grantee.work_ids += [work.pid]
+        grantee.editable_work_ids += [work.pid]
         grantee.save!
 
         work.synchronize_link_and_file_permissions

@@ -4,7 +4,7 @@ class Image < ActiveFedora::Base
   include CurationConcern::WithLinkedResources
   include CurationConcern::WithRelatedWorks
   include CurationConcern::Embargoable
-  include CurationConcern::WithEditors
+  include CurationConcern::WithEditorsAndReaders
 
   include CurationConcern::WithMetaTags
   def special_meta_tag_fields

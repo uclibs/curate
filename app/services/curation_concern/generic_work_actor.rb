@@ -3,19 +3,22 @@ module CurationConcern
 
     def create
       editors = attributes.delete('editors_attributes')
-      groups = attributes.delete('editor_groups_attributes')
-
+      readers = attributes.delete('readers_attributes')
+      editor_groups = attributes.delete('editor_groups_attributes')
+      reader_groups = attributes.delete('reader_groups_attributes')
       assign_pid && super && attach_files && create_linked_resources &&
         download_create_cloud_resources && assign_representative &&
         add_depositor_as_editor &&
-        add_or_update_editors_and_groups(editors, groups, :create) &&
+        add_or_update_editors_readers_and_groups(editors, readers, editor_groups, reader_groups, :create) &&
         apply_access_permissions
     end
 
     def update
       editors = attributes.delete('editors_attributes')
-      groups = attributes.delete('editor_groups_attributes')
-      add_or_update_editors_and_groups(editors, groups, :update) &&
+      readers = attributes.delete('readers_attributes')
+      editor_groups = attributes.delete('editor_groups_attributes')
+      reader_groups = attributes.delete('reader_groups_attributes')
+      add_or_update_editors_readers_and_groups(editors, readers, editor_groups, reader_groups, :create) &&
         add_to_collections(attributes.delete(:collection_ids)) &&
         super && attach_files && create_linked_resources && 
         apply_access_permissions
@@ -37,9 +40,8 @@ module CurationConcern
       curation_concern.inner_object.pid = CurationConcern.mint_a_pid
     end
 
-    def add_or_update_editors_and_groups(editors, groups, action)
-      CurationConcern::WorkPermission.create(curation_concern, action, editors,
-                                             groups)
+    def add_or_update_editors_readers_and_groups(editors, readers, editor_groups, reader_groups, action)
+      CurationConcern::WorkPermission.create(curation_concern, action, editors, readers, editor_groups, reader_groups)
     end
 
     def add_depositor_as_editor

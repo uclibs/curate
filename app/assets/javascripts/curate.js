@@ -26,6 +26,7 @@
 //= require manage_repeating_fields
 //= require toggle_details
 //= require toggle_div
+//= require toggle_readers
 //= require help_modal
 //= require jquery.tokeninput
 //= require curate/select_works

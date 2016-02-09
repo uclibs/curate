@@ -25,6 +25,15 @@ en:
         group:
           name:         "Groups"
           help:         "Add groups to allow others to collaboratively edit this work."
+      reader:
+        legend:         "Content Readers"
+        caption:        "Who should be able to view this private work?"
+        individual:
+          name:         "Individuals"
+          help:         "You may specify additional individuals who may access this private work"
+        group:
+          name:         "Groups"
+          help:         "You may specify groups that may access this private work"
       add_multiples:    "Add multiple values to a field using the \"Add+\" button, where applicable."
       input_field:
         abstract:

@@ -23,7 +23,9 @@ module CurationConcern
       unless assets.nil?
         assets.each do |asset|
           asset.edit_users = self.edit_users
+          asset.read_users = self.read_users
           asset.edit_groups = self.edit_groups
+          asset.read_groups = self.read_groups
           asset.save!
         end
       end

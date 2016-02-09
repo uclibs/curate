@@ -33,11 +33,11 @@ describe GenericWork do
 
   describe 'Embargo' do
     let!(:work) { FactoryGirl.create(:generic_work, title: 'Embargo Work', visibility: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_EMBARGO) }
-     
+
     it "should not be under embargo by default" do
       expect(work).to_not be_under_embargo
     end
-    
+
     it "should be under embargo when embargo is set" do
       #set embargo to 1 day from now
       work.embargo_release_date = (Time.now + 1.day).strftime("%Y-%m-%d")
@@ -152,6 +152,112 @@ describe GenericWork do
 
         work.editor_groups.should == []
         work.edit_groups.should_not include(group_pid)
+        work.datastreams['RELS-EXT'].content.to_s.should_not include(group_pid)
+      end
+    end
+  end
+
+  describe 'Reader' do
+    let(:person) { FactoryGirl.create(:person_with_user) }
+    let(:another_person) { FactoryGirl.create(:person_with_user) }
+    let(:work) { FactoryGirl.create(:private_generic_work, user: person.user) }
+    let(:collection) { FactoryGirl.create(:collection) }
+
+    describe '#add_reader' do
+      it 'should add reader' do
+        work.read_users.should == []
+        work.add_reader(person.user)
+        work.add_reader(another_person.user)
+        work.save!
+
+        work.reload
+        work.read_users.should eq [person.depositor, another_person.depositor]
+      end
+
+      it 'should not add non-work objects' do
+        work.read_users.should == []
+        expect { work.add_reader(collection) }.to raise_error ArgumentError
+        work.reload.read_users.should == []
+      end
+    end
+
+    describe '#add_readers' do
+      it 'should add reader' do
+        work.read_users.should == []
+        work.add_readers([person.user, another_person.user])
+        work.save!
+
+        work.reload
+        work.read_users.should eq [person.depositor, another_person.depositor]
+      end
+    end
+
+    describe '#remove_reader' do
+      before do
+        work.read_users.should == []
+        work.add_reader(another_person.user)
+        work.save!
+        work.reload
+      end
+
+      it 'should remove reader' do
+        work.remove_reader(another_person.user)
+        work.reload
+
+        work.read_users.should == []
+        work.read_users.should_not include(another_person.user.user_key)
+        another_person.readable_works.should_not include(work)
+      end
+    end
+  end
+
+  describe 'ReaderGroup' do
+    let(:person) { FactoryGirl.create(:person_with_user) }
+    let(:user) { person.user }
+    let(:group) { FactoryGirl.create(:group, user: user) }
+    let(:work) { FactoryGirl.create(:private_generic_work, user: person.user) }
+    let(:collection) { FactoryGirl.create(:collection) }
+
+    describe '#add_reader_group' do
+      it 'should add group' do
+        work.read_groups.should == []
+        work.add_reader_group(group)
+
+        work.reload
+        work.read_groups.should == [group.pid]
+      end
+
+      it 'should not add non-group objects' do
+        expect { work.add_reader_group(collection) }.to raise_error ArgumentError
+        work.reload.read_groups.should == []
+      end
+    end
+
+    describe '#remove_reader_group' do
+      before do
+        work.read_groups.should == []
+        work.add_reader_group(group)
+
+        work.reload
+      end
+
+      it 'should remove read_group' do
+        work.remove_reader_group(group)
+
+        work.reload
+
+        work.read_groups.should == []
+        work.read_groups.should_not include(group.pid)
+      end
+
+      it 'should delete relationship when related object is deleted' do
+        group_pid = group.pid
+        group.destroy
+
+        work.reload
+
+        work.read_groups.should == []
+        work.read_groups.should_not include(group_pid)
         work.datastreams['RELS-EXT'].content.to_s.should_not include(group_pid)
       end
     end

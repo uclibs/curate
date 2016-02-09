@@ -27,6 +27,7 @@ FactoryGirl.define do
     factory :public_generic_work do
       visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
     end
+
     factory :generic_work_with_files do
       ignore do
         file_count 3
