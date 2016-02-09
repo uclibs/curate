@@ -79,8 +79,8 @@ describe 'Profile for a Person: ' do
     let!(:person) { account.person }
     before { login_as(user) }
     it 'with edit access is displayed in the results' do
-      login_as(user)
       create_work
+      logout
       visit catalog_index_path
       fill_in 'Search Curate', with: 'Bruce'
       click_button 'keyword-search-submit'
