@@ -4,4 +4,4 @@
 <% else %>
   <% path = "curate/default.png" %>
 <% end %>
-<%= link_to image_tag(path, width: width, alt: "Thumbnail for file", class: 'thumbnail'), curation_concern_generic_file_path(thumbnail.noid), class: 'canonical-image' %>
+<%= link_to image_tag(path, width: width, alt: "Thumbnail for file", class: 'thumbnail float-thumbnail'), curation_concern_generic_file_path(thumbnail.noid), class: 'canonical-image' %>
