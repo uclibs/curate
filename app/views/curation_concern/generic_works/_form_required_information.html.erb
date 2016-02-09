@@ -12,7 +12,7 @@
           <div class="span6">
             <%= f.input :title, 
                         as: :text,
-                        input_html: { class: 'input-xxxlarge', rows: '1' } %>
+                        input_html: { class: 'input-xxxlarge no-space', rows: '1' } %>
           </div>
           <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.title.help', work_type: curation_concern.human_readable_type) %>
       </div>
@@ -32,7 +32,7 @@
           <%= f.input :description, 
                       as: :text, 
                       required: true, 
-                      input_html: { class: 'input-xxxlarge', rows: '14' } %>
+                      input_html: { class: 'input-xxxlarge no-space', rows: '14' } %>
         </div>
         <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.description.help', work_type: curation_concern.human_readable_type) %>
       </div>
