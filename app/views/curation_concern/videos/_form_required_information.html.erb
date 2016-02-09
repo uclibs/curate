@@ -21,7 +21,7 @@
         <div class="span6">
           <%= f.input :creator, 
                       as: :multi_value, 
-                      label: 'Author',
+                      label: 'Creator',
                       required: true %>
         </div>
         <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.creator.help', work_type: curation_concern.human_readable_type) %>
