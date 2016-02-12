@@ -9,7 +9,7 @@
   <div class="row break-word <%= dom_class(generic_file) %> attributes">
     <div class="span2">
       <% if index == 0 %>
-      <p class="related-files-heading">File</p>
+      <p class="related-files-heading hidden-phone">File</p>
       <% end %>
       <div class="attribute title">
         <%= render partial: 'thumbnail', locals: {thumbnail: generic_file, dom_class_name: 'thumbnail'} %>
@@ -19,7 +19,7 @@
 
     <div class="span2">
       <% if index == 0 %>
-      <p class="related-files-heading">Filename</p>
+      <p class="related-files-heading hidden-phone">Filename</p>
       <% end %>
       <div class="attribute filename">
         <%= link_to(generic_file_link_name(generic_file), curation_concern_generic_file_path(generic_file)) %>
@@ -27,7 +27,7 @@
     </div>  
     <div class="span2">
       <% if index == 0 %>
-      <p class="related-files-heading">Date Uploaded</p>
+      <p class="related-files-heading hidden-phone">Date Uploaded</p>
       <% end %>
       <div class="attribute date_uploaded">
         <%= generic_file.date_uploaded %>
@@ -36,14 +36,15 @@
     
     <div class="span2">
       <% if index == 0 %>
-      <p class="related-files-heading">Visibility</p>
+      <p class="related-files-heading hidden-phone">Visibility</p>
       <% end %>
       <div class="attribute permission"><%= permission_badge_for(generic_file) %></div>
+      <br>
     </div>
     <!-- actions bar start -->
     <div class="span4">
       <% if index == 0 %>
-      <p class="related-files-heading">Actions <%= link_to '?', '#', data: { toggle: "modal", target: "#rollbackHelp" } %></p>
+      <p class="related-files-heading hidden-phone">Actions <%= link_to '?', '#', data: { toggle: "modal", target: "#rollbackHelp" } %></p>
       <% end %> 
       <%- if with_actions -%>
               <%- if can?(:edit, generic_file) -%>
