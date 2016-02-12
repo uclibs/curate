@@ -24,3 +24,19 @@
     list-style-type: none;
   }
 }
+
+.break-word {
+  word-wrap: break-word;
+}
+
+.related-files-heading {
+  color: #333;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.float-thumbnail {
+  float: left;
+  padding-right: 5px;
+  margin-right: 5px;
+}

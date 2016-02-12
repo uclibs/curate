@@ -17,7 +17,8 @@
 <% editor    = can?(:edit,    curation_concern) %>
 <% if collector || editor %>
   <% content_for :second_row do %>
-    <div class="form-actions">
+    <div class="form-actions row">
+      <div class="span12">
       <% if editor %>
         <%= link_to "Edit This #{curation_concern.human_readable_type}", edit_polymorphic_path([:curation_concern, curation_concern]), class: 'btn btn-primary' %>
         <%= link_to "Delete This #{curation_concern.human_readable_type}", [:curation_concern, curation_concern], class: 'btn btn-primary', data: { confirm: "Delete this #{curation_concern.human_readable_type}?" }, method: :delete %>
@@ -28,6 +29,7 @@
         <%= render 'add_to_collection_gui', collectible: curation_concern, button_class: 'btn btn-primary' %>
       <% end %>
     </div>
+  </div>
   <% end %>
 <% end %>
 
