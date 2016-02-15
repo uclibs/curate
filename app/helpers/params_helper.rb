@@ -113,13 +113,42 @@ module ParamsHelper
     end
   end
 
-  def check_java_script_parameters?()
-    blacklist = ['javascript:alert', '<script>']
+  def scan_params(param, blacklist)
+    if blacklist.any? { |w| param.to_s =~ /#{w}/i }
+      return true
+    end
+  end
+
+  def params_contain_blacklisted_strings?()
+    blacklist = ['<[^>]*script']
     params.clone.each do |key, value|
         if value.is_a?(Hash)
           value.clone.each do |k,v|
             unless defined?(v) == nil
-              if blacklist.any? { |w| v.to_s =~ /#{w}/ }
+              if scan_params(v, blacklist)
+                flash[:error] = 'HTML script tags not permitted'
+                render :new and return
+              end
+            end
+          end
+        else
+          unless defined?(value) == nil
+              if scan_params(value, blacklist)
+                flash[:error] = 'HTML script tags not permitted'
+              render :new and return
+            end
+          end
+        end
+    end
+  end
+
+  def check_java_script_parameters?()
+    blacklist = ['javascript:alert']
+    params.clone.each do |key, value|
+        if value.is_a?(Hash)
+          value.clone.each do |k,v|
+            unless defined?(v) == nil
+              if scan_params(v, blacklist)
                 return_404
                 return false
                 break
@@ -128,7 +157,7 @@ module ParamsHelper
           end
         else
           unless defined?(value) == nil
-              if blacklist.any? { |w| value.to_s =~ /#{w}/ }
+              if scan_params(value, blacklist)
               return_404
               return false
               break

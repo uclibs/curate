@@ -27,6 +27,7 @@ module CurationConcern
     include ParamsHelper
     before_filter :check_blind_sql_parameters_loop?
     before_filter :check_parameters?
+    before_filter :params_contain_blacklisted_strings?
 
     class_attribute :excluded_actions_for_curation_concern_authorization
     self.excluded_actions_for_curation_concern_authorization = [:new, :create]

@@ -18,6 +18,7 @@ class Hydramata::GroupsController < ApplicationController
   before_filter :authenticate_user!
   before_filter :force_update_user_profile!
   before_filter :check_parameters?
+  before_filter :params_contain_blacklisted_strings?
 
   self.copy_blacklight_config_from(CatalogController)
 
