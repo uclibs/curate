@@ -9,6 +9,26 @@ describe 'Creating a article' do
     visit new_curation_concern_article_path
     expect(page).to have_checked_field('visibility_open')
   end
+
+  it 'links to the submitters profile' do
+    login_as(user)
+    visit root_path
+    click_link "add-content"
+    classify_what_you_are_uploading 'Article'
+    within '#new_article' do
+      fill_in "Title", with: "Submitter profile link test"
+      fill_in "Abstract", with: "test abstract"
+      fill_in "article_creator", with: "Test article creator"
+      select(Sufia.config.cc_licenses.keys.first.dup, from: I18n.translate('sufia.field_label.rights'))
+      check("I have read and accept the distribution license agreement")
+      click_button("Create Article")
+    end
+    #the submitter field should have a link to the submitter's profile
+    within ('.article.attributes') do
+      click_link "#{user.name}"
+    end
+    expect(page).to have_selector('h1', text: "#{user.name}")
+  end
  
   describe 'with a related link' do
     it "should allow me to attach the link on the create page" do
