@@ -38,7 +38,11 @@ module Curate
       # If you restart the server, this could be out of sync; A better
       # implementation is to read something from the file system. However
       # that detail is an exercise for the developer.
-      @build_identifier ||= Time.now.strftime("%Y-%m-%d %H:%M:%S")
+      if File.file?('config/deploy_timestamp')
+        @build_identifier = "Deployed on " + File.open('config/deploy_timestamp', &:readline)
+      else
+        @build_identifier ||= "Started on " + Time.now.strftime("%m-%d-%Y %r")
+      end
     end
 
     # Override characterization runner
