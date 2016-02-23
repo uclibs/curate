@@ -6,7 +6,8 @@ if ENV['JS']
 end
 
 describe 'Editing existing works', describe_options do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:person) { FactoryGirl.create(:person_with_user) }
+  let(:user) { person.user }
   let(:work) { FactoryGirl.create(:generic_work, user: user, title:"My Fabulous Work") }
   let(:dataset1) { FactoryGirl.create(:dataset, user: user, title:"Records from that Kiki") }
   let(:dataset2) { FactoryGirl.create(:dataset, user: user, title:"Records from that other Kiki") }

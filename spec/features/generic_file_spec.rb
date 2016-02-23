@@ -1,8 +1,10 @@
 require 'spec_helper'
 
 describe 'Uploading Generic File' do
-  let(:user) { FactoryGirl.create(:user) }
-  let(:another_user) { FactoryGirl.create(:user) }
+  let(:person) { FactoryGirl.create(:person_with_user) }
+  let(:another_person) { FactoryGirl.create(:person_with_user) }
+  let(:user) { person.user }
+  let(:another_user) { another_person.user }
 
   context "editing my own work" do
     let(:work) { FactoryGirl.create(:public_generic_work, user: user) }
