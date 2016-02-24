@@ -38,11 +38,16 @@ module CurationConcern
     module MintingBehavior
 
       def apply_doi_assignment_strategy(&perform_persistence_block)
-        if respond_to?(:doi_assignment_strategy)
-          no_doi_assignment_strategy_given(&perform_persistence_block) ||
-            not_now(&perform_persistence_block) ||
-            update_identifier_locally(&perform_persistence_block) ||
-            request_remote_minting_for(&perform_persistence_block)
+        if respond_to?(:doi_assignment_strategy) && respond_to?(:identifier_url)
+          if self.identifier_url.nil?
+            no_doi_assignment_strategy_given(&perform_persistence_block) ||
+              not_now(&perform_persistence_block) ||
+              update_identifier_locally(&perform_persistence_block) ||
+              request_remote_minting_for(&perform_persistence_block)
+          else
+            !!yield(self) && identifier_request
+          end
+
         else
           !!yield(self)
         end
@@ -56,7 +61,11 @@ module CurationConcern
         # Before we make a potentially expensive call
         # hand off control back to the caller.
         # I'm doing this because I want a chance to persist the object first
-        !!yield(self) && doi_remote_service.mint(self)
+        !!yield(self) && identifier_request
+      end
+
+      def identifier_request
+        doi_remote_service.mint(self)
       end
 
       def update_identifier_locally
