@@ -12,6 +12,7 @@ require 'inline_reflection'
 require 'contributors_association'
 require 'rails_autolink'
 require 'browse-everything'
+require 'jquery-fileupload-rails'
 
 module Curate
   extend ActiveSupport::Autoload

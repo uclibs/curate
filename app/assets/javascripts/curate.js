@@ -13,6 +13,7 @@
 //= require jquery-ui-1.9.2/jquery.ui.menu
 //= require jquery-ui-1.9.2/jquery.ui.position
 //= require jquery-ui-1.9.2/jquery.ui.autocomplete
+//= require jquery-fileupload
 //
 //= require blacklight/blacklight
 //
