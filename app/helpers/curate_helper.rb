@@ -67,6 +67,10 @@ module CurateHelper
         else
           markup << %(<li class="attribute #{method_name}"><a href=#{h(value)} target="_blank"> #{h(Sufia.config.cc_licenses_reverse[value])}</a></li>\n)
         end
+      elsif method_name == :owner
+        owner_name = Person.find(depositor: curation_concern.owner).first
+        owner_pid = owner_name.pid[6..30]
+        markup << %(<li class="attribute #{method_name}"><a href="/people/#{owner_pid}">#{owner_name}</a></li>\n)
       else
         markup << %(<li class="attribute #{method_name}">#{h(value)}</li>\n)
       end

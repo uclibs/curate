@@ -2,6 +2,9 @@ require 'spec_helper'
 
 describe 'meta tags' do
 
+  let(:person) { FactoryGirl.create(:person_with_user) }
+  let(:user) { person.user }
+
   describe 'for articles only' do
     before do
       article = FactoryGirl.create(:public_article,
@@ -65,6 +68,7 @@ describe 'meta tags' do
           coverage_spatial: 'Cincinnati',
           coverage_temporal: '19th Century',
           ## creator: "The Creator" (set by factory)
+          user: user,
           date_created: '2001-02-03',
           date_modified: Date.parse('2001-02-03'),
           date_uploaded: Date.parse('2001-02-03'),
@@ -220,7 +224,7 @@ describe 'meta tags' do
     describe 'special fields' do
       let(:work) do
         generic_work = FactoryGirl.create(:public_generic_work,
-          creator: "And Another Creator") ## in addition to "The Creator"
+          creator: "And Another Creator", user: user) ## in addition to "The Creator"
       end
       before { visit curation_concern_generic_work_path(work) }
 
@@ -247,7 +251,7 @@ describe 'meta tags' do
 
     describe 'attach_files' do
       let(:work) do 
-        FactoryGirl.create(:generic_work_with_files,
+        FactoryGirl.create(:generic_work_with_files, user: user,
           visibility: Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
       end
 

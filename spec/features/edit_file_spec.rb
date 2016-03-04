@@ -1,7 +1,8 @@
 require "spec_helper"
 
 describe "Editing an attached file" do
-  let(:user) { FactoryGirl.create(:user) }
+  let(:person) { FactoryGirl.create(:person_with_user) }
+  let(:user) { person.user }
   let(:work) { FactoryGirl.create(:generic_work_with_files, file_count: 1, user: user) }
 
   it 'should allow me to edit the file' do

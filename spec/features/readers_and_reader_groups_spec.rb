@@ -1,10 +1,12 @@
 require 'spec_helper'
 
 describe "Readers and Reader Groups" do
-  let(:owner) { FactoryGirl.create(:person_with_user) }
-  let(:reader) { FactoryGirl.create(:person_with_user) }
+  let(:owner_person) { FactoryGirl.create(:person_with_user) }
+  let(:owner) { owner_person.user }
+  let(:reader_person) { FactoryGirl.create(:person_with_user) }
+  let(:reader) { reader_person.user }
   let(:group) { FactoryGirl.create(:group) }
-  let(:work) { FactoryGirl.create(:private_generic_work) }
+  let(:work) { FactoryGirl.create(:private_generic_work, user: owner) }
 
   before(:each) do
     FactoryGirl.create_generic_file(work, owner) do |gf|
@@ -15,10 +17,10 @@ describe "Readers and Reader Groups" do
 
   describe "adding/removing a reader" do
     it "gives/removes read access to the work" do
-      work.add_reader(reader.user)
+      work.add_reader(reader)
       work.save!
       work.synchronize_link_and_file_permissions
-      login_as(reader.user)
+      login_as(reader)
       visit curation_concern_generic_work_path(work)
 
       # Can view work
@@ -28,7 +30,7 @@ describe "Readers and Reader Groups" do
       page.should have_content(work.generic_files.first.title.first)
 
       # Removing reader
-      work.remove_reader(reader.user)
+      work.remove_reader(reader)
       work.save!
       work.synchronize_link_and_file_permissions
 
@@ -46,11 +48,11 @@ describe "Readers and Reader Groups" do
 
   describe "adding/removing a reader group" do
     it "gives/removes reader group members read access to the work" do
-      group.add_member(reader)
+      group.add_member(reader_person)
       work.add_reader_group(group)
       work.save!
       work.synchronize_link_and_file_permissions
-      login_as(reader.user)
+      login_as(reader)
       visit curation_concern_generic_work_path(work)
 
       # Can view work
