@@ -8,6 +8,8 @@
 
         <p class="help-block">
           The content of your <%= curation_concern.human_readable_type.downcase %> can be a file, a URL, or a remote file from a cloud service.
+          <br>
+          <%= render 'format_help_link' %>
         </p>
 
         <ul id=tabs class="nav nav-tabs" data-tabs="tabs">
