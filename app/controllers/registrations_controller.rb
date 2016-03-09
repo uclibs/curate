@@ -5,6 +5,10 @@ class RegistrationsController < Devise::RegistrationsController
   # @TODO - Instead of updating user accounts via the registration controller,
   #         expose a resource for updating an account. It is possible that the
   #         resource would only be available for repository managers.
+  def create
+    super
+    WelcomeMailer.welcome_email(resource.email).deliver
+  end
   def update(&block)
     if current_user.manager?
       manager_is_updating_a_user_registration(&block)
