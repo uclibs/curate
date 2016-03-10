@@ -12,6 +12,8 @@ gemspec
 #
 #
 
+gem 'rake', '10.5'
+
 gem 'coveralls', require: false
 gem 'simplecov', require: false
 if !ENV['TRAVIS']
