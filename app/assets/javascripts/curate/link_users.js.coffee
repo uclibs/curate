@@ -104,7 +104,7 @@
           $.getJSON $targetElement.data('url'), { q: request.term + "*" }, ( data, status, xhr ) ->
             matches = []
             $.each data.response.docs, (idx, val) ->
-              matches.push {label: (val['desc_metadata__first_name_tesim'] + " " + val['desc_metadata__last_name_tesim']), value: val['id']}
+              matches.push {label: (val['desc_metadata__first_name_tesim'] + " " + val['desc_metadata__last_name_tesim'] + " (" + val['desc_metadata__email_tesim'] + ")"), value: val['id']}
             response( matches )
         minLength: 2
         focus: ( event, ui ) ->
