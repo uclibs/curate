@@ -1,0 +1,11 @@
+<%= User.find_by_email(@changes.first.owner).name %> has added or removed you as a member of the following groups in Scholar@UC:
+
+<ul>
+<% @changes.each do |change| %>
+	<% group = Hydramata::Group.find(change.context) %>
+	<% group_url = File.join(Curate.configuration.application_root_url, 'hydramata/groups', group.pid) %>
+	<li><%= @change_types[change.change_type]['human_readable'] %> <%= link_to group.title, group_url %></li>
+<% end %>
+</ul>
+
+Groups are used to grant access and edit rights for works to a set of specific users. You may gain or lose access rights based on this change. If you feel this was made in error, please contact the <a href="mailto:scholar@uc.edu">Scholar@UC</a> team.

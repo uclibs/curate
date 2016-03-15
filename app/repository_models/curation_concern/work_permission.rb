@@ -36,6 +36,18 @@ class CurationConcern::WorkPermission
       ["1", "true"].include?(hash['_destroy'].to_s)
     end
 
+    def self.has_destroy_key?(hash)
+      hash.key?('_destroy')
+    end
+
+    def self.has_name_key?(hash)
+      hash.key?('name')
+    end
+
+    def self.is_new_editor?(hash)
+      !has_destroy_key?(hash) && !has_name_key?(hash)
+    end
+
     def self.user(person_id)
       ::User.find_by_repository_id(person_id)
     end
@@ -46,13 +58,12 @@ class CurationConcern::WorkPermission
 
     def self.update_editors_and_readers(work, editors, readers, action)
       collection = decide_action(editors, action)
-      work.remove_editors(collection[:remove].map { |u| user(u) })
-      work.add_editors(collection[:create].map { |u| user(u) })
-
+      if work.remove_editors(collection[:remove].map { |u| user(u) }) && work.add_editors(collection[:create].map { |u| user(u) })
+        queue_emails_for_editors(editors, work)
+      end
       collection = decide_action(readers, action)
       work.remove_readers(collection[:remove].map { |u| user(u) })
       work.add_readers(collection[:create].map { |u| user(u) })
-
       work.save!
     end
 
@@ -65,5 +76,17 @@ class CurationConcern::WorkPermission
       collection = decide_action(reader_groups, action)
       work.remove_reader_groups(collection[:remove].map { |grp| group(grp) })
       work.add_reader_groups(collection[:create].map { |grp| group(grp) })
+    end
+
+    def self.queue_emails_for_editors(editors, work)
+      unless editors.nil?
+        editors.each do |editor_hash|
+          if is_new_editor?(editor_hash[1])
+            CurateManager.queue_change( work.owner, 'added_as_editor', work.pid, user(editor_hash[1]['id']).email )
+          elsif has_destroy_flag?(editor_hash[1])
+            CurateManager.queue_change( work.owner, 'removed_as_editor', work.pid, user(editor_hash[1]['id']).email )
+          end
+        end
+      end
     end
 end

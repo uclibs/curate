@@ -1,0 +1,14 @@
+<p>Dear <%= User.find_by_email(@changes.first.target).name %>:</p>
+
+<% if @changes.first.is_delegate_change? %>
+	<%= render 'delegate_changes' %>
+<% elsif @changes.first.is_editor_change? %>
+	<%= render 'editor_changes' %>
+<% else %>
+	<%= render 'group_changes' %>
+<% end %>
+
+<p>
+Thanks,
+Scholar@UC
+</p>
