@@ -27,6 +27,8 @@ module Hydramata::GroupMembershipActionParser
         elsif !value["id"].nil? and value["id"] != "" and value["_destroy"].nil?
           #add member
           action << "create"
+          # added_user = User.where(repository_id: value["id"])
+          # AddedToMailer.added_to_group
         elsif !value["id"].nil? and value["id"] != "" and !value["_destroy"].nil?
           #remove member
           action << "destroy"

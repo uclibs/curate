@@ -6,6 +6,7 @@ class Hydramata::GroupsController < ApplicationController
   include Hydramata::GroupMembershipActionParser
   include ParamsHelper
 
+  require 'pp'
   prepend_before_filter :normalize_identifier, only: [:show, :edit, :update]
   Hydramata::GroupsController.solr_search_params_logic += [:only_groups]
   Hydramata::GroupsController.solr_search_params_logic += [:add_access_controls_to_solr_params]
@@ -55,6 +56,7 @@ class Hydramata::GroupsController < ApplicationController
     @group_membership = Hydramata::GroupMembershipForm.new( Hydramata::GroupMembershipActionParser.convert_params(params, current_user) )
     if @group_membership.save
       if is_current_user_a_member_of_this_group?(@group_membership.group)
+        byebug
         redirect_to hydramata_group_path( params[:id] ), notice: "Group updated successfully."
       else
         redirect_to hydramata_groups_path, notice: "Group updated successfully. You are no longer a member of the Group: #{@group_membership.title}"
