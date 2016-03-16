@@ -28,6 +28,7 @@ class Hydramata::Group < ActiveFedora::Base
     candidate.add_relationship(:is_member_of, self)
     candidate.save!
     self.create_role(candidate, role)
+    AddedToMailer.added_to_group(depositor, candidate[:email][0], descMetadata.pid)
   end
 
   def remove_member(candidate)
@@ -42,6 +43,7 @@ class Hydramata::Group < ActiveFedora::Base
     self.remove_relationship(:has_member, candidate)
     self.save!
     self.remove_member_privileges(candidate)
+    AddedToMailer.removed_from_group(depositor, candidate[:email][0], descMetadata.pid)
   end
 
   def to_s
