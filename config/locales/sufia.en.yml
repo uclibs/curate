@@ -96,7 +96,7 @@ en:
         title:
           help:         "<p>Enter the title of your %{work_type}. If the %{work_type} doesn't have a title, please enter a brief descriptive label.</p>"
         unit:
-          help:         "<p>The college and department or degree program associated with this work, if it was completed as part of a thesis or capstone.</p>"
+          help:       "<p>The college and department of the submitter of the %{work_type}</p>"
         upload_file:
           help:
             GenericWork:   "Hold Shift or Command to select multiple files"
@@ -112,4 +112,6 @@ en:
           help:         "<p>Enter a summary of your %{work_type}. Please include any presentations or awards assocaited with this %{work_type} here. There is no character limit for this field.</p>"
         type: 
           help:         "<p>Select the type of your %{work_type}. If you are unsure about the type, please select 'Other'.</p>"
+        unit:
+          help:         "<p>The college and department or degree program associated with this work, if it was completed as part of a thesis or capstone.</p>"
               

@@ -27,6 +27,8 @@
         <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.creator.help', work_type: curation_concern.human_readable_type) %>
       </div>
 
+      <%= render 'form_unit', curation_concern: curation_concern, f: f %>
+
       <div class="row">
         <div class="span6">
           <%= f.input :abstract, 

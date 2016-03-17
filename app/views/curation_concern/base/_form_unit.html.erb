@@ -2,14 +2,15 @@
   <%= f.simple_fields_for :unit do |uf| %>
     <div class="span3">
       <%= uf.input :college,
+        selected: curation_concern.unit || current_user_college,
         collection: sorted_college_list,
-        required: false,
+        required: true,
         label: 'College' %>
     </div>
     <div class="span3">
       <%= uf.input :department,
-        required: false,
-        input_html: { value: curation_concern.department || "" },
+        required: true,
+        input_html: { value: curation_concern.department || current_user.department },
         label: 'Program or Department' %>
     </div>
     <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.unit.help', work_type: curation_concern.human_readable_type) %>

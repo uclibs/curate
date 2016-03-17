@@ -23,6 +23,7 @@ end
 
 
 copy_file 'templates/predicate_mappings.yml', 'config/predicate_mappings.yml'
+copy_file 'college_and_department.yml', 'config/college_and_department.yml'
 
 
 HELPFUL_DEVELOPMENT_TOOLS =

@@ -82,6 +82,8 @@ class CatalogController < ApplicationController
 
     config.add_facet_field solr_name("desc_metadata__tag", :facetable), label: "Keyword", limit: 5
     config.add_facet_field solr_name("desc_metadata__subject", :facetable), label: "Subject", limit: 5
+    config.add_facet_field solr_name("desc_metadata__college", :facetable), label: "College", limit: 5
+    config.add_facet_field solr_name("desc_metadata__department", :facetable), label: "Program or Department", limit: 5
     config.add_facet_field solr_name("desc_metadata__language", :facetable), label: "Language", limit: 5
     config.add_facet_field solr_name("desc_metadata__based_near", :facetable), label: "Location", limit: 5
     config.add_facet_field solr_name("desc_metadata__publisher", :facetable), label: "Publisher", limit: 5
