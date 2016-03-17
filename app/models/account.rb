@@ -155,6 +155,12 @@ class Account
     person.attributes = person_attributes
     apply_deposit_authorization(person)
     person.save && connect_user_to_person
+    hide_new_profiles
+  end
+
+  def hide_new_profiles
+    person.read_groups = []
+    person.save
   end
 
   def update_person
