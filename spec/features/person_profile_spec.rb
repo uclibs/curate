@@ -57,27 +57,24 @@ describe 'Profile for a Person: ' do
     let!(:user) {manager_user.user}
     let!(:person) {manager_user.person}
 
-    let!(:account) { FactoryGirl.create(:account, name: 'The Hulk') }
-    let!(:user) { account.user }
-    let!(:person) { account.person }
+    let!(:account) { FactoryGirl.create(:account, first_name: 'Bruce', last_name: 'Banner') }
+    let!(:user_b) { account.user }
+    let!(:person_b) { account.person }
 
+    let!(:account_c) { FactoryGirl.create(:account, first_name: 'Carl', last_name: 'Weathers') }
+    let!(:user_c) { account_c.user }
+    let!(:person_c) { account_c.person }
+
+    before { login_as(user_b) }
 
     it 'without edit access is not displayed in the results' do
-      FactoryGirl.create(:account, name: 'Marguerite Scypion' )
       visit catalog_index_path
-      fill_in 'Search Curate', with: 'Marguerite'
+      fill_in 'Search Curate', with: 'Carl'
       click_button 'keyword-search-submit'
       within('#documents') do
-        expect(page).to_not have_link('Marguerite Scypion') #title
+        expect(page).to_not have_link('Carl Weathers') #title
       end
     end
-  end
-
-  context "searching" do
-    let!(:account) { FactoryGirl.create(:account, first_name: 'Bruce', last_name: 'Banner') }
-    let!(:user) { account.user }
-    let!(:person) { account.person }
-    before { login_as(user) }
     it 'with edit access is displayed in the results' do
       create_work
       logout

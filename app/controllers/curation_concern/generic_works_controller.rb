@@ -36,15 +36,7 @@ class CurationConcern::GenericWorksController < CurationConcern::BaseController
     return unless verify_acceptance_of_user_agreement!
     if actor.create
       after_create_response
-
-      #If the owner is still hidden, make them public
-      work_owner = Person.where(depositor: curation_concern.owner).first
-      if work_owner.read_groups.empty?
-        work_owner.read_groups = ['make_public']
-        work_owner.save!
-        work_owner.to_solr
-      end
-
+      reveal_profile
     else
       setup_form
       flash[:error] = "A virus/error was found in one of the uploaded files.  The file was not uploaded, but the work was created."
@@ -52,6 +44,14 @@ class CurationConcern::GenericWorksController < CurationConcern::BaseController
         wants.html { render 'show', status: :unprocessable_entity }
       end
     end
+  end
+
+  def reveal_profile
+    #If the owner is still hidden, make them public
+    work_owner = Person.where(depositor: curation_concern.owner).first
+    work_owner.read_groups = ['public']
+    work_owner.save!
+    work_owner.to_solr
   end
 
   def after_create_response

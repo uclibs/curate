@@ -124,16 +124,7 @@ class Person < ActiveFedora::Base
     super(solr_doc, opts)
     Solrizer.set_field(solr_doc, 'generic_type', 'Person', :facetable)
 
-    #New users are created without public read access
-    unless self.read_groups == ['make_public']
-      solr_doc['read_access_group_ssim'] = ''
-      self.read_groups = []
-    else
-      #After user owns a work, they will become public
-      solr_doc['read_access_group_ssim'] = 'public'
-      self.set_read_groups(['public'],['make_public'])
-      self.save!
-    end
+    solr_doc['read_access_group_ssim'] = self.read_groups
 
     solr_doc['has_user_bsi'] = !!User.exists?(repository_id: pid)
     solr_doc[Solrizer.solr_name('representative', :stored_searchable)] = self.representative
