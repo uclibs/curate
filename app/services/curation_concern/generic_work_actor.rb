@@ -123,6 +123,7 @@ module CurationConcern
       )
       generic_file.embargo_release_date = curation_concern.embargo_release_date
       generic_file.visibility = visibility
+      generic_file.owner = assign_owner_on_creation
       CurationConcern.attach_file(generic_file, user, file)
     end
 
