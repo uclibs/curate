@@ -38,16 +38,6 @@
     </table>
 
 </div>
-<script>
-  var fileUploadErrors = {
-  maxFileSize: 'File is too big',
-  minFileSize: 'File is too small',
-  acceptFileTypes: 'Filetype not allowed',
-  maxNumberOfFiles: 'Max number of files exceeded',
-  uploadedBytes: 'Uploaded bytes exceed file size',
-  emptyResult: 'Empty file upload result'
-  };
-</script>
 
 <!-- The template to display files available for upload -->
 <script id="template-upload" type="text/x-tmpl">
@@ -58,7 +48,8 @@
     <td class="size"><span>{%=o.formatFileSize(file.size)%}</span></td>
     {% if (file.error) { %}
     <td class="error" colspan="2"><span class="label label-important">{%=locale.fileupload.error%}</span> {%=locale.fileupload.errors[file.error] || file.error%}</td>
-    {% } else if (o.files.valid && !i) { %}
+    debugger;
+    {% } else if ( o.files.valid && !i) { %}
     <td>
       <div class="progress progress-success progress-striped active"><div class="bar" style="width:0%;"></div></div>
     </td>
@@ -114,10 +105,10 @@
   $(function () {
       // Initialize the jQuery File Upload widget:
       $('#file').fileupload();
-      // 
+      //
       // Load existing files:
       $.getJSON($('#file').prop('action'), function (files) {
-        var fu = $('#file').data('blueimpFileupload'), 
+        var fu = $('#file').data('blueimpFileupload'),
           template;
         fu._adjustMaxNumberOfFiles(-files.length);
         console.log(files);
@@ -132,5 +123,3 @@
 
   });
 </script>
-
-
