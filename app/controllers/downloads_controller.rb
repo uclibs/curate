@@ -19,7 +19,7 @@ class DownloadsController < ApplicationController
   ## Overriding Hydra::Controller::DownloadBehavior.datastream_name to return asset.filename instead of asset.label
   def datastream_name
     ## Except for objects where the files are avatars
-    unless [Person, Collection].include? asset.class 
+    unless [Person, Collection].include? asset.class
       params[:filename] || asset.filename
     end
   end
@@ -38,6 +38,10 @@ class DownloadsController < ApplicationController
   def respond_with_default_thumbnail_image
     image= ActionController::Base.helpers.asset_path("curate/default.png", type: :image)
     redirect_to image
+  end
+
+  def can_download?
+    return true if asset.is_a?(Person) || (can? :read, datastream.pid)
   end
 
 end
