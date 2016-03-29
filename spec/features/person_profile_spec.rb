@@ -117,7 +117,7 @@ describe 'Profile for a Person: ' do
     end
   end
 
-  context 'A person when logged in' do
+  context 'A person' do
     let(:password) { FactoryGirl.attributes_for(:user).fetch(:password) }
     let(:account) { FactoryGirl.create(:account, first_name: 'Iron', last_name: 'Man') }
     let(:user) { account.user }
@@ -127,11 +127,18 @@ describe 'Profile for a Person: ' do
       login_as(user)
     end
 
-    it 'should have a profile image in show view' do
+    it 'when logged in should have a profile image in show view' do
       create_image(image_file)
       visit('/')
       click_link "My Profile"
       page.should have_css("img[src$='/downloads/#{person.pid}?datastream_id=medium']")
+    end
+
+    it 'when logged out should have a public profile image' do
+      create_image(image_file)
+      logout
+      visit("/downloads/#{person.pid}?datastream_id=medium")
+      page.status_code.should be 200
     end
 
     it 'should show gravatar image if profile image not uploaded' do
