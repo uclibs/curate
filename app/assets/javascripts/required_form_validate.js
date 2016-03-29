@@ -1,5 +1,5 @@
 /*
-This file is to fix #588, adds validations to any input field within form with the class of 'no-space'.
+This file is to fix #588, adds validations to any input field within form with the class of 'validate-me'.
 
 you can add the class to any new work form in the _form_required_information template
 
@@ -15,9 +15,13 @@ function isValid(requiredField) {
  	}
 }
 
+function stripWhiteSpace(requiredField) {
+	requiredField.replace('\v', ' ')
+}
+
 function validateAllFields() {
-	//collect all elements with the class 'no-space' into array
-	var inputs = document.getElementsByClassName('no-space');
+	//collect all elements with the class 'validate-me' into array
+	var inputs = document.getElementsByClassName('validate-me');
 	var valid = true;
 	//cycle through and validate all of the input values, not the elements themselves.
 	for (var i = 0; i < inputs.length; i+=1) {
@@ -27,6 +31,7 @@ function validateAllFields() {
 			valid = false;
 			break;
 		}
+		stripWhiteSpace(inputs[i].value);
 	}
 	if (valid) {
 		document.forms['new_work_form'].submit();
