@@ -18,7 +18,7 @@ class Curate::PeopleController < ApplicationController
      initialized_config = Curate.configuration.search_config['people']
      # If the hash is empty, set reasonable defaults for this search type
      if initialized_config.nil?
-        Hash['qf' => 'desc_metadata__first_name_tesim desc_metadata__last_name_tesim','fl' => 'desc_metadata__first_name_tesim desc_metadata__last_name_tesim id','qt' => 'search','rows' => 10]
+        Hash['qf' => 'desc_metadata__first_name_tesim desc_metadata__last_name_tesim desc_metadata__email_sim','fl' => 'desc_metadata__first_name_tesim desc_metadata__last_name_tesim desc_metadata__email_tesim id','qt' => 'search','rows' => 10]
      else
         initialized_config
      end

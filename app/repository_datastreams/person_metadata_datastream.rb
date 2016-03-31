@@ -50,7 +50,7 @@ class PersonMetadataDatastream < ActiveFedora::NtriplesRDFDatastream
     end
 
     map.email(to: "account#preferred_email", in: RDF::QualifiedFOAF) do |index|
-      index.as :stored_searchable
+      index.as :stored_searchable, :facetable
     end
   end
 end

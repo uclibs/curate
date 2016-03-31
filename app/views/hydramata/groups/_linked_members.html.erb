@@ -2,14 +2,14 @@
 <legend class="accessible-hidden">Edit Group Members</legend>
 <div class="control-group required link-users" id="members">
   <div class="row">
-    <div class="span4">
+    <div class="span5">
       <span class="control-label">
         <label class="required" for="<%=f.object_name.downcase%>_members_attributes_0_name">
           <%= label %>
         </label>
       </span>
     </div>
-    <div class="span2 text-center hidden">
+    <div class="span1 text-center hidden">
       Can edit group
     </div>
   </div>
@@ -19,7 +19,7 @@
     <script id="entry-template" type="text/x-handlebars-template">
       <li class="field-wrapper input-append">
         <div class="row">
-          <div class="span4">
+          <div class="span5">
             <input class="input-xlarge autocomplete-users" data-url="/people" id="<%=prefix %>_members_attributes_{{index}}_name" name="<%=prefix %>[members_attributes][{{index}}][name]" type="text" value="" />
             <span class="field-controls">
               <button type="button" class="btn btn-success add">
@@ -28,7 +28,7 @@
               </button>
             </span>
           </div>
-          <div class="span2 text-center">
+          <div class="span1 text-center">
             <label class="checkbox inline-checkbox">Can edit group<%= check_box_tag "group_member[edit_users_ids][]", false %></label>
             <input id="<%=prefix %>_members_attributes_{{index}}_id" name="<%=prefix %>[members_attributes][{{index}}][id]" type="hidden" value="" />
           </div>
@@ -38,7 +38,7 @@
     <script id="existing-user-template" type="text/x-handlebars-template">
       <li class="field-wrapper input-append">
         <div class="row">
-          <div class="span4">
+          <div class="span5">
             <span class="linked-user">
               <a href="/people/{{value}}" target="_new">{{label}}</a>
             </span>
@@ -50,7 +50,7 @@
               </button>
             </span>
           </div>
-          <div class="span2 text-center">
+          <div class="span1 text-center">
             <label class="checkbox inline-checkbox">Can edit group<%= check_box_tag "group_member[edit_users_ids][]", "{{value}}", @group.edit_users.include?("{{value}}") %></label>
           </div>
         </div>
@@ -64,7 +64,7 @@
           <div class="row">
             <%= memberField.hidden_field :id %>
             <%= memberField.hidden_field :_destroy %>
-            <div class="span4">
+            <div class="span5">
               <% if memberField.object.persisted? %>
                 <% if ( @group.edit_users.include?(memberField.object.user_key) && @group.edit_users.size == 1 ) %>
                   <span class="linked-user current-user"><%=link_to memberField.object.name, memberField.object, target: '_new' %></span>
@@ -79,7 +79,7 @@
                 <span class="field-controls"></span>
               <% end %>
             </div>
-            <div class="span2 text-center">
+            <div class="span1 text-center">
               <label class="checkbox inline-checkbox">Can edit group
                 <% if memberField.object.persisted? %>
                   <% if ( @group.edit_users.include?(memberField.object.user_key) && ( @group.edit_users.size == 1 ) ) %>
