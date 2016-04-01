@@ -1,10 +1,12 @@
 require 'spec_helper'
 
 describe 'Proxy Deposit' do
-  let(:user) { FactoryGirl.create(:user, name: 'Im A. User') }
-  let(:proxy) { FactoryGirl.create(:user, name: 'Me A. Proxy') }
+  let(:user) { FactoryGirl.create(:user, first_name: 'Iron', last_name: 'Man') }
+  let(:proxy) { FactoryGirl.create(:user, first_name: 'Tony', last_name: 'Starks') }
   let(:user_person) { FactoryGirl.create(:account, user: user)}
   let(:proxy_person) { FactoryGirl.create(:account, user: proxy)}
+
+
   before do
     user.can_receive_deposits_from << proxy
   end
@@ -56,6 +58,7 @@ describe 'Proxy Deposit' do
     end
 
     page.should have_content(proxy.name)
+
   end
 
 end

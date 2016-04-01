@@ -14,7 +14,10 @@ function updateCreators(){
     if (ownerName == 'Myself') {
         ownerName = $(".user-display-name").text().trim();
     }
+
     else if (ownerName === "") { return; }
+
+    ownerName = ownerName.split(" ").reverse().join(", ");
 
     // Put that name into the "Add" Creator control and force a click of the Add button.
     // Note that the last Creator control is always the one into which a new user is entered.
