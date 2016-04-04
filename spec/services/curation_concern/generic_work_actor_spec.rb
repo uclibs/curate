@@ -59,7 +59,7 @@ describe CurationConcern::GenericWorkActor do
             generic_file = curation_concern.generic_files.first
             expect(generic_file.content.content).to eq file.read
             expect(generic_file.filename).to eq 'image.png'
-
+            expect(generic_file.owner).to eq curation_concern.owner
             expect(curation_concern).to be_authenticated_only_access
             expect(generic_file).to be_authenticated_only_access
           end
@@ -128,6 +128,7 @@ describe CurationConcern::GenericWorkActor do
             curation_concern.linked_resources.count.should == 2
             # Sanity test to make sure the file we uploaded is stored and has same permission as parent.
             link = curation_concern.linked_resources.first
+            expect(link.owner).to eq curation_concern.owner
             expect(link.url).to eq 'http://www.youtube.com/watch?v=oHg5SJYRHA0'
             expect(curation_concern).to be_authenticated_only_access
           end

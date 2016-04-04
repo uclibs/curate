@@ -101,7 +101,9 @@ module CurationConcern
         link.url = link_resource_url
         link.batch = curation_concern
         link.label = curation_concern.human_readable_type
+
       end
+      resource.owner = assign_owner_on_creation
       Sufia::GenericFile::Actions.create_metadata(resource, user, curation_concern.pid)
       true
     rescue ActiveFedora::RecordInvalid
