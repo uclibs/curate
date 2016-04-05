@@ -46,7 +46,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'virtus'
   s.add_dependency 'rails_autolink'
   s.add_dependency 'rubydora', '~> 1.7.4'
-  s.add_dependency 'browse-everything'
+  s.add_dependency 'browse-everything','0.9.1'
   s.add_dependency 'httparty'
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency "rspec-rails", '~> 2.14.0'
