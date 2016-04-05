@@ -17,29 +17,32 @@ class AddedToMailer < ActionMailer::Base
 		puts "The remove email to #{removed_user_email} has been sent by #{current_user_email} for group #{@group_title}"
 	end
 
-	def added_as_delegate(current_user_email, delegate_email)
-		@current_user_email = current_user_email
-		@delegate_email = delegate_email
-		mail()
+	def added_as_delegate(grantor_email, grantee_email)
+		@grantor_email = grantor_email
+		@grantee_email = grantee_email
+		puts "The added email to #{grantee_email} has been sent by #{grantor_email}"
+		# mail()
 	end
 
 	def removed_from_delegate(current_user_email, removed_delegate_email)
 		@current_user_email = current_user_email
 		@removed_delegate_email = removed_delegate_email
-		mail()
+		puts "The remove email to #{removed_delegate_email} has been sent by #{current_user_email}"
 	end
 
 	def added_as_editor(current_user_email, editor_email, work_id)
 		@current_user_email = current_user_email
 		@editor_email = editor_email
 		@work_id = work_id
-		mail()
+		# mail()
+		puts "The added email to #{editor_email} for work #{work_id} has been sent by #{current_user_email}"
 	end
 
 	def removed_from_editor(current_user_email, removed_editor_email, work_id)
 		@current_user_email = current_user_email
 		@removed_editor_email = removed_editor_email
-		mail()
+		# mail()
+		puts "the remove email to #{removed_editor_email} for work #{work_id} by #{current_user_email}"
 	end
 
 	def prepare_body()
