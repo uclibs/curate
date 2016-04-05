@@ -91,6 +91,11 @@ module CurationConcern
       owner if owner && user.can_make_deposits_for.include?(owner)
     end
 
+    def assign_owner_on_creation
+      owner = curation_concern.owner
+      return owner
+    end
+
     def candidate_owner
       attributes.has_key?('owner') && User.find_by_user_key(attributes.delete('owner'))
     end

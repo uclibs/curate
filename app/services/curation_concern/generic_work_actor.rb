@@ -101,7 +101,9 @@ module CurationConcern
         link.url = link_resource_url
         link.batch = curation_concern
         link.label = curation_concern.human_readable_type
+
       end
+      resource.owner = assign_owner_on_creation
       Sufia::GenericFile::Actions.create_metadata(resource, user, curation_concern.pid)
       true
     rescue ActiveFedora::RecordInvalid
@@ -123,6 +125,7 @@ module CurationConcern
       )
       generic_file.embargo_release_date = curation_concern.embargo_release_date
       generic_file.visibility = visibility
+      generic_file.owner = assign_owner_on_creation
       CurationConcern.attach_file(generic_file, user, file)
     end
 
