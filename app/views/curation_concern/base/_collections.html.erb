@@ -12,7 +12,7 @@
     <% curation_concern.collections.each do |collection| %>
       <tr class="collection attributes">
         <%= content_tag :td, class: 'attribute title', data: { noid: collection.noid } do %>
-          <%= link_to collection.title, collection %>
+          <%= link_to collection.title, create_link(collection) %>
         <% end %>
       </tr>
     <% end %>
