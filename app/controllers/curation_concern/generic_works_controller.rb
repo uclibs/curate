@@ -33,6 +33,7 @@ class CurationConcern::GenericWorksController < CurationConcern::BaseController
   end
 
   def create
+    byebug
     return unless verify_acceptance_of_user_agreement!
     if actor.create
       after_create_response

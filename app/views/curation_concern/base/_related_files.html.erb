@@ -24,7 +24,7 @@
       <div class="attribute filename">
         <%= link_to(generic_file_link_name(generic_file), curation_concern_generic_file_path(generic_file)) %>
       </div>
-    </div>  
+    </div>
     <div class="span2">
       <% if index == 0 %>
       <p class="related-files-heading hidden-phone">Date Uploaded</p>
@@ -33,7 +33,7 @@
         <%= generic_file.date_uploaded %>
       </div>
     </div>
-    
+
     <div class="span2">
       <% if index == 0 %>
       <p class="related-files-heading hidden-phone">Visibility</p>
@@ -45,7 +45,7 @@
     <div class="span4">
       <% if index == 0 %>
       <p class="related-files-heading hidden-phone">Actions <%= link_to '?', '#', data: { toggle: "modal", target: "#rollbackHelp" } %></p>
-      <% end %> 
+      <% end %>
       <%- if with_actions -%>
               <%- if can?(:edit, generic_file) -%>
                 <%= link_to(
@@ -90,3 +90,5 @@
     <%= link_to 'Download Adobe Acrobat Reader', 'https://get.adobe.com/reader/otherversions/', :target => "_blank"%>
   <% end %>
 <% end %><!-- end main if -->
+
+<%= render partial: 'curation_concern/generic_files/multiple_upload' %>

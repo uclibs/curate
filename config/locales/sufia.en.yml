@@ -6,6 +6,7 @@ en:
     institution_homepage_url:   "#"
     division_name:      "Your Division at Institution"
     division_homepage_url:   "#"
+    upload_tooltip:   "Files must be under 2GB."
     search:
       form:
         q:

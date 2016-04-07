@@ -11,30 +11,30 @@ class CurationConcern::GenericFilesController < CurationConcern::BaseController
   before_filter :parent
   before_filter :cloud_resources_valid?, only: :create
   before_filter :authorize_edit_parent_rights!, except: [:show]
-  before_filter :scan_viral_files, only: [:create, :update]
+  # before_filter :scan_viral_files, only: [:create, :update]
 
-  def scan_viral_files
-    good_files = []
-    viral_files = []
-    clam = ClamAV.instance
-    content = attributes_for_actor
-    unless content.nil? or content["file"].nil?
-      temp_path = content["file"].instance_variable_get(:@tempfile).path
-      file_name = content["file"].instance_variable_get(:@original_filename)
-      scan_result = clam.scanfile(temp_path)
-      content.each do |file|
-        if (scan_result.is_a? Fixnum)
-          good_files << file
-        else
-          viral_files << file
-        end
-      end
-      if viral_files.any?
-        flash[:error] = "The following virus #{scan_result} was found in the file (#{file_name}) you attempted to upload.  Please attach another file. "
-        content["file"]=nil
-      end
-    end
-  end
+  #def scan_viral_files
+  #  good_files = []
+  #  viral_files = []
+  #  clam = ClamAV.instance
+  #  content = attributes_for_actor
+  #  unless content.nil? or content["file"].nil?
+  #    temp_path = content["file"].instance_variable_get(:@tempfile).path
+  #    file_name = content["file"].instance_variable_get(:@original_filename)
+  #    scan_result = clam.scanfile(temp_path)
+  #    content.each do |file|
+  #      if (scan_result.is_a? Fixnum)
+  #        good_files << file
+  #      else
+  #        viral_files << file
+  #      end
+  #    end
+  #    if viral_files.any?
+  #      flash[:error] = "The following virus #{scan_result} was found in the file (#{file_name}) you attempted to upload.  Please attach another file. "
+  #      content["file"]=nil
+  #    end
+  #  end
+  #end
 
   self.excluded_actions_for_curation_concern_authorization = [:new, :create]
   def action_name_for_authorization
@@ -64,8 +64,11 @@ class CurationConcern::GenericFilesController < CurationConcern::BaseController
   end
 
   def create
+
+    byebug
+
     curation_concern.batch = parent
-    if attributes_for_actor["file"] || attributes_for_actor["cloud_resources"] 
+    if attributes_for_actor["files"] || attributes_for_actor["cloud_resources"] 
       if actor.create
         curation_concern.update_parent_representative_if_empty(parent)
         respond_with([:curation_concern, parent])
@@ -76,12 +79,16 @@ class CurationConcern::GenericFilesController < CurationConcern::BaseController
          }
       end
     else
+  
+      respond_with([:curation_concern, curation_concern]) {|wants|
+          wants.json { render :json => [generic_file_to_json(curation_concern)]}
+      }
+  
       respond_with([:curation_concern, curation_concern]) { |wants|
         wants.html { render 'new', status: :unprocessable_entity }
       }
     end
   end
-
 
   def show
     respond_with(curation_concern)
@@ -125,4 +132,24 @@ class CurationConcern::GenericFilesController < CurationConcern::BaseController
   register :actor do
     CurationConcern.actor(curation_concern, current_user, attributes_for_actor)
   end
+
+  protected
+  
+  def json_error(error, name=nil, additional_arguments={})
+    args = {:error => error}
+    args[:name] = name if name
+    render additional_arguments.merge({:json => [args]})
+  end
+  
+  def generic_file_to_json(generic_file)
+    return {
+      "name" => generic_file.title,
+      "size" => generic_file.file_size,
+      "url" => "/concern/generic_files/#{generic_file.noid}",
+      "thumbnail_url" => generic_file.pid,
+      "delete_url" => "deleteme", # generic_file_path(:id => id),
+      "delete_type" => "DELETE"
+    }
+  end
+
 end

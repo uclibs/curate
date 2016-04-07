@@ -22,18 +22,15 @@
           <div class="tab-pane active" id="file">
             <div class="row">
               <div class="span6">
-                <fieldset>
-                  <legend class="accessible-hidden">Upload a file</legend>
-                  <%= render "shared/styled_file_input", multiple: true, f: f, model: :files %> 
-                </fieldset>
-           </div>
+                <%= render "file_uploader", f: f  %>
+              </div>
            <div class="span6">
             <p class='help-inline'>
               <%= I18n.t("sufia.work.input_field.upload_file.help.#{curation_concern.class}") %>
             </p>
-           </div> 
-         </div> 
-       </div> 
+           </div>
+         </div>
+       </div>
 
           <div class="tab-pane" id="link">
             <fieldset>

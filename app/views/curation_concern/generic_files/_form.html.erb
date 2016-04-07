@@ -1,39 +1,6 @@
-<%= simple_form_for [:curation_concern, curation_concern] do |f| %>
-  <div class="row">
-    <div class="span6">
-      <fieldset class="required">
-        <legend>Your File&#8217;s Title</legend>
-        <span class="control-label">
-          <label class="string optional" for="generic_file_title">Title</label>
-        </span>
-        <%= text_field_tag 'generic_file[title]', curation_concern.title.first,
-                    input_html: { class: 'input-xlarge' }
-        %>
-      </fieldset>
-      <fieldset class="required">
-        <legend>
-          Attach Your File
-        </legend>
-        <%= render "shared/styled_file_input", f: f, model: :file %> 
-      </fieldset>
-    </div>
-
-    <div class="span6">
-      <%= render "form_browse_everything", curation_concern: curation_concern, f: f %>
-    </div>
-
-    <div class="span6">
-      <%= render "form_permission", curation_concern: curation_concern, f: f %>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="span12 form-actions">
-      <%= f.submit(
-        (curation_concern.persisted? ? "Update Attached File" : %(Attach to #{parent.human_readable_type})),
-        class: 'btn btn-primary'
-      ) %>
-      <%= link_to 'Cancel', polymorphic_path([:curation_concern, parent]), class: 'btn btn-link' %>
-    </div>
+<%= form_for(GenericFile.new, :url => curation_concern_generic_files_path(parent_id:curation_concern.id), :html => {:multipart => true, :id => 'fileupload'}) do |f| %>
+  <div class="well">
+    <%= render partial: 'curation_concern/generic_files/form_fields' %>
   </div>
 <% end %>
+
