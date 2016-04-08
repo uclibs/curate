@@ -15,7 +15,6 @@
   </div>
   <div class="controls">
     <% prefix = f.object_name.downcase %>
-
     <script id="entry-template" type="text/x-handlebars-template">
       <li class="field-wrapper input-append">
         <div class="row">
@@ -28,7 +27,7 @@
               </button>
             </span>
           </div>
-          <div class="span2 offset1 ">
+          <div class="span2 offset1">
             <label class="checkbox inline-checkbox ">Can edit group<%= check_box_tag "group_member[edit_users_ids][]", false %></label>
             <input id="<%=prefix %>_members_attributes_{{index}}_id" name="<%=prefix %>[members_attributes][{{index}}][id]" type="hidden" value="" />
           </div>
@@ -56,7 +55,6 @@
         </div>
       </li>
     </script>
-
     <ul class="listing">
       <% if !@group.nil? && @group.members != [] %>
         <%= f.fields_for :members do |memberField| %>
@@ -100,4 +98,3 @@
     </ul>
   </div>
 </div>
-

@@ -1,10 +1,12 @@
 @media (min-width: 480px) and (max-width: 767px) {
+  #editors > div > ul.listing {
+    .input-append .linked-user {
+      width: 365px !important;
+    }
+  }
   .link-users { 
     .input-append input[type="text"] {
-    width: 400px !important;
-    }
-    .filled-in {
-      width: 380px !important;
+    width: 400px;
     }
     .radio input[type="radio"], .checkbox input[type="checkbox"] {
       float: none;
@@ -13,12 +15,10 @@
   }
 }
 @media (max-width: 480px) {
-
   .link-users { 
     .input-append input[type="text"] {
       width: 300px;
     }
-
     .filled-in {
       width: 280px !important;
     }
@@ -28,8 +28,6 @@
     } 
   }
 }
-
-
 .link-users {  
   .input-append .linked-user {
     display: inline-block;
@@ -39,12 +37,9 @@
     border-radius: 4px 0 0 4px;
     border: 1px solid #cccccc;
   }
-
-
   .current-user {
     border: 0px !important;
   }
-
   .listing {
     margin: 0;
   }
@@ -53,4 +48,8 @@
     overflow: hidden;
   }
 }
-
+#editors > div > ul.listing {
+  .input-append .linked-user {
+    width: 275px;
+  }
+}
