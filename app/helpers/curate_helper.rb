@@ -71,6 +71,8 @@ module CurateHelper
         owner_name = Person.find(depositor: curation_concern.owner).first
         owner_pid = owner_name.pid[6..30]
         markup << %(<li class="attribute #{method_name}"><a href="/people/#{owner_pid}">#{owner_name}</a></li>\n)
+      elsif method_name == :unit
+        markup << %(<li class="attribute unit">#{curation_concern.college_and_department_display}</li>\n) unless curation_concern.college_and_department_display.nil?
       else
         markup << %(<li class="attribute #{method_name}">#{h(value)}</li>\n)
       end
@@ -165,4 +167,17 @@ module CurateHelper
     auto_link(link, :all)
   end
 
+  def sorted_college_list
+    COLLEGE_AND_DEPARTMENT["colleges"].keys.collect { |k| COLLEGE_AND_DEPARTMENT["colleges"][k]["label"] }.sort << "Other"
+  end
+
+  def work_types_for_student_works
+    types = Array.new
+    types += Curate.configuration.registered_curation_concern_types
+    types.delete("StudentWork")
+    types.delete("GenericWork")
+    types = (types.sort.collect { |type| type.underscore.humanize.capitalize })
+    ## "Generic work" will become "other", so we need to re-add it after the sort is performed
+    types << "Generic Work"
+  end
 end

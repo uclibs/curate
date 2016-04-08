@@ -40,6 +40,8 @@ en:
           help:         "<p>Enter the abstract of your %{work_type}. There is no character limit for this field.</p>"
         actions:
           help:         "<h1>Actions Help Information</h1><p>Edit - Replace the attached file, or simply change its title.</p><p>Rollback - revert to any previous changes you may have made with edit.</p><p>Delete - removes the file from this work.</p><p>Download - allows you to save the file to your computer</p>"
+        advisor:
+          help:         "<p>The faculty advisor or sponsor for this work, in <i>LastName, FirstName</i> format.</p>"
         alternate_title:
           help:         "<p>Enter an alternate title for your %{work_type}. An alternate title could include acronyms, abbreviations, or a series title.</p>"
         bibliographic_citation:
@@ -56,6 +58,8 @@ en:
           help:         "<p>Date when the contents of the %{work_type} were created. Enter date formatted as: YYYY or YYYY-MM or YYYY-MM-DD.</p><p>Examples:</p><ul><li>January 30, 1950 would be entered 1950-01-30</li></ul>"
         date_digitized:
           help:         "<p>Date when the contents of the %{work_type} were digitized or converted to digital format. Format as: YYYY or YYYY-MM or YYYY-MM-DD.</p><p>Examples:</p><ul><li>April 1, 2015 would be entered 2015-04-01</li></ul>"
+        degree:
+          help:         "<p>The degree associated with this work, if the work was completed as part of a thesis or capstone. Please enter the abbreviation for the degree, e.g., BA or MS.</p>"
         description:
           help:         "<p>Enter a summary of your %{work_type}. There is no character limit for this field.</p>"
         date_photographed:
@@ -91,6 +95,8 @@ en:
           help:         "<p>Enter terms or keywords that describe your %{work_type}.</p>Examples:</p><ul><li>Biology</li><li>Art History</li><li>Economics</li></ul>"
         title:
           help:         "<p>Enter the title of your %{work_type}. If the %{work_type} doesn't have a title, please enter a brief descriptive label.</p>"
+        unit:
+          help:         "<p>The college and department or degree program associated with this work, if it was completed as part of a thesis or capstone.</p>"
         upload_file:
           help:
             GenericWork:   "Hold Shift or Command to select multiple files"
@@ -99,3 +105,9 @@ en:
             Document:  "A PDF is preferred. Hold Shift or Command to select multiple files" 
             Dataset:   "Hold Shift or Command to select multiple files"
             Video:  "Hold Shift or Command to select multiple files"
+            StudentWork:  "Hold Shift or Command to select multiple files"
+    student_work:
+      input_field:
+        description: 
+          help:         "<p>Enter a summary of your %{work_type}. Please include any presentations or awards assocaited with this %{work_type} here. There is no character limit for this field.</p>"
+              

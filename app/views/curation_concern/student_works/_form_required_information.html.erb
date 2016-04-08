@@ -1,0 +1,88 @@
+<div class="row with-headroom">
+  <div class="span12">
+    <fieldset class="required">
+      <legend>
+        Basic Description
+        <small>Required information</small>
+      </legend>
+
+      <p class='help-inline'><%= I18n.t('sufia.work.add_multiples') %></p>
+
+      <div class="row">
+          <div class="span6">
+            <%= f.input :title, 
+                        as: :string,
+                        input_html: { class: 'validate-me full-width', rows: '1' } %>
+          </div>
+          <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.title.help', work_type: 'work') %>
+      </div>
+
+      <div class="row">
+          <div class="span6">
+            <%= f.input :type, 
+                        label: "Type of work",
+                        collection: work_types_for_student_works,
+                        label_method: ->(value) do 
+                          if value == "Generic Work" 
+                            "Other"
+                          else 
+                            value 
+                          end
+                        end %>
+          </div>
+          <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.title.help', work_type: 'work') %>
+      </div>
+
+      <div class="row">
+        <div class="span6">
+          <%= f.input :creator, 
+                      as: :multi_value, 
+                      required: true, 
+                      input_html: { value: "@current_user.name" } %>
+        </div>
+        <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.creator.help', work_type: 'work') %>
+      </div>
+
+      <div class="row">
+        <div class="span6">
+          <%= f.input :advisor, 
+                      as: :multi_value, 
+                      label: "Faculty Advisor or Sponsor",
+                      required: true %>
+        </div>
+        <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.advisor.help', work_type: 'work') %>
+      </div>
+
+      <%= render 'form_unit', curation_concern: curation_concern, f: f %>
+
+      <div class="row">
+        <div class="span6">
+          <%= f.input :degree, 
+                      required: false %>
+        </div>
+        <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.degree.help', work_type: 'work') %>
+      </div>
+
+      <div class="row">
+        <div class="span6">
+          <%= f.input :description, 
+                      as: :text, 
+                      required: true, 
+                      input_html: { class: 'input-xxxlarge validate-me', rows: '14' } %>
+        </div>
+        <%= render 'form_input_help_block', help_text: I18n.t('sufia.student_work.input_field.description.help', work_type: 'work') %>
+      </div>
+
+      <div class="row">
+        <div class="span6">
+          <%= f.input :publisher,
+            as: :multi_value,
+            label: I18n.t('sufia.work.input_field.publisher.label'),
+            input_html: { class: 'input-xlarge', id: 'publisher' }
+          %>
+        </div>
+        <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.publisher.help', work_type: 'work') %>
+      </div>
+    </fieldset>
+  </div>
+</div>

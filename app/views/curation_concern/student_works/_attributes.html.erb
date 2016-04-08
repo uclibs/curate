@@ -1,0 +1,36 @@
+<table class="table table-striped <%= dom_class(curation_concern) %> attributes">
+  <caption class="table-heading"><h2>Attributes</h2></caption>
+  <thead>
+    <tr><th>Attribute Name</th><th>Values</th></tr>
+  </thead>
+  <tbody>
+  <%= curation_concern_attribute_to_html(curation_concern, :type, "Type of Work") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :creator, "Creator(s)") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :advisor, "Faculty advisor(s) or sponsor(s)") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :unit_for_display, "College and Program or Department") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :degree, "Degree") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :description, "Description") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :date_created, "Date Created") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :owner, "Submitter") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :contributor, "Contributors") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :subject, "Subject") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :alternate_title, "Alternate Title") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :genre, "Genre") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :coverage_spatial, "Geographic Subject") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :coverage_temporal, "Time Period") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :publisher, "Publisher") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :bibliographic_citation, "Citation") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :source, "Source") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :language, "Language") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :note, "Note") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :requires, "Required Software") %>
+  <tr>
+    <th>Access Rights</th>
+    <td>
+      <%= permission_badge_for(curation_concern) %>
+    </td>
+  </tr>
+  <%= curation_concern_attribute_to_html(curation_concern, :embargo_release_date, "Embargo Release Date") %>
+  <%= curation_concern_attribute_to_html(curation_concern, :rights, "Content License") %>
+  </tbody>
+</table>

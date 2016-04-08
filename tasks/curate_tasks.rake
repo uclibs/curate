@@ -69,6 +69,7 @@ task :generate do
 
     puts "Copying generator"
     system_with_command_output("cp -r spec/skeleton/* #{DUMMY_APP}")
+    system_with_command_output("cp config/college_and_department.yml #{DUMMY_APP}/config")
     Bundler.with_clean_env do
       within_test_app do
         system_with_command_output("bundle install")

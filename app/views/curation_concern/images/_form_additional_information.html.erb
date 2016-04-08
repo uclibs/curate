@@ -38,7 +38,7 @@
       <div class="row">
         <div class="span6">
           <%= f.input :genre, 
-            collection: Image.valid_types, 
+            collection: Image.valid_types.sort,
             input_html: { class: 'input-xlarge' } 
           %>
         </div>
