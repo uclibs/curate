@@ -13,6 +13,8 @@
 //= require jquery-ui-1.9.2/jquery.ui.menu
 //= require jquery-ui-1.9.2/jquery.ui.position
 //= require jquery-ui-1.9.2/jquery.ui.autocomplete
+//= require jquery-ui-1.9.2/jquery.ui.effect
+//= require jquery-ui-1.9.2/jquery.ui.effect-highlight
 //
 //= require blacklight/blacklight
 //
@@ -41,6 +43,10 @@
 //= require curate/browse_everything_implement
 //= require curate/validate_doi
 //= require curate/hidden_upload
+//= require lodash
+//= require license-selector
+//= require select-license
+//
 // Initialize plugins and Bootstrap dropdowns on jQuery's ready event as well as
 // Turbolinks's page change event.
 Blacklight.onLoad(function() {

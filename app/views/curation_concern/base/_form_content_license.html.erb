@@ -1,20 +1,21 @@
 <div class="row with-headroom">
   <div class="span12">
-    <fieldset id="set-license">
+    <fieldset>
       <legend>Choose a License for your Content</legend>
       <p>
-        What do you want others to be able to do with your work?
+      <span id="license-wizard-text">For alternatives to traditional copyright that still retain the intellectual property rights of the creator, please use the license wizard to choose a license.</span>To claim traditional copyright, please choose "All rights reserved." You may also directly choose a license/statement using the dropdown menu.
       </p>
-      <p>
-        <a href="http://creativecommons.org/licenses/" target="_blank">Here's some help</a> if you don't know which license to choose.
-      </p>
-
+      <div class="row with-headroom vertical-align">
+        <div class="span2" id="license-wizard"></div>
+        <div class="span3">
       <%= f.input :rights,
                   as: :select,
                   collection: Sufia.config.cc_licenses,
-                  input_html: { class: 'input-xxlarge' },
+                  input_html: { class: 'input-xxlarge rights-selector' },
                   label: 'Content License'
-      %>
+                %>
+            </div>
+            </div>
     </fieldset>
   </div>
 </div>
