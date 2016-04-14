@@ -121,3 +121,14 @@ dl.stacked {
 legend + .control-group {
   margin-top: 0px;
 }
+
+.vertical-align {
+  display: flex;
+  align-items: center;
+}
+
+@media only screen and (max-width: 768px) {
+    #license-wizard, #license-wizard-text {
+        display: none;
+    }
+}
