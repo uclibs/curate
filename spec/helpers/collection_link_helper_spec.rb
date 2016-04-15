@@ -1,21 +1,21 @@
 require 'spec_helper'
 
 describe CollectionLinkHelper do
-	describe '#create_link' do
-		it 'links to a persons page' do	
-			user = FactoryGirl.create(:person_with_user)
-			profile = user.profile
+  describe '#create_link' do
+    let(:profile) { double(human_readable_type: "Profile", depositor: "foo") }
+    let(:collection) { double(human_readable_type: "Collection", pid: "foo1234" ) }
+    let(:user) { double(representative: "bar1234") }
 
-			link = helper.create_link(profile)
-			link.should == "/people/#{user.representative}"
-		end
+    before do
+      Person.stub(:find).and_return([user])
+    end
 
-		it 'links to a collection page' do
-			user = FactoryGirl.create(:person_with_user)
-			my_collection = FactoryGirl.create(:public_collection, user: user, title: 'Collected Stuff') 
-
-			link = helper.create_link(my_collection)
-			link.should == "/collections/#{my_collection.pid}"
-		end
+	it 'links to a persons page for profiles' do	
+      expect(helper.create_link(profile)).to eq("/people/#{user.representative}")
 	end
+
+	it 'links to a collection page for collections' do
+      expect(helper.create_link(collection)).to eq("/collections/#{collection.pid}")
+	end
+  end
 end
