@@ -27,6 +27,10 @@ module Curate
         manager_usernames.include?(user_key)
       end
 
+      def student?
+        User.find_by_email(user_key).ucstatus == "Student"
+      end
+
       def manager_usernames
         @manager_usernames ||= load_managers
       end
