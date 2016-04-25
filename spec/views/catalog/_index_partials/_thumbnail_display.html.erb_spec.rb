@@ -32,5 +32,31 @@ describe 'catalog/_index_partials/_thumbnail_display' do
     it 'should display selected representative as thumbnail' do
       rendered.should include("/downloads/1234?datastream_id=thumbnail")
     end
+
+    it 'should link to the work' do
+      rendered.should include("/works/generic_works/#{document.noid}")
+    end
+  end
+
+  context 'People' do
+    let(:person) { Factory.build(:person) }
+    before do
+      render partial: 'thumbnail_display', locals: { document: person }
+    end
+
+    it 'should link to the person' do
+      rendered.should include("/people/#{person.noid}")
+    end
+  end
+
+  context 'Collection' do
+    let(:collection) { Factory.build(:collection) }
+    before do
+      render partial: 'thumbnail_display', locals: { document: collection }
+    end
+
+    it 'should link to the collection' do
+      rendered.should include("/collections/#{collection.pid}")
+    end
   end
 end
