@@ -1,0 +1,13 @@
+<% content_for :page_title, curation_concern_page_title(curation_concern) %>
+<% content_for :page_header do %>
+
+<div class="help-alert">
+  <a href="#" class="close" data-dismiss="alert">&times;</a>
+  <strong>If you would like guidance on submitting a dataset, please read the <a href = "/data_help_request" target = "_blank">Documenting Data </a>help page.</strong>
+</div>
+
+<h2>Submit Your <%= curation_concern.human_readable_type %></h2>
+<% end %>
+
+<% curation_concern.visibility = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC %>
+<%= render 'form' %>
