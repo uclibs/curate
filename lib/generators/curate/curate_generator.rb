@@ -81,7 +81,7 @@ This generator makes the following changes to your application:
       data << "  # config.default_antivirus_instance = lambda {|filename| … }"
       data << ""
       data << "  # # Used for constructing permanent URLs"
-      data << "   config.application_root_url = 'http://localhost:3000'"
+      data << "   config.application_root_url = 'http://localhost:3000/'"
       data << ""
       data << "  # # Used to load values for constructing SOLR searches"
       data << "  search_config_file = File.join(Rails.root, 'config', 'search_config.yml')"
