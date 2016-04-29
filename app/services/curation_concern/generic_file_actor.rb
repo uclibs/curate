@@ -3,7 +3,7 @@ module CurationConcern
 
     def create
        download_create_cloud_resources && update_file && super 
-   end
+    end
 
     def update
       super && update_file  && download_create_cloud_resources
@@ -28,6 +28,7 @@ module CurationConcern
       file = attributes.delete(:file)
       title = attributes[:title]
       title ||= file.original_filename if file
+      attributes[:owner] = get_work_owner
       curation_concern.label = title
       if file
         CurationConcern.attach_file(curation_concern, user, file)
@@ -69,5 +70,12 @@ module CurationConcern
     def pid_for_object_to_copy_permissions_from
       curation_concern.batch.pid
     end
+
+    def get_work_owner
+      if curation_concern.batch != nil
+        curation_concern.batch.owner
+      end
+    end
+
   end
 end

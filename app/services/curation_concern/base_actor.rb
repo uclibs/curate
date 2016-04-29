@@ -93,7 +93,6 @@ module CurationConcern
 
     def assign_owner_on_creation
       owner = curation_concern.owner
-      return owner
     end
 
     def candidate_owner
