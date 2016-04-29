@@ -1,3 +1,4 @@
+<% title_link_target ||= polymorphic_path([:curation_concern, document])%>
 <%- if document.respond_to?(:representative_image_url) && document.representative_image_url.present? %>
   <%= image_tag document.representative_image_url, alt: catalog_thumbnail_alt_text(document), class: "canonical-image"  %>
 <%- elsif document.respond_to?(:representative) && document.representative.present? %>

@@ -39,7 +39,7 @@ describe 'catalog/_index_partials/_thumbnail_display' do
   end
 
   context 'People' do
-    let(:person) { Factory.build(:person) }
+    let(:person) { FactoryGirl.build(:person) }
     before do
       render partial: 'thumbnail_display', locals: { document: person }
     end
@@ -50,7 +50,7 @@ describe 'catalog/_index_partials/_thumbnail_display' do
   end
 
   context 'Collection' do
-    let(:collection) { Factory.build(:collection) }
+    let(:collection) { FactoryGirl.build(:collection) }
     before do
       render partial: 'thumbnail_display', locals: { document: collection }
     end
