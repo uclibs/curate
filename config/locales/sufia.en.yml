@@ -110,4 +110,6 @@ en:
       input_field:
         description: 
           help:         "<p>Enter a summary of your %{work_type}. Please include any presentations or awards assocaited with this %{work_type} here. There is no character limit for this field.</p>"
+        type: 
+          help:         "<p>Select the type of your %{work_type}. If you are unsure about the type, please select 'Other'.</p>"
               

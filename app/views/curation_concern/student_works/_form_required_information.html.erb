@@ -19,9 +19,11 @@
 
       <div class="row">
           <div class="span6">
+            <% collection = work_types_for_student_works %>
             <%= f.input :type, 
                         label: "Type of work",
-                        collection: work_types_for_student_works,
+                        collection: collection, selected: curation_concern.type || collection.last,
+                        required: true,
                         label_method: ->(value) do 
                           if value == "Generic Work" 
                             "Other"
@@ -30,7 +32,7 @@
                           end
                         end %>
           </div>
-          <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.title.help', work_type: 'work') %>
+          <%= render 'form_input_help_block', help_text: I18n.t('sufia.student_work.input_field.type.help', work_type: 'work') %>
       </div>
 
       <div class="row">

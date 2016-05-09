@@ -22,7 +22,7 @@ describe 'Creating a student work' do
       fill_in "student_work_creator", with: "Test student work creator"
 
       # Special fields
-      find('#student_work_type').find(:xpath, 'option[2]').select_option
+      find('#student_work_type').find(:xpath, 'option[1]').select_option
         # option[2] = "Article"
       fill_in "Advisor", with: "Ross, Bob"
       find('#student_work_unit_attributes_0_college').find(:xpath, 'option[3]').select_option
@@ -36,7 +36,6 @@ describe 'Creating a student work' do
     end
 
     within ('.student_work.attributes') do
-      save_and_open_page
       expect(page).to have_selector(:css, "li.type", text: "Article")
       expect(page).to have_selector(:css, "li.advisor", text: "Ross, Bob")
       expect(page).to have_selector(:css, "li.unit_for_display", text: "Arts and Sciences : Biology")
