@@ -227,4 +227,36 @@ describe ApplicationHelper do
   it "should have link for google.com" do
     helper.auto_link_without_protocols("google.com").should have_link("http://google.com")
   end
+
+  describe '#sorted_college_list' do
+    before do
+      stub_const("COLLEGE_AND_DEPARTMENT",
+                  {"colleges"=> 
+                    {
+                      "ceas"=>{"label"=>"Engineering"},
+                      "com"=>{"label"=>"College of Medicine"},
+                      "a&s"=>{"label"=>"Arts & Sciences"}
+                    }
+                  } 
+                )
+    end
+    it "should return an array" do
+      expect(helper.sorted_college_list).to be_an(Array) 
+    end
+
+    it "should contain all the colleges, plus 'other'" do
+      expect(helper.sorted_college_list.length).to eq(COLLEGE_AND_DEPARTMENT["colleges"].length + 1)
+    end
+  end
+
+  describe '#work_types_for_student_works' do
+    let(:types) { Curate.configuration.registered_curation_concern_types }
+    it 'should return an array' do
+      expect(helper.work_types_for_student_works).to be_an(Array)
+    end
+
+    it 'should contain all the work types except student work' do
+      expect(helper.work_types_for_student_works.length).to eq(types.length - 1)
+    end
+  end
 end

@@ -22,6 +22,10 @@ module RDF
     property "date#digitized".to_sym
     property "coverage#spatial".to_sym
     property "coverage#temporal".to_sym
+    property "subject#college".to_sym
+    property "subject#department".to_sym
+    property "subject#unit".to_sym
+    property "subject#degree".to_sym
     property "type#genre".to_sym
   end
 end
