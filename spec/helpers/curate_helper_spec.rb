@@ -240,7 +240,7 @@ describe ApplicationHelper do
   describe '#sorted_college_list' do
     before do
       stub_const("COLLEGE_AND_DEPARTMENT",
-                  {"colleges"=> 
+                  {"current_colleges"=> 
                     {
                       "ceas"=>{"label"=>"Engineering"},
                       "com"=>{"label"=>"College of Medicine"},
@@ -254,7 +254,36 @@ describe ApplicationHelper do
     end
 
     it "should contain all the colleges, plus 'other'" do
-      expect(helper.sorted_college_list.length).to eq(COLLEGE_AND_DEPARTMENT["colleges"].length + 1)
+      expect(helper.sorted_college_list.length).to eq(COLLEGE_AND_DEPARTMENT["current_colleges"].length + 1)
+    end
+  end
+
+  describe '#sorted_college_list_for_etds' do
+    before do
+      stub_const("COLLEGE_AND_DEPARTMENT",
+                  {"current_colleges"=> 
+                    {
+                      "ceas"=>{"label"=>"One"},
+                      "com"=>{"label"=>"Two"},
+                    },
+                   "legacy_colleges"=> 
+                   [
+                     "Foo",
+                     "Bar",
+                     "Bez"
+                   ]
+                  }
+                )
+    end
+
+    it "should add the legacy college list to the end of the sorted college list" do
+      expect(helper.sorted_college_list_for_etds).to eq(
+        ["One", "Two", "Other", "Foo", "Bar", "Bez"]
+      )
+    end
+
+    it "should return an array" do
+      expect(helper.sorted_college_list_for_etds).to be_an(Array) 
     end
   end
 

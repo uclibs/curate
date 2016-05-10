@@ -32,7 +32,7 @@ describe 'Creating a student work' do
 
       select(Sufia.config.cc_licenses.keys.first.dup, from: I18n.translate('sufia.field_label.rights'))
       check("I have read and accept the distribution license agreement")
-      click_button("Create Student work")
+      click_button("Create Student Work")
     end
 
     within ('.student_work.attributes') do
@@ -55,7 +55,7 @@ describe 'Creating a student work' do
       fill_in "student_work_creator", with: "Test student work creator"
       select(Sufia.config.cc_licenses.keys.first.dup, from: I18n.translate('sufia.field_label.rights'))
       check("I have read and accept the distribution license agreement")
-      click_button("Create Student work")
+      click_button("Create Student Work")
     end
 
     #the submitter field should have a link to the submitter's profile
@@ -79,7 +79,7 @@ describe 'Creating a student work' do
         fill_in "External link", with: "http://www.youtube.com/watch?v=oHg5SJYRHA0"
         select(Sufia.config.cc_licenses.keys.first.dup, from: I18n.translate('sufia.field_label.rights'))
         check("I have read and accept the distribution license agreement")
-        click_button("Create Student work")
+        click_button("Create Student Work")
       end
       expect(page).to have_selector('h1', text: 'Student Work')
 
@@ -137,7 +137,7 @@ describe 'Viewing a student work that is private' do
     login_as(user)
     visit curation_concern_student_work_path(work)
     page.should have_content('Unauthorized')
-    page.should have_content('The student work you have tried to access is private')
+    page.should have_content('The Student Work you have tried to access is private')
     page.should have_content("ID: #{work.pid}")
     page.should_not have_content("Sample work")
   end

@@ -168,7 +168,13 @@ module CurateHelper
   end
 
   def sorted_college_list
-    COLLEGE_AND_DEPARTMENT["colleges"].keys.collect { |k| COLLEGE_AND_DEPARTMENT["colleges"][k]["label"] }.sort << "Other"
+    COLLEGE_AND_DEPARTMENT["current_colleges"].keys.collect do |k|
+      COLLEGE_AND_DEPARTMENT["current_colleges"][k]["label"]
+    end.sort << "Other"
+  end
+
+  def sorted_college_list_for_etds
+    sorted_college_list + COLLEGE_AND_DEPARTMENT["legacy_colleges"]
   end
 
   def work_types_for_student_works

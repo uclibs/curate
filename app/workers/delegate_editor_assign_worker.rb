@@ -27,7 +27,7 @@ class DelegateEditorAssignWorker
     grantor = ActiveFedora::Base.find(@grantor_pid, cast: true)
     grantee = ActiveFedora::Base.find(@grantee_pid, cast: true)
 
-    type = [Article, Dataset, Document, GenericWork, Image, Video, StudentWork]
+    type = [Article, Dataset, Document, GenericWork, Image, Video, StudentWork, Etd]
     type.each do |klass|
       klass.find_each('owner_sim' => grantor.email) do |work|
         work.edit_users += [grantee.email]

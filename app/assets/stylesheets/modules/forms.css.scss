@@ -104,6 +104,12 @@ form.pull-right {
   font-size:1.3em
 }
 
+@media (min-width: 768px) and (max-width: 989px) { 
+  .shrinking-form-input {
+    width: 140px;
+  }
+}
+
 @media only screen and (max-width: 767px) {
   .help-block {
     padding: 0px 0px 20px 0px;

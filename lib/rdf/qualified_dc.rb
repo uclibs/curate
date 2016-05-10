@@ -5,6 +5,7 @@ module RDF
   class QualifiedDC < Vocabulary("http://purl.org/dc/terms/")
     property "type".to_sym
     property "contributor#advisor".to_sym
+    property "contributor#committeeMember".to_sym
     property "publisher#country".to_sym
     property "publisher#digital".to_sym
     property "identifier#doi".to_sym

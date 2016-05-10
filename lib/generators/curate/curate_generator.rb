@@ -112,6 +112,10 @@ This generator makes the following changes to your application:
     create_file('config/manager_usernames.yml', "development:\n  manager_usernames:\n  - manager@example.com\ntest:\n  manager_usernames:\n  - manager@example.com\n  - manager2@example.com\nproduction:\n  manager_usernames:\n  - manager@example.com\n")
   end
 
+  def create_etd_manager_usernames
+    create_file('config/etd_manager_usernames.yml', "development:\n  etd_manager_usernames:\n  - etd_manager@example.com\ntest:\n  etd_manager_usernames:\n  - etd_manager@example.com\n  - etd_manager2@example.com\nproduction:\n  etd_manager_usernames:\n  - etd_manager@example.com\n")
+  end
+
   def create_clamav_initializer
     create_file('config/initializers/clamav.rb', "ClamAV.instance.loaddb()")
   end

@@ -21,4 +21,28 @@ describe User do
     end
   end
 
+  describe "#etd_manager?" do
+    subject { FactoryGirl.build :user }
+
+    it 'should be true if user is a repository manager' do
+      subject.stub(:manager?).and_return(true)
+      expect(subject.etd_manager?).to be_true
+    end
+
+    it 'should be true if user is in etd_manager config' do
+      subject.stub(:user_key).and_return("etd_manager@example.com")
+      expect(subject.etd_manager?).to be_true
+    end
+
+    it 'should be false if user is not in etd_manager config' do
+      subject.stub(:user_key).and_return("regular_user@example.com")
+      expect(subject.etd_manager?).to be_false
+    end
+
+    it 'should be true if user can make deposits for an etd_manager' do
+      subject.stub(:can_make_deposits_for)
+        .and_return([OpenStruct.new(email: "etd_manager@example.com")])
+      expect(subject.etd_manager?).to be_true
+    end
+  end
 end
