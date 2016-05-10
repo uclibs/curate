@@ -173,4 +173,22 @@ describe CurationConcern::Work do
       expect(work.generic_files.first.edit_groups.length).to eq(0)
     end
   end
+
+  describe '#synchronize_link_and_file_ownership' do
+    let(:work) { FactoryGirl.create(:generic_work_with_files) }
+    let(:new_owner) { FactoryGirl.build(:user) }
+    let(:new_owner_email) { new_owner.email }
+    
+    before do
+      work.owner = new_owner_email
+      work.save
+      work.reload
+      work.synchronize_link_and_file_ownership
+    end
+
+    it 'sets ownership for attached assets' do
+      expect(work.generic_files.first.owner).to eq(new_owner_email)
+      expect(work.generic_files.last.owner).to eq(new_owner_email)
+    end
+  end
 end
