@@ -1,9 +1,33 @@
+<% title_link_target ||= polymorphic_path([:curation_concern, document])                                   %>
+
 <%- if document.respond_to?(:representative_image_url) && document.representative_image_url.present? %>
-  <%= image_tag document.representative_image_url, alt: catalog_thumbnail_alt_text(document), class: "canonical-image"  %>
+    <% if document.is_a?(Collection) %>
+       <%= image_tag document.representative_image_url, alt: catalog_thumbnail_alt_text(document), class: "canonical-image"  %> 
+    <% elsif document.is_a?(User) %>
+       <%= image_tag document.representative_image_url, alt: catalog_thumbnail_alt_text(document), class: "canonical-image" %>
+    <% else %>
+      <%= link_to (image_tag document.representative_image_url, alt: catalog_thumbnail_alt_text(document), class: "canonical-image"), title_link_target  %>
+    <%- end -%>
+
 <%- elsif document.respond_to?(:representative) && document.representative.present? %>
-  <%= image_tag download_path(document.representative, {:datastream_id => 'thumbnail'}), alt: catalog_thumbnail_alt_text(document), class: "canonical-image"  %>
+    <% if document.is_a?(Collection) %>
+      <%= image_tag download_path(document.representative, {:datastream_id => 'thumbnail'}), alt: catalog_thumbnail_alt_text(document), class: "canonical-image"  %>
+    <% elsif document.is_a?(User) %>
+      <%= image_tag download_path(document.representative, {:datastream_id => 'thumbnail'}), alt: catalog_thumbnail_alt_text(document), class: "canonical-image"  %>
+    <% else %>
+      <%= link_to (image_tag download_path(document.representative, {:datastream_id => 'thumbnail'}), alt: catalog_thumbnail_alt_text(document), class: "canonical-image"), title_link_target  %>
+    <%- end -%>
+
 <%- elsif document.persisted? -%>
-  <%= image_tag download_path(document, {:datastream_id => 'thumbnail'}), alt: catalog_thumbnail_alt_text(document), class: "canonical-image" %>
+   <% if document.is_a?(Collection) %>
+      <%= image_tag download_path(document, {:datastream_id => 'thumbnail'}), alt: catalog_thumbnail_alt_text(document), class: "canonical-image" %>
+   
+   <% elsif document.is_a?(User) %>
+      <%= image_tag download_path(document, {:datastream_id => 'thumbnail'}), alt: catalog_thumbnail_alt_text(document), class: "canonical-image" %>
+   <% else %> 
+      <%= link_to (image_tag download_path(document, {:datastream_id => 'thumbnail'}), alt: catalog_thumbnail_alt_text(document), class: "canonical-image"), title_link_target %>
+   <%- end -%>
+
 <%- else -%>
   <span class="canonical-image"></span>
 <%- end -%>
