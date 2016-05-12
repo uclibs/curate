@@ -78,13 +78,6 @@ module CurationConcern
 
     private
 
-    # Decide if the user can be removed as an editor.  They cannot be removed
-    # if they are the depositor or if they are not presently an editor
-    # @param user [User] the user to remove
-    def can_remove_editor?(user)
-      owner != user.user_key && editors.include?(user.person)
-    end
-
     def add_group(group, access_type)
       raise ArgumentError, "parameter is #{group.inspect}, expected a kind of Hydramata::Group" unless group.is_a?(Hydramata::Group)
 
@@ -154,7 +147,7 @@ module CurationConcern
       raise ArgumentError, "parameter is #{user.inspect}, expected a kind of User" unless user.is_a?(User)
       if access_type == :edit
         editors << user.person
-        self.permissions_attributes = [{ name: user.user_key, access: 'edit', type: 'person' }] unless depositor == user.user_key
+        self.permissions_attributes = [{ name: user.user_key, access: 'edit', type: 'person' }] unless owner == user.user_key
       elsif access_type == :read
         readers << user.person
         self.set_read_users([user.user_key], [])
@@ -208,10 +201,10 @@ module CurationConcern
     end
 
     # Decide if the user can be removed as an editor.  They cannot be removed
-    # if they are the depositor or if they are not presently an editor
+    # if they are the owner or if they are not presently an editor
     # @param user [User] the user to remove
     def can_remove_editor?(user)
-      depositor != user.user_key && editors.include?(user.person)
+      owner != user.user_key && editors.include?(user.person)
     end
 
     def clear_associations

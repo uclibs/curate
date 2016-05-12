@@ -1,0 +1,14 @@
+<% if current_user and current_user.manager? %>
+  
+  <div class="proxy-rights row with-headroom">
+  <fieldset class="form-inline span12">
+    <legend><h3>Edit Ownership</h3></legend>
+    <%= form_tag("/change_owner", method: :post ) do %>
+      <%= hidden_field_tag("work_pid", curation_concern.pid) %>
+      <%= label_tag(:q, "Search for:") %>
+      <%= text_field_tag :user, '', "data-url"=>"/people" %>
+      <%= submit_tag("Submit") %>
+    <% end %>
+  </fieldset>
+
+<% end %>
