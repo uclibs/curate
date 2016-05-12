@@ -42,7 +42,7 @@
   <%# We must check for both those situations: 1) is_a? and 2) include?, respectively.                                          %>
   <% if !@collection.is_a?(ProfileSection) && !ActiveFedora::ContentModel.known_models_for(@collection).include?(ProfileSection) %>
     <div class="control-group string required collection_description">
-      <%= render :partial => 'catalog/_index_partials/thumbnail_display', locals: {document: @collection} %>
+      <%= render :partial => 'curate/collections/thumbnail_display', locals: {document: @collection} %>
       <span class="control-label">
         <%= f.label :avatar %>
       </span>
