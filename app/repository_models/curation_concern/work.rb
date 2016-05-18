@@ -48,6 +48,16 @@ module CurationConcern
       end
     end
 
+    def synchronize_link_and_file_ownership
+      assets = self.attached_files_and_links
+      unless assets.nil?
+        assets.each do |asset|
+          asset.owner = self.owner
+          asset.save!
+        end
+      end
+    end
+
     def attached_files_and_links
       files = self.generic_files
       links = self.linked_resources
