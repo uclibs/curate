@@ -10,7 +10,7 @@ describe OwnershipCopyWorker do
   end
 
   context 'for valid pid' do
-    let(:work) { double(GenericWork, pid: 'foo:123') }
+    let(:work) { double('GenericWork', pid: 'foo:123', synchronize_link_and_file_ownership: true) }
     let(:pid) { work.pid }
 
     before do
@@ -18,7 +18,7 @@ describe OwnershipCopyWorker do
     end
 
     it 'call Work.synchronize_link_and_file_ownership' do
-      AccessPermissionsCopyWorker.new(pid).run
+      OwnershipCopyWorker.new(pid).run
       expect(work).to have_received(:synchronize_link_and_file_ownership)
     end
   end
