@@ -18,9 +18,9 @@
           <dd><%= truncate(render_index_field_value(document: solr_doc, field: 'desc_metadata__description_tesim'), length: 150) %></dd>
         <% end %>
 
-        <% if solr_doc.has?('edit_access_person_ssim') %>
+        <% if solr_doc.has?('owner_name_tesim') %>
           <dt>Owner:</dt>
-          <dd><%= render_index_field_value(document: solr_doc, field: 'edit_access_person_ssim') %></dd>
+          <dd><%= render_index_field_value(document: solr_doc, field: 'owner_name_tesim') %></dd>
         <% end %>
       </dl>
     </div>
