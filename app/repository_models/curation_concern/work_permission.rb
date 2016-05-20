@@ -48,6 +48,10 @@ class CurationConcern::WorkPermission
       !has_destroy_key?(hash) && !has_name_key?(hash)
     end
 
+    def self.has_processed_key?(hash)
+      hash.key?('_processed')
+    end
+
     def self.user(person_id)
       ::User.find_by_repository_id(person_id)
     end
@@ -81,10 +85,13 @@ class CurationConcern::WorkPermission
 
     def self.queue_emails_for_editors(editors, work)
       editors.each do |editor_hash|
-        if is_new_editor?(editor_hash[1])
-          ChangeManager::Manager.queue_change( work.owner, 'added_as_editor', work.pid, user(editor_hash[1]['id']).email )
-        elsif has_destroy_flag?(editor_hash[1])
-          ChangeManager::Manager.queue_change( work.owner, 'removed_as_editor', work.pid, user(editor_hash[1]['id']).email )
+        unless has_processed_key?(editor_hash[1])
+          if is_new_editor?(editor_hash[1])
+            ChangeManager::Manager.queue_change( work.owner, 'added_as_editor', work.pid, user(editor_hash[1]['id']).email )
+          elsif has_destroy_flag?(editor_hash[1])
+            ChangeManager::Manager.queue_change( work.owner, 'removed_as_editor', work.pid, user(editor_hash[1]['id']).email )
+          end
+          editor_hash[1]['_processed'] = ''
         end
       end
     end
