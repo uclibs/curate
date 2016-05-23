@@ -31,6 +31,7 @@ module ActionDispatch::Routing
             post :copy
           end
         end
+
         resources( :linked_resources, only: [:new, :create], path: 'container/:parent_id/linked_resources')
         resources( :linked_resources, only: [:show, :edit, :update, :destroy])
         resources( :generic_files, only: [:new, :create], path: 'container/:parent_id/files')
@@ -45,6 +46,8 @@ module ActionDispatch::Routing
       resources :welcome_page, only: [:new, :create]
       resources :help_requests, only: [:new, :create]
       resources :classify_concerns, only: [:new, :create]
+
+      match "change_owner" => "change_owner#update", via: :post, as: "change_owner"
 
       match "show/:id" => "common_objects#show", via: :get, as: "common_object"
       match "show/stub/:id" => "common_objects#show_stub_information", via: :get, as: "common_object_stub_information"

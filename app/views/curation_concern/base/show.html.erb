@@ -5,6 +5,8 @@
 <% end %>
 <%= render partial: 'representative_media', locals: {work: curation_concern} %>
 
+<%= render 'manager_owner_edit', curation_concern: curation_concern %>
+
 <%= render 'attributes', curation_concern: curation_concern %>
 <%= render 'doi', curation_concern: curation_concern %>
 
