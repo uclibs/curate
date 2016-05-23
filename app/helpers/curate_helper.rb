@@ -74,7 +74,7 @@ module CurateHelper
       elsif method_name == :unit
         markup << %(<li class="attribute unit">#{curation_concern.college_and_department_display}</li>\n) unless curation_concern.college_and_department_display.nil?
       else
-        markup << %(<li class="attribute #{method_name}">#{h(value)}</li>\n)
+        markup << %(<li class="attribute #{method_name}">#{h(value).gsub(/\n/, '<br/>')}</li>\n)
       end
     end
     markup << %(</ul></td></tr>)

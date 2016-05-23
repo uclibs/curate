@@ -120,6 +120,7 @@ describe ApplicationHelper do
       rendered = helper.curation_concern_attribute_to_html(object, :things)
       expect(rendered).to eq("")
     end
+
     it 'returns a string for an empty array if allow_empty is passed' do
       collection = []
       object = double('curation_concern', things: collection)
@@ -128,6 +129,14 @@ describe ApplicationHelper do
       rendered.should render_curation_concern_attribute_html('Weird') do
         without_tag('li.attribute.things')
       end
+    end
+
+    it 'converts sting line breaks to html breaks' do
+      collection = "Foo\nBar"
+      object = double('curation_concern', things: collection)
+
+      rendered = helper.curation_concern_attribute_to_html(object, :things)
+      rendered.should have_css('br')
     end
   end
 
