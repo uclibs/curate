@@ -33,6 +33,8 @@
   <%= list_items_in_collection(@collection) %>
 </div>
 
+<%= render 'parent_collections_list' %>
+
 <div class="page-link">
   <% this_page = Curate.configuration.application_root_url + polymorphic_path(@collection) %>
   <p>Link to this page: <%= link_to(this_page, this_page) %></p>
