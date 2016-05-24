@@ -9,7 +9,7 @@ describe 'curate/collections/show.html.erb' do
     assign(:collection, child_collection)
     render 'parent_collections_list', locals: {collection: child_collection}
 
-    expect(rendered).to have_content('Parent Collections')
+    expect(rendered).to have_content('This collection is a member of the following collections:')
     expect(rendered).to have_content('Top Level Collection')
   end
 
@@ -18,6 +18,6 @@ describe 'curate/collections/show.html.erb' do
     assign(:collection, parent_collection)
     render 'parent_collections_list', locals: {collection: parent_collection}
 
-    expect(rendered).to_not have_content('Parent Collections')
+    expect(rendered).to_not have_content('This collection is a member of the following collections:')
   end
 end
