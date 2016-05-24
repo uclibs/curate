@@ -36,6 +36,7 @@ class Collection < ActiveFedora::Base
     Solrizer.set_field(solr_doc, 'generic_type', 'Collection', :facetable)
     solr_doc[Solrizer.solr_name('representative', :stored_searchable)] = self.representative
     solr_doc[Solrizer.solr_name('representative_image_url', :stored_searchable)] = self.representative_image_url
+    solr_doc[Solrizer.solr_name('owner_name', :stored_searchable)] = owner_name(solr_doc['edit_access_person_ssim'])
     solr_doc
   end
 
@@ -54,5 +55,11 @@ class Collection < ActiveFedora::Base
 
   def generate_thumbnail_url
     "/downloads/#{self.representative}?datastream_id=thumbnail"
+  end
+
+  def owner_name(edit_user)
+    if user = User.find_by_email(edit_user)
+     user.inverted_name
+    end
   end
 end
