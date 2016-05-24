@@ -15,6 +15,7 @@
           <% options << options_from_collection_for_select(collections, "pid", "title") %>
           <% options << '</optgroup>'.html_safe %>
         <% end %>
+        <% options << '<optgroup label="Your Profile">'.html_safe %>
         <% options << options_from_collection_for_select(available_profiles, "pid", "title") %>
         <% if current_users_profile_sections.any? %>
           <% options << '<optgroup label="Profile Sections">'.html_safe %>
