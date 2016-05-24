@@ -5,6 +5,7 @@
     <%= render :partial => 'curate/collections/thumbnail_display', locals: {document: @collection} %>
   <% end %>
   <h1> <%= @collection.title %> </h1>
+  <p>Collection submitted by: <%= link_owner(@collection).html_safe %></p>
 <% end %>
 <% if can? :edit, @collection %>
   <% content_for :page_actions do %>
@@ -25,6 +26,7 @@
     <%= link_to 'Edit', edit_collection_path(@collection), class: 'btn' %>
   <% end %>
 <% end %>
+
 <div class="collection-description">
   <%= @collection.description %>
 </div>

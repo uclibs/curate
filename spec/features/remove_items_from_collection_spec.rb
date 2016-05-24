@@ -5,6 +5,10 @@ describe "Remove member from collection" do
   let(:article) { FactoryGirl.create(:generic_work, user: user, title: 'A Scholarly Paper') }
   let(:collection) { FactoryGirl.create(:public_collection, user: user, title: 'Articles of Great Import', members: [article]) }
 
+  before do
+    allow_any_instance_of(Curate::CollectionsHelper).to receive(:link_owner).and_return("<a href='#'>LINK</a>")
+  end
+
   context "If a user alredy has a collection with content in it" do
     it "should be easy to remove a member from a collection" do
       login_as(user)

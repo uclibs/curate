@@ -1,11 +1,16 @@
 require 'spec_helper'
 
 describe "Collections show view: " do
+
   let!(:user) { FactoryGirl.create(:user) }
   let!(:bilbo) { 'Bilbo' }
   let!(:frodo) { 'Frodo' }
   let!(:article) { FactoryGirl.create(:public_generic_work, user: user, creator: [bilbo, frodo], title: 'An Article') }
   let!(:collection) { FactoryGirl.create(:public_collection, user: user, title: 'Collected Stuff', members: [article]) }
+
+  before do
+    allow_any_instance_of(Curate::CollectionsHelper).to receive(:link_owner).and_return("<a href='#'>LINK</a>")
+  end
 
   context "For logged in members:" do
     it "remove an item from the collection" do
@@ -32,6 +37,11 @@ describe "Collections show view: " do
       visit destroy_user_session_url
       visit collection_path(collection.pid)
       page.should_not have_css("a[title$='Remove Item from Collection']")
+    end
+
+    it "should display the collection owner" do
+      visit collection_path(collection.pid)
+      page.should have_content("Collection submitted by: LINK")
     end
   end
 

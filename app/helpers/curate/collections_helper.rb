@@ -127,6 +127,12 @@ module Curate::CollectionsHelper
     end
   end
 
+  def link_owner(collection)
+    owner_name = Person.find(depositor: @collection.edit_users.first).first
+    owner_pid = owner_name.pid[6..30] 
+    link = "<a href='/people/#{owner_pid}'>#{owner_name}</a>"
+  end
+
   def collection_member_actions(collection, member)
     content_tag :span, class: 'collection-member-actions' do
       if member.respond_to?(:members)
