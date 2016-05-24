@@ -43,10 +43,10 @@ describe "Showing and creating Collections" do
     expect( page ).to have_css( "img[src$='/downloads/#{user.collections.first.pid}?datastream_id=thumbnail']" )
 
     visit collection_path( user.collections.first )
-    expect( page ).to have_css( "img[src$='/downloads/#{user.collections.first.pid}?datastream_id=thumbnail']" )
+    expect( page ).to have_css( "img[src$='/downloads/#{user.collections.first.pid}?datastream_id=medium']" )
 
     visit edit_collection_path( user.collections.first )
-    expect( page ).to have_css( "img[src$='/downloads/#{user.collections.first.pid}?datastream_id=thumbnail']" )
+    expect( page ).to have_css( "img[src$='/downloads/#{user.collections.first.pid}?datastream_id=medium']" )
 
     visit root_path
     expect( page ).to have_css( "img[src$='/downloads/#{user.collections.first.pid}?datastream_id=thumbnail']" )
