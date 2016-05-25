@@ -22,7 +22,7 @@
   <% end %>
 <% end %>
 <div class="group-description">
-  <%= @group.description %>
+  <%= @group.description.gsub(/\n/, '<br/>').html_safe %>
 </div>
 
 <h3> Members of this group: </h3>
