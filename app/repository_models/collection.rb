@@ -15,6 +15,16 @@ class Collection < ActiveFedora::Base
 
   before_save :add_profile_image, :only => [ :create, :update ]
 
+  def members
+    Curate.configuration.registered_curation_concern_types.collect do |klass|
+      klass.constantize.send(:find, 
+        klass.constantize.send(:find_with_conditions, { collection_sim: self.pid }).collect do |result|
+          result["id"]
+        end
+      )
+    end.flatten
+  end
+
   def can_be_member_of_collection?(collection)
     collection == self ? false : true
   end

@@ -14,6 +14,14 @@ class Article < ActiveFedora::Base
 
   include ActiveFedora::RegisteredAttributes
 
+  def collections
+    Collection.find(
+      Collection.find_with_conditions(has_collection_member_ssim: "info:fedora/#{self.pid}").collect do |result|
+        result["id"]
+      end
+    )
+  end
+
   has_metadata "descMetadata", type: ArticleMetadataDatastream
 
   include CurationConcern::RemotelyIdentifiedByDoi::Attributes
