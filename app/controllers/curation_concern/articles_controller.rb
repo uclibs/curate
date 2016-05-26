@@ -5,5 +5,4 @@ class CurationConcern::ArticlesController < CurationConcern::GenericWorksControl
     super
     curation_concern.build_unit if curation_concern.unit.blank?
   end
-
 end
