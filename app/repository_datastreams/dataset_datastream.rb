@@ -24,7 +24,7 @@ class DatasetDatastream < ActiveFedora::NtriplesRDFDatastream
     end
 
     map.date_created(:to => "date#created", :in => RDF::QualifiedDC) do |index|
-      index.as :stored_searchable
+      index.as :stored_searchable, :facetable
     end
 
     map.date_modified(to: "modified", in: RDF::DC) do |index|

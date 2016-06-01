@@ -86,6 +86,7 @@ class CatalogController < ApplicationController
     config.add_facet_field solr_name("desc_metadata__based_near", :facetable), label: "Location", limit: 5
     config.add_facet_field solr_name("desc_metadata__publisher", :facetable), label: "Publisher", limit: 5
     config.add_facet_field solr_name("file_format", :facetable), label: "File Format", limit: 5
+    config.add_facet_field solr_name("desc_metadata__date_created", :facetable), label: "Date Created", limit: 5
 
     # Have BL send all facet field names to Solr, which has been the default
     # previously. Simply remove these lines if you'd rather use Solr request
@@ -110,6 +111,7 @@ class CatalogController < ApplicationController
     config.add_index_field solr_name("human_readable_type", :stored_searchable, type: :string), label: "Resource Type"
     config.add_index_field solr_name("desc_metadata__format", :stored_searchable, type: :string), label: "File Format"
     config.add_index_field solr_name("desc_metadata__identifier", :stored_searchable, type: :string), label: "Identifier"
+
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
@@ -227,7 +229,7 @@ class CatalogController < ApplicationController
       field.solr_parameters = {
         :"spellcheck.dictionary" => "date_created"
       }
-      solr_name = solr_name("desc_metadata__created", :stored_searchable, type: :string)
+      solr_name = solr_name("desc_metadata__date_created", :stored_searchable, type: :string)
       field.solr_local_parameters = {
         :qf => solr_name,
         :pf => solr_name

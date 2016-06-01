@@ -25,7 +25,7 @@ class VideoRdfDatastream < ActiveFedora::NtriplesRDFDatastream
     end
 
     map.date_created(:to => "date#created", :in => RDF::QualifiedDC) do |index|
-      index.as :stored_searchable
+      index.as :stored_searchable, :facetable
     end
 
     map.date_digitized(:to => "date#digitized", :in => RDF::QualifiedDC) do |index|
