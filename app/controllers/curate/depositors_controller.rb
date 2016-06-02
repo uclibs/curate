@@ -25,7 +25,7 @@ class Curate::DepositorsController < ApplicationController
       respond_to do |format|
         format.json { render json: response}
       end
-      ChangeManager::Manager.queue_change(grantor.email, 'added_as_delegate', '', grantee.email)
+    CurateManager.queue_change(grantor.email, 'added_as_delegate', '', grantee.email)
     end
   end
 
@@ -34,7 +34,7 @@ class Curate::DepositorsController < ApplicationController
     grantee = Person.find(params[:id])
     authorize! :edit, grantor
     grantor.user.can_receive_deposits_from.delete(grantee.user)
-    ChangeManager::Manager.queue_change(grantor.email, 'removed_as_delegate', '', grantee.email)
+    CurateManager.queue_change(grantor.email, 'removed_as_delegate', '', grantee.email)
     Sufia.queue.push(DelegateEditorCleanupWorker.new(pids_for_grantee_grantor))    
 
     respond_to do |format|
