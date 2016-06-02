@@ -5,7 +5,7 @@ describe 'catalog/_index_partials/_thumbnail_display' do
       let(:person) { FactoryGirl.create(:person, representative: '1234') }
       before do
         person.stub(:representative_image_url).and_return('http://www.gravatar.com/avatar/998e373d9226f0ac08b7b52084f32ac6/?s=300')
-        render partial: 'thumbnail_display', locals: { document: person }
+        render partial: 'thumbnail_display', locals: { document: person, title_link_target: person }
       end
       it 'should display gravatar as thumbnail' do
         rendered.should include("http://www.gravatar.com/avatar/998e373d9226f0ac08b7b52084f32ac6/?s=300")
@@ -16,7 +16,7 @@ describe 'catalog/_index_partials/_thumbnail_display' do
       let(:person) { FactoryGirl.create(:person, representative: '1234') }
       before do
         person.stub(:representative_image_url).and_return('/downloads/1234?datastream_id=thumbnail')
-        render partial: 'thumbnail_display', locals: { document: person }
+        render partial: 'thumbnail_display', locals: { document: person, title_link_target: person }
       end
       it 'should display uploaded image as thumbnail' do
         rendered.should include("/downloads/1234?datastream_id=thumbnail")
@@ -39,9 +39,9 @@ describe 'catalog/_index_partials/_thumbnail_display' do
   end
 
   context 'People' do
-    let(:person) { FactoryGirl.build(:person) }
+    let(:person) { FactoryGirl.create(:person) }
     before do
-      render partial: 'thumbnail_display', locals: { document: person }
+      render partial: 'thumbnail_display', locals: { document: person, title_link_target: person }
     end
 
     it 'should link to the person' do
@@ -50,9 +50,9 @@ describe 'catalog/_index_partials/_thumbnail_display' do
   end
 
   context 'Collection' do
-    let(:collection) { FactoryGirl.build(:collection) }
+    let(:collection) { FactoryGirl.create(:collection) }
     before do
-      render partial: 'thumbnail_display', locals: { document: collection }
+      render partial: 'thumbnail_display', locals: { document: collection, title_link_target: collection }
     end
 
     it 'should link to the collection' do
