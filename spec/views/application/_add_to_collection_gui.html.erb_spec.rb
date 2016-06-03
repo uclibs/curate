@@ -1,7 +1,11 @@
 require 'spec_helper'
 
 describe 'application/add_to_collection_gui' do
-  let(:document)        { double(title: 'A Document',        pid: 'sufia:vwxyz', noid: 'vwxyz', human_readable_type: 'Document'  ) }
+
+  let!(:person) { FactoryGirl.create(:person_with_user) }
+  let!(:user) { person.user }
+
+  let(:document)        { double(title: 'A Document',        pid: 'sufia:vwxyz', noid: 'vwxyz', human_readable_type: 'Document', edit_users: [user.email]  ) }
   let(:profile)         { double(title: 'Your Profile',      pid: 'sufia:abcde', noid: 'abcde', human_readable_type: 'Profile'   ) }
   let(:collection)      { double(title: 'A Collection',      pid: 'sufia:12345', noid: '12345', human_readable_type: 'Collection') }
   let(:profile_section) { double(title: 'A Profile Section', pid: 'sufia:56789', noid: '56789', human_readable_type: 'Collection') }
@@ -11,8 +15,9 @@ describe 'application/add_to_collection_gui' do
       view.stub(:current_users_profile_sections).and_return([])
       view.stub(:available_collections).and_return([collection])
       view.stub(:available_profiles).and_return([])
+      view.stub(:current_user).and_return(user)
 
-      render partial: 'add_to_collection_gui', locals: { collectible: document, current_user: true }
+      render partial: 'add_to_collection_gui', locals: { collectible: document}
     end
 
     it 'displays add link; lists collection as an option' do
@@ -28,8 +33,9 @@ describe 'application/add_to_collection_gui' do
       view.stub(:current_users_profile_sections).and_return([profile_section])
       view.stub(:available_collections).and_return([])
       view.stub(:available_profiles).and_return([profile])
+      view.stub(:current_user).and_return(user)
 
-      render partial: 'add_to_collection_gui', locals: { collectible: document, current_user: true }
+      render partial: 'add_to_collection_gui', locals: { collectible: document}
     end
 
     it 'displays add link; lists profile section as an option' do
@@ -46,8 +52,9 @@ describe 'application/add_to_collection_gui' do
       view.stub(:current_users_profile_sections).and_return([])
       view.stub(:available_collections).and_return([])
       view.stub(:available_profiles).and_return([])
+      view.stub(:current_user).and_return(user)
 
-      render partial: 'add_to_collection_gui', locals: { collectible: document, current_user: true }
+      render partial: 'add_to_collection_gui', locals: { collectible: document}
     end
 
     it 'displays add link; includes no profile or collections' do
@@ -59,12 +66,12 @@ describe 'application/add_to_collection_gui' do
 
   context 'while user logged in' do
     before do
-
       view.stub(:current_users_profile_sections).and_return([])
       view.stub(:available_collections).and_return([])
       view.stub(:available_profiles).and_return([])
+      view.stub(:current_user).and_return(user)
 
-      render partial: 'add_to_collection_gui', locals: { collectible: document, current_user: true }
+      render partial: 'add_to_collection_gui', locals: { collectible: document}
     end
 
     it 'displays add link' do
@@ -74,7 +81,6 @@ describe 'application/add_to_collection_gui' do
 
   context 'while user not logged in' do
     before do
-
       view.stub(:current_users_profile_sections).and_return([])
       view.stub(:available_collections).and_return([])
       view.stub(:available_profiles).and_return([])

@@ -63,7 +63,7 @@ module Curate::CollectionsHelper
     if can? :read, member
       content_tag :li, class: line_item_class(collection), data: { noid: member.noid }do
         markup = work_line_item(member, options)
-        if can? :edit, member 
+        if collection.edit_users.include?(current_user.email)
           markup << collection_member_actions(collection, member)
         end
         markup
