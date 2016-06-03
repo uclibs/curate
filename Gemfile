@@ -12,10 +12,6 @@ gemspec
 #
 #
 
-gem 'rake', '10.5'
-
-gem 'change_manager', path: '../change_manager'
-
 gem 'coveralls', require: false
 gem 'simplecov', require: false
 if !ENV['TRAVIS']
