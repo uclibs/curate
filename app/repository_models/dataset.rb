@@ -12,6 +12,9 @@ class Dataset < ActiveFedora::Base
     %i(description language)
   end
 
+  include CurationConcern::WithCollegeAndDepartment
+  has_attributes :unit, :unit_attributes, datastream: :descMetadata, multiple: true
+
   include ActiveFedora::RegisteredAttributes
 
   has_metadata "descMetadata", type: DatasetDatastream

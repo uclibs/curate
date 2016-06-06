@@ -12,6 +12,9 @@ class Article < ActiveFedora::Base
     %i(abstract issn journal_title language)
   end
 
+  include CurationConcern::WithCollegeAndDepartment
+  has_attributes :unit, :unit_attributes, datastream: :descMetadata, multiple: true
+
   include ActiveFedora::RegisteredAttributes
 
   has_metadata "descMetadata", type: ArticleMetadataDatastream
@@ -22,12 +25,6 @@ class Article < ActiveFedora::Base
   self.human_readable_short_description = "Published or unpublished articles"
 
   self.indefinite_article = 'an'
-
-  has_attributes :unit, :unit_attributes, datastream: :descMetadata, multiple: true
-
-  def build_unit
-    descMetadata.unit = [ArticleMetadataDatastream::Unit.new(RDF::Repository.new)]
-  end
 
   attribute :abstract,
     datastream: :descMetadata, multiple: false,
@@ -109,37 +106,4 @@ class Article < ActiveFedora::Base
 
   attribute :files,
     multiple: true, form: {as: :file}, label: "Upload Files"
-
-  def to_solr(solr_doc = {})
-    super
-    solr_doc[Solrizer.solr_name('desc_metadata__college', :stored_searchable)] = college
-    solr_doc[Solrizer.solr_name('desc_metadata__college', :facetable)] = college
-    solr_doc[Solrizer.solr_name('desc_metadata__department', :stored_searchable)] = department
-    solr_doc[Solrizer.solr_name('desc_metadata__department', :facetable)] = department
-    solr_doc
-  end
-
-  def college
-    self.unit.first.college.first
-  end
-
-  def department
-    self.unit.first.department.first
-  end
-
-  def unit_for_display
-    if self.college.blank?
-      if self.department.blank?
-        nil
-      else
-        self.department
-      end
-    else
-      if self.department.blank?
-        self.college
-      else
-        self.college + " : " + self.department
-      end
-    end
-  end
 end

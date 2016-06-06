@@ -1,4 +1,4 @@
-class DocumentDatastream < GenericWorkRdfDatastream
+class DocumentDatastream < ActiveFedora::NtriplesRDFDatastream
   map_predicates do |map|
     map.alternate_title(to: "title#alternate", in: RDF::QualifiedDC) do |index|
       index.as :stored_searchable

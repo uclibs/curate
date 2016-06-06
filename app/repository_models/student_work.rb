@@ -12,6 +12,9 @@ class StudentWork < ActiveFedora::Base
     %i(description language)
   end
 
+  include CurationConcern::WithCollegeAndDepartment
+  has_attributes :unit, :unit_attributes, datastream: :descMetadata, multiple: true
+
   include ActiveFedora::RegisteredAttributes
 
   has_metadata "descMetadata", type: StudentWorkRdfDatastream
@@ -22,10 +25,6 @@ class StudentWork < ActiveFedora::Base
   self.human_readable_short_description = "Deposit any kind of student work."
 
   has_attributes :unit, :unit_attributes, datastream: :descMetadata, multiple: true
-
-  def build_unit
-    descMetadata.unit = [StudentWorkRdfDatastream::Unit.new(RDF::Repository.new)]
-  end
 
   attribute :advisor,
     datastream: :descMetadata, multiple: true
@@ -112,37 +111,7 @@ class StudentWork < ActiveFedora::Base
 
   def to_solr(solr_doc = {})
     super
-    solr_doc[Solrizer.solr_name('desc_metadata__college', :stored_searchable)] = college
-    solr_doc[Solrizer.solr_name('desc_metadata__college', :facetable)] = college
-    solr_doc[Solrizer.solr_name('desc_metadata__department', :stored_searchable)] = department
-    solr_doc[Solrizer.solr_name('desc_metadata__department', :facetable)] = department
     solr_doc[Solrizer.solr_name('human_readable_type', :facetable)] = type
     solr_doc
-  end
-
-  def college
-    return self.unit.first.college.first unless self.unit.blank?
-    nil
-  end
-
-  def department
-    return self.unit.first.department.first unless self.unit.blank?
-    nil
-  end
-
-  def unit_for_display
-    if self.college.blank?
-      if self.department.blank?
-        nil
-      else
-        self.department
-      end
-    else
-      if self.department.blank?
-        self.college
-      else
-        self.college + " : " + self.department
-      end
-    end
   end
 end

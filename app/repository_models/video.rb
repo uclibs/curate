@@ -8,10 +8,12 @@ class Video < ActiveFedora::Base
   include CurationConcern::WithEditorsAndReaders
 
   include CurationConcern::WithMetaTags
-
   def special_meta_tag_fields
     %i(description language date_digitized)
   end
+
+  include CurationConcern::WithCollegeAndDepartment
+  has_attributes :unit, :unit_attributes, datastream: :descMetadata, multiple: true
 
   include ActiveFedora::RegisteredAttributes
 
