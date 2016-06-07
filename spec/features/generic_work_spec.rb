@@ -15,6 +15,12 @@ describe 'Creating a generic work' do
     expect(page).to have_checked_field('visibility_open')
   end
 
+  it 'displays license wizard button', js: true do
+    login_as(user)
+    visit new_curation_concern_generic_work_path
+    expect(page).to have_tag('a', text: 'License Wizard')
+  end
+
   describe 'with a related link' do
     it "should allow me to attach the link on the create page" do
       login_as(user)
