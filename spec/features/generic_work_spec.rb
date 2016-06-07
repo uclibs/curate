@@ -32,7 +32,7 @@ describe 'Creating a generic work' do
         fill_in "External link", with: "http://www.youtube.com/watch?v=oHg5SJYRHA0"
         select(Sufia.config.cc_licenses.keys.first.dup, from: I18n.translate('sufia.field_label.rights'))
         check("I have read and accept the distribution license agreement")
-        click_button("Create Generic work")
+        click_button("Create Generic Work")
       end
 
       expect(page).to have_selector('h1', text: 'Generic Work')
@@ -61,7 +61,7 @@ describe 'Creating a generic work' do
         page.should have_tag("#status", text: "1 item(s) selected")
         select(Sufia.config.cc_licenses.keys.first.dup, from: I18n.translate('sufia.field_label.rights'))
         check("I have read and accept the distribution license agreement")
-        click_button("Create Generic work")
+        click_button("Create Generic Work")
       end
       #expect(page).to have_link('http://www.youtube.com/watch?v=oHg5SJYRHA0', href: 'http://www.youtube.com/watch?v=oHg5SJYRHA0')
       expect(page).to have_selector('h1', text: 'Generic Work')
@@ -138,7 +138,7 @@ describe 'Viewing a generic work that is private' do
     login_as(user)
     visit curation_concern_generic_work_path(work)
     page.should have_content('Unauthorized')
-    page.should have_content('The generic work you have tried to access is private')
+    page.should have_content('The Generic Work you have tried to access is private')
     page.should have_content("ID: #{work.pid}")
     page.should_not have_content("Sample work")
   end

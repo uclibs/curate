@@ -2,17 +2,17 @@
   <%= f.simple_fields_for :unit do |uf| %>
     <div class="span3">
       <%= uf.input :college,
-        collection: sorted_college_list,
-        input_html: { class: 'shrinking-form-input' },
+        collection: sorted_college_list_for_etds,
         required: false,
+        input_html: { class: 'shrinking-form-input' },
         label: 'College' %>
     </div>
     <div class="span3">
       <%= uf.input :department,
         required: false,
         input_html: { class: 'shrinking-form-input', value: curation_concern.department || "" },
-        label: 'Program or Department' %>
+        label: 'Degree Program' %>
     </div>
-    <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.unit.help', work_type: curation_concern.human_readable_type) %>
+    <%= render 'form_input_help_block', help_text: I18n.t('sufia.etd.input_field.unit.help', work_type: curation_concern.human_readable_type) %>
   <% end %>
 </div>

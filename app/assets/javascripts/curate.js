@@ -68,6 +68,11 @@ Blacklight.onLoad(function() {
   $('.link-groups').linkGroups();
   $('.proxy-rights').proxyRights();
 
+  $('#etd_date_created').datepicker({
+    format: ' yyyy',
+    viewMode: 'years',
+    minViewMode: 'years'
+  });
 
   $('#set-access-controls .datepicker').datepicker({
     format: 'yyyy-mm-dd',
@@ -79,4 +84,3 @@ Blacklight.onLoad(function() {
   $("[data-toggle='dropdown']").dropdown();
 
 });
-

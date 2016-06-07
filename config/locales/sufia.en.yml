@@ -106,6 +106,41 @@ en:
             Dataset:   "Hold Shift or Command to select multiple files"
             Video:  "Hold Shift or Command to select multiple files"
             StudentWork:  "Hold Shift or Command to select multiple files"
+            Etd:  "A PDF is preferred. Hold Shift or Command to select multiple files" 
+    etd:
+      input_field:
+        abstract:
+          help:         "<p>Enter the abstract of the ETD. There is no character limit for this field.</p>"
+        advisor:
+          help:         "<p>Enter the advisor for the ETD. Please enter the name in <i>LastName, FirstName</i> order.</p>"
+        alternate_title:
+          help:         "<p>Enter an alternate title for ETD. An alternate title could include acronyms, abbreviations, or a series title.</p>"
+        bibliographic_citation:
+          help:         "<p>Enter the preferred citation for the ETD.</p>"
+        committee:
+          help:         "<p>Enter any additional members of the thesis/dissertation committee. Please enter the name in <i>LastName, FirstName</i> order.</p>"
+        coverage_spatial:
+          help:         "<p>Enter the geographic subjects or keywords for the ETD.</p>"
+        coverage_temporal:
+          help:         "<p>Enter the period or date associated with the subject.</p>"
+        creator:
+          help:         "<p>Enter the author of the ETD. Please enter the name in <i>LastName, FirstName</i> order.</p>"
+        degree:
+          help:         "<p>Enter the degree associated with the ETD, e.g <i>PhD</i> or <i>MS</i>, and the year the degree was granted.</p>"
+        language:
+          help:         "<p>Enter the language of the ETD.</p>"
+        note:
+          help:         "<p>Enter any additional information about the ETD.</p>"
+        publisher:
+          help:         "<p>Enter the degree associated with the ETD, typically the <i>University of Cincinnati</i></p>"
+        requires:
+          help:         "<p>Special software needed to open the ETD.</p>"
+        subject:
+          help:         "<p>Enter terms or keywords that describe the ETD.</p>"
+        title:
+          help:         "<p>Enter the title of the ETD, including the subtitle.</p>"
+        unit:
+          help:         "<p>Enter the college and degree program associated with the ETD.</p>"
     student_work:
       input_field:
         description: 

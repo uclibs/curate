@@ -104,6 +104,10 @@ describe 'Profile for a Person: ' do
     let!(:user) {manager_2.user}
     let!(:person) {manager_2.person}
 
+    let(:etd_manager) {FactoryGirl.create(:account, email: 'etd_manager@example.com', first_name: 'Winston', last_name: 'Churchill')}
+    let!(:user2) {etd_manager.user}
+    let!(:person2) {etd_manager.person}
+
     before do
       login_as(manager_user)
     end
@@ -113,6 +117,46 @@ describe 'Profile for a Person: ' do
       click_button 'keyword-search-submit'
       within('#documents') do
         expect(page).to have_link('Stan Theman') #title
+      end
+
+      visit catalog_index_path
+      fill_in 'Search Curate', with: 'Winston'
+      click_button 'keyword-search-submit'
+      within('#documents') do
+        expect(page).to have_link('Winston Churchill') #title
+      end
+    end
+  end
+
+  context "As an etd manager searching people" do
+    let(:creating_user) { FactoryGirl.create(:user) }
+    let(:email) { 'etd_manager@example.com' }
+    let(:etd_manager_user) { FactoryGirl.create(:user, email: email) }
+
+    let(:manager) {FactoryGirl.create(:account, email: 'manager@example.com', first_name: 'Stan', last_name: 'Theman')}
+    let!(:user) {manager.user}
+    let!(:person) {manager.person}
+
+    let(:etd_manager2) {FactoryGirl.create(:account, email: 'etd_manager2@example.com', first_name: 'Winston', last_name: 'Churchill')}
+    let!(:user2) {etd_manager2.user}
+    let!(:person2) {etd_manager2.person}
+
+    before do
+      login_as(etd_manager_user)
+    end
+    it "should see all users, including ETD managers, except repository managers" do
+      visit catalog_index_path
+      fill_in 'Search Curate', with: 'Stan'
+      click_button 'keyword-search-submit'
+      within('#documents') do
+        expect(page).to have_no_link('Stan Theman') #title
+      end
+
+      visit catalog_index_path
+      fill_in 'Search Curate', with: 'Winston'
+      click_button 'keyword-search-submit'
+      within('#documents') do
+        expect(page).to have_no_link('Winston Churchill') #title
       end
     end
   end
@@ -169,7 +213,7 @@ describe 'Profile for a Person: ' do
       fill_in "* Title", with: "test work"
       select(Sufia.config.cc_licenses.keys.first.dup, from: I18n.translate('sufia.field_label.rights'))
       check("I have read and accept the distribution license agreement")
-      click_button("Create Generic work")
+      click_button("Create Generic Work")
     end
   end
 

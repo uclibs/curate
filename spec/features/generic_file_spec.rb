@@ -171,7 +171,7 @@ describe 'Viewing a generic file that is private' do
     login_as(user)
     visit curation_concern_generic_file_path(work)
     page.should have_content('Unauthorized')
-    page.should have_content('The generic file you have tried to access is private')
+    page.should have_content('The Generic File you have tried to access is private')
     page.should have_content("ID: #{work.pid}")
     page.should_not have_content("Sample file")
   end

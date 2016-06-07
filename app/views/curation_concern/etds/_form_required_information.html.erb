@@ -1,0 +1,86 @@
+<div class="row with-headroom">
+  <div class="span12">
+    <fieldset class="required">
+      <legend>
+        Basic Description
+        <small>Required information</small>
+      </legend>
+
+      <p class='help-inline'><%= I18n.t('sufia.work.add_multiples') %></p>
+
+      <div class="row">
+          <div class="span6">
+            <%= f.input :title, 
+                        as: :string,
+                        input_html: { class: 'validate-me full-width', rows: '1' } %>
+          </div>
+          <%= render 'form_input_help_block', help_text: I18n.t('sufia.etd.input_field.title.help', work_type: curation_concern) %>
+      </div>
+
+      <div class="row">
+        <div class="span6">
+          <%= f.input :creator, 
+                      as: :multi_value, 
+                      required: true, 
+                      label: "Author" %>
+        </div>
+        <%= render 'form_input_help_block', help_text: I18n.t('sufia.etd.input_field.creator.help', work_type: curation_concern) %>
+      </div>
+
+      <div class="row">
+        <div class="span6">
+          <%= f.input :advisor, 
+                      label: "Thesis/Dissertation Advisor",
+                      required: true %>
+        </div>
+        <%= render 'form_input_help_block', help_text: I18n.t('sufia.etd.input_field.advisor.help', work_type: curation_concern) %>
+      </div>
+
+      <div class="row">
+        <div class="span6">
+          <%= f.input :committee_member, 
+                      as: :multi_value, 
+                      label: "Additional Thesis/Dissertation Committee Members" %>
+        </div>
+        <%= render 'form_input_help_block', help_text: I18n.t('sufia.etd.input_field.committee.help', work_type: curation_concern) %>
+      </div>
+
+      <%= render 'form_unit', curation_concern: curation_concern, f: f %>
+
+      <div class="row">
+        <div class="span3">
+          <%= f.input :degree, 
+            input_html: { class: 'shrinking-form-input' },
+            required: false %>
+        </div>
+        <div class="span3">
+          <%= f.input :date_created,
+            required: false,
+            label: 'Degree Year',
+            input_html: { class: 'datepicker shrinking-form-input' } %>
+        </div>
+        <%= render 'form_input_help_block', help_text: I18n.t('sufia.etd.input_field.degree.help', work_type: curation_concern) %>
+      </div>
+
+      <div class="row">
+        <div class="span6">
+          <%= f.input :abstract, 
+                      as: :text, 
+                      required: true, 
+                      input_html: { class: 'input-xxxlarge validate-me', rows: '14' } %>
+        </div>
+        <%= render 'form_input_help_block', help_text: I18n.t('sufia.etd.input_field.abstract.help', work_type: curation_concern) %>
+      </div>
+
+      <div class="row">
+        <div class="span6">
+          <%= f.input :publisher,
+            label: I18n.t('sufia.work.input_field.publisher.label'),
+            input_html: { class: 'input-xlarge', id: 'publisher' }
+          %>
+        </div>
+        <%= render 'form_input_help_block', help_text: I18n.t('sufia.etd.input_field.publisher.help', work_type: curation_concern) %>
+      </div>
+    </fieldset>
+  </div>
+</div>

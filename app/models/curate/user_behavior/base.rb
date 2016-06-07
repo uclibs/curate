@@ -27,12 +27,22 @@ module Curate
         manager_usernames.include?(user_key)
       end
 
+      def etd_manager?
+        return true if manager?
+        return true if delegate_of_etd_manager?
+        etd_manager_usernames.include?(user_key)
+      end
+
       def student?
         User.find_by_email(user_key).ucstatus == "Student"
       end
 
       def manager_usernames
         @manager_usernames ||= load_managers
+      end
+
+      def etd_manager_usernames
+        @etd_manager_usernames ||= load_etd_managers
       end
 
       def name
@@ -53,17 +63,38 @@ module Curate
 
       private
 
-        def load_managers
-          manager_config = "#{::Rails.root}/config/manager_usernames.yml"
-          if File.exist?(manager_config)
-            content = IO.read(manager_config)
-            YAML.load(ERB.new(content).result).fetch(Rails.env).
-              fetch('manager_usernames')
-          else
-            logger.warn "Unable to find managers file: #{manager_config}"
-            []
-          end
+      def load_etd_managers
+        etd_manager_config = "#{::Rails.root}/config/etd_manager_usernames.yml"
+        if File.exist?(etd_manager_config)
+          content = IO.read(etd_manager_config)
+          YAML.load(ERB.new(content).result).fetch(Rails.env).
+            fetch('etd_manager_usernames')
+        else
+          logger.warn "Unable to find ETD managers file: #{etd_manager_config}"
+          []
         end
+      end
+
+      def delegate_of_etd_manager?
+        return false if (can_make_deposits_for_emails & load_etd_managers).empty?
+        true
+      end
+
+      def can_make_deposits_for_emails
+        self.can_make_deposits_for.collect { |u| u.email }
+      end
+
+      def load_managers
+        manager_config = "#{::Rails.root}/config/manager_usernames.yml"
+        if File.exist?(manager_config)
+          content = IO.read(manager_config)
+          YAML.load(ERB.new(content).result).fetch(Rails.env).
+            fetch('manager_usernames')
+        else
+          logger.warn "Unable to find managers file: #{manager_config}"
+          []
+        end
+      end
     end
   end
 end

@@ -413,7 +413,17 @@ class CatalogController < ApplicationController
         solr_parameters[:fq] ||= []
         manager_config = "#{::Rails.root}/config/manager_usernames.yml"
         content = IO.read(manager_config)
-        list = YAML.load(ERB.new(content).result).fetch(Rails.env).fetch('manager_usernames')
+        manager_list = YAML.load(ERB.new(content).result).fetch(Rails.env).fetch('manager_usernames')
+
+        if current_user and current_user.etd_manager?
+          list = manager_list
+        else
+          etd_manager_config = "#{::Rails.root}/config/etd_manager_usernames.yml"
+          content = IO.read(etd_manager_config)
+          etd_manager_list = YAML.load(ERB.new(content).result).fetch(Rails.env).fetch('etd_manager_usernames')
+
+          list = etd_manager_list + manager_list
+        end
 
         list.each do |manager|
           solr_parameters[:fq] << "-(+edit_access_person_ssim: #{manager} AND has_model_ssim:\"info:fedora/afmodel:Person\")"

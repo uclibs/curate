@@ -36,10 +36,11 @@
         <a class="close" data-dismiss="alert" href="#">&times;</a>
       </div>
     <div class="span12 form-actions">
-      <%= f.submit class: 'btn btn-primary require-contributor-agreement'  %>
       <%- if curation_concern.new_record? -%>
+        <%= f.button :submit, "Create #{curation_concern.human_readable_type}", class: 'btn btn-primary require-contributor-agreement'  %>
         <%= link_to 'Cancel', root_path, class: 'btn btn-link' %>
       <%- else -%>
+        <%= f.button :submit, "Update #{curation_concern.human_readable_type}", class: 'btn btn-primary require-contributor-agreement'  %>
         <%= link_to 'Cancel', polymorphic_path([:curation_concern, curation_concern]), class: 'btn btn-link' %>
       <%- end -%>
     </div>

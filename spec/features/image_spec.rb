@@ -42,7 +42,7 @@ describe 'Viewing an image that is private' do
     login_as(user)
     visit curation_concern_image_path(work)
     page.should have_content('Unauthorized')
-    page.should have_content('The image you have tried to access is private')
+    page.should have_content('The Image you have tried to access is private')
     page.should have_content("ID: #{work.pid}")
     page.should_not have_content("Sample work")
   end

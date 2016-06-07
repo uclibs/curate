@@ -99,7 +99,7 @@ describe 'Viewing an Article that is private' do
     login_as(user)
     visit curation_concern_article_path(work)
     page.should have_content('Unauthorized')
-    page.should have_content('The article you have tried to access is private')
+    page.should have_content('The Article you have tried to access is private')
     page.should have_content("ID: #{work.pid}")
     page.should_not have_content("Sample work")
   end
