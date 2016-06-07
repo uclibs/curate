@@ -3,6 +3,10 @@ require 'spec_helper'
 describe "Showing and creating Collections" do
   let(:user) { FactoryGirl.create(:user) }
 
+  before do
+    allow_any_instance_of(Curate::CollectionsHelper).to receive(:link_owner).and_return("<a href='#'>LINK</a>")
+  end
+
   it 'defaults to open visibility' do
     login_as(user)
     visit new_collection_path
