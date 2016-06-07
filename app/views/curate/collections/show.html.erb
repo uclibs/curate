@@ -26,7 +26,7 @@
   <% end %>
 <% end %>
 <div class="collection-description">
-  <%= @collection.description %>
+  <%= @collection.description.gsub(/\n/, '<br/>').html_safe unless @collection.description.nil? %>
 </div>
 
 <div id="documents" class="clear">
