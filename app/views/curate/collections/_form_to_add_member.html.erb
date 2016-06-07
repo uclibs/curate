@@ -15,8 +15,12 @@
           <% options << options_from_collection_for_select(collections, "pid", "title") %>
           <% options << '</optgroup>'.html_safe %>
         <% end %>
-        <% options << '<optgroup label="Your Profile">'.html_safe %>
-        <% options << options_from_collection_for_select(available_profiles, "pid", "title") %>
+
+        <% if collectible.edit_users.include?(current_user.email) %>
+          <% options << '<optgroup label="Your Profile">'.html_safe %>
+          <% options << options_from_collection_for_select(available_profiles, "pid", "title") %>
+        <% end %>
+
         <% if current_users_profile_sections.any? %>
           <% options << '<optgroup label="Profile Sections">'.html_safe %>
           <% options << options_from_collection_for_select(current_users_profile_sections, "pid", "title") %>
