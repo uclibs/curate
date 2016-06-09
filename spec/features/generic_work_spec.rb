@@ -47,24 +47,27 @@ describe 'Creating a generic work' do
       login_as(user)
       visit new_curation_concern_generic_work_path
       within '#new_generic_work' do
-        fill_in "Title", with: "My title"
-        click_button("Browse!")
+        fill_in 'Title', with: 'My title'
+        fill_in 'generic_work_description', with: 'Generic Work Description'
+        click_link('Cloud file')
+        click_button('Click here to upload remote files')
       end
       find("div#browse-everything").should be_visible
       within('#browse-everything') do
-        page.should have_tag("a[href$='/remote_files/browse/file_system']", text: "File System")
-        click_link 'File System'
+        page.should have_select('provider-select')
+        sleep 1
         click_link 'features.rb'
+        sleep 1
         click_button ("Submit")
       end
       within '#new_generic_work' do
-        page.should have_tag("#status", text: "1 item(s) selected")
+        page.should have_tag("#status", text: "1 items selected")
         select(Sufia.config.cc_licenses.keys.first.dup, from: I18n.translate('sufia.field_label.rights'))
         check("I have read and accept the distribution license agreement")
         click_button("Create Generic Work")
       end
       #expect(page).to have_link('http://www.youtube.com/watch?v=oHg5SJYRHA0', href: 'http://www.youtube.com/watch?v=oHg5SJYRHA0')
-      expect(page).to have_selector('h1', text: 'Generic Work')
+      expect(page).to have_selector('span', text: '(Generic Work)')
       page.should have_content("Files")
       page.should have_content('features.rb')
     end
@@ -108,17 +111,19 @@ describe 'An existing generic work owned by the user' do
 
       within '#new_generic_file' do
         fill_in "Title", with: "My title"
-        click_button("Browse!")
+        click_button('Browse!')
       end
       find("div#browse-everything").should be_visible
       within('#browse-everything') do
-        page.should have_tag("a[href$='/remote_files/browse/file_system']", text: "File System")
-        click_link 'File System'
+
+      page.should have_select('provider-select')
+        sleep 1
         click_link 'features.rb'
+        sleep 1
         click_button ("Submit")
       end
       within '#new_generic_file' do
-        page.should have_tag("#status", text: "1 item(s) selected")
+        page.should have_tag("#status", text: "1 items selected")
         click_button("Attach to Generic Work")
       end
       within ('.generic_file.attributes') do
