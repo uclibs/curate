@@ -50,6 +50,7 @@ task :generate do
 
     group :test do
       gem 'capybara'
+      gem 'selenium-webdriver'
       gem 'coveralls', require: false
       gem 'database_cleaner', '< 1.1.0'
       gem 'factory_girl_rails', '~> 4.2.0'
