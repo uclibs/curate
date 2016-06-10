@@ -15,6 +15,7 @@ module CurationConcern
     def to_solr(solr_doc={}, opts={})
       super(solr_doc, opts)
       Solrizer.set_field(solr_doc, 'generic_type', 'Work', :facetable)
+      Solrizer.set_field(solr_doc, 'sort_title', sort_title, :stored_sortable)
       return solr_doc
     end
 
@@ -65,6 +66,17 @@ module CurationConcern
       return links if files.nil? 
       return files if links.nil? 
       files + links
+    end
+
+    private
+
+    def sort_title
+      unless self.title.nil?
+        cleaned_title = self.title.sub(/^(a |an |the )/i, "")
+        cleaned_title.delete!(" .,-?!")
+        cleaned_title.upcase!
+        return cleaned_title
+      end
     end
 
   end
