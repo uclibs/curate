@@ -28,7 +28,7 @@ class ImageMetadata < ActiveFedora::NtriplesRDFDatastream
     map.cultural_context(in: RDF::Image)
 
     map.date_created(:to => "date#created", :in => RDF::QualifiedDC) do |index|
-      index.as :stored_searchable
+      index.as :stored_searchable, :facetable
     end
 
     map.date_modified(to: "modified", in: RDF::DC) do |index|
