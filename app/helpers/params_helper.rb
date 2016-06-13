@@ -9,6 +9,7 @@ module ParamsHelper
 
     unless params["f"].nil?
       safe_params["f"] = Hash.new;
+      safe_params["f"]["collection_sim"] = params["f"]["collection_sim"]
       safe_params["f"]["desc_metadata__creator_sim"] = params["f"]["desc_metadata__creator_sim"]
       safe_params["f"]["desc_metadata__language_sim"] = params["f"]["desc_metadata__language_sim"]
       safe_params["f"]["desc_metadata__publisher_sim"] = params["f"]["desc_metadata__publisher_sim"]
@@ -31,6 +32,7 @@ module ParamsHelper
 
     unless safe_params["f"].nil?
       params["f"] = Hash.new
+      params["f"]["collection_sim"] = safe_params["f"]["collection_sim"] unless safe_params["f"]["collection_sim"].nil?
       params["f"]["desc_metadata__creator_sim"] = safe_params["f"]["desc_metadata__creator_sim"] unless safe_params["f"]["desc_metadata__creator_sim"].nil?
       params["f"]["desc_metadata__language_sim"] = safe_params["f"]["desc_metadata__language_sim"] unless safe_params["f"]["desc_metadata__language_sim"].nil?
       params["f"]["desc_metadata__publisher_sim"] = safe_params["f"]["desc_metadata__publisher_sim"] unless safe_params["f"]["desc_metadata__publisher_sim"].nil?
@@ -40,7 +42,7 @@ module ParamsHelper
       params["per_page"] = safe_params["per_page"] unless safe_params["per_page"].nil?
       params["sort"] = safe_params["sort"] unless safe_params["sort"].nil?
     end
-    
+
     unless safe_params["q"].nil?
       params["q"] = safe_params["q"] unless safe_params["q"].nil?
     end
@@ -174,7 +176,7 @@ module ParamsHelper
   end
 
   def return_404
-    render(:file => File.join(Rails.root, 'public/404.html'), :status => 404) 
+    render(:file => File.join(Rails.root, 'public/404.html'), :status => 404)
   end
 
   private
