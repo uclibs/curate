@@ -46,6 +46,7 @@ describe CurationConcern::GenericWorkActor do
 
         describe 'authenticated visibility' do
           it 'should stamp each file with the access rights' do
+            curation_concern.build_unit
             subject.create.should be_true
             expect(curation_concern).to be_persisted
             curation_concern.date_uploaded.should == Date.today
@@ -86,6 +87,7 @@ describe CurationConcern::GenericWorkActor do
 
         describe 'authenticated visibility' do
           it 'should stamp each file with the access rights' do
+            curation_concern.build_unit
             subject.create.should be_true
             expect(curation_concern).to be_persisted
             curation_concern.date_uploaded.should == Date.today
@@ -118,6 +120,7 @@ describe CurationConcern::GenericWorkActor do
 
         describe 'authenticated visibility' do
           it 'should stamp each link with the access rights' do
+            curation_concern.build_unit
             subject.create.should be_true
             expect(curation_concern).to be_persisted
             curation_concern.date_uploaded.should == Date.today
@@ -154,6 +157,7 @@ describe CurationConcern::GenericWorkActor do
 
         describe 'authenticated visibility' do
           it 'should attach the files from cloud' do
+            curation_concern.build_unit
             subject.create.should be_true
             expect(curation_concern).to be_persisted
             curation_concern.date_uploaded.should == Date.today

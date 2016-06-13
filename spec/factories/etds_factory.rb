@@ -13,6 +13,7 @@ FactoryGirl.define do
     country "United States of America"
     advisor "Karin Verschoor"
 
+    after(:build) { |work| work.build_unit }
 
     before(:create) { |work, evaluator|
       work.apply_depositor_metadata(evaluator.user.user_key)

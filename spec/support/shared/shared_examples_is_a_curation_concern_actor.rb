@@ -14,6 +14,8 @@ shared_examples 'is_a_curation_concern_actor' do |curation_concern_class, curati
     CurationConcern.actor(curation_concern, user, attributes)
   }
 
+  before(:each) { curation_concern.build_unit }
+
   describe '#create' do
     let(:contributors) { ["Mark Twain"] }
     let(:curation_concern) { curation_concern_class.new(pid: CurationConcern.mint_a_pid )}

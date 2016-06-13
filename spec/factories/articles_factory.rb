@@ -15,6 +15,8 @@ FactoryGirl.define do
       work.apply_depositor_metadata(evaluator.user.user_key)
     }
 
+    after(:build) { |work| work.build_unit }
+
     factory :private_article do
       visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE
     end

@@ -13,6 +13,8 @@ FactoryGirl.define do
       work.contributor << "Some Body"
     }
 
+    after(:build) { |work| work.build_unit }
+
     factory :private_dataset do
       visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE
     end

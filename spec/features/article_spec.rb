@@ -18,7 +18,6 @@ describe 'Creating a article' do
     within '#new_article' do
       fill_in "Title", with: "Submitter profile link test"
       fill_in "Abstract", with: "test abstract"
-      fill_in "article_creator", with: "Test article creator"
       select(Sufia.config.cc_licenses.keys.first.dup, from: I18n.translate('sufia.field_label.rights'))
       check("I have read and accept the distribution license agreement")
       click_button("Create Article")

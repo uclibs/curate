@@ -52,7 +52,7 @@ class Article < ActiveFedora::Base
   attribute :date_created,
     datastream: :descMetadata, multiple: false
 
-  attribute :date_modified, 
+  attribute :date_modified,
     datastream: :descMetadata, multiple: false
 
   attribute :date_uploaded,

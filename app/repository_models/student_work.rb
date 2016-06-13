@@ -12,10 +12,10 @@ class StudentWork < ActiveFedora::Base
     %i(description language)
   end
 
+  include ActiveFedora::RegisteredAttributes
+
   include CurationConcern::WithCollegeAndDepartment
   has_attributes :unit, :unit_attributes, datastream: :descMetadata, multiple: true
-
-  include ActiveFedora::RegisteredAttributes
 
   has_metadata "descMetadata", type: StudentWorkRdfDatastream
 
@@ -23,8 +23,6 @@ class StudentWork < ActiveFedora::Base
 
   class_attribute :human_readable_short_description
   self.human_readable_short_description = "Deposit any kind of student work."
-
-  has_attributes :unit, :unit_attributes, datastream: :descMetadata, multiple: true
 
   attribute :advisor,
     datastream: :descMetadata, multiple: true
@@ -49,8 +47,8 @@ class StudentWork < ActiveFedora::Base
 
   attribute :creator,
     datastream: :descMetadata, multiple: true
-  
-  attribute :date_modified, 
+
+  attribute :date_modified,
     datastream: :descMetadata, multiple: false
 
   attribute :date_uploaded,

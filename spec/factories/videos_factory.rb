@@ -21,6 +21,8 @@ FactoryGirl.define do
       work.creator << "Me"
     }
 
+    after(:build) { |work| work.build_unit }
+
     factory :private_video do
       visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE
     end

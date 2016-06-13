@@ -17,9 +17,11 @@ FactoryGirl.define do
       else
         work.owner = evaluator.user.user_key
         work.contributor << "Some Body"
-        work.creator << "The Creator"		
+        work.creator << "The Creator"
       end
     }
+
+    after(:build) { |work| work.build_unit }
 
     factory :private_generic_work do
       visibility Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE

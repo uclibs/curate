@@ -13,6 +13,9 @@ class Image < ActiveFedora::Base
 
   include ActiveFedora::RegisteredAttributes
 
+  include CurationConcern::WithCollegeAndDepartment
+  has_attributes :unit, :unit_attributes, datastream: :descMetadata, multiple: true
+
   has_metadata "descMetadata", type: ImageMetadata
 
   include CurationConcern::RemotelyIdentifiedByDoi::Attributes
@@ -104,7 +107,7 @@ class Image < ActiveFedora::Base
 
     ds.attribute :coverage_temporal,
       multiple: true
-  
+
     ds.attribute :note,
       multiple: false,
       editable: true
@@ -113,7 +116,7 @@ class Image < ActiveFedora::Base
       default: "University of Cincinnati",
       multiple: false,
       editable: true
-  
+
     ds.attribute :requires,
       multiple: false
 

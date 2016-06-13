@@ -5,12 +5,12 @@
         Basic Description
         <small>Required information</small>
       </legend>
-      
+
       <p class='help-inline'><%= I18n.t('sufia.work.add_multiples') %></p>
 
       <div class="row">
           <div class="span6">
-            <%= f.input :title, 
+            <%= f.input :title,
                         as: :string,
                         input_html: { class: 'validate-me full-width', rows: '1' } %>
           </div>
@@ -19,18 +19,20 @@
 
       <div class="row">
         <div class="span6">
-          <%= f.input :creator, 
-                      as: :multi_value, 
+          <%= f.input :creator,
+                      as: :multi_value,
                       required: true %>
         </div>
         <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.creator.help', work_type: curation_concern.human_readable_type) %>
       </div>
 
+      <%= render 'form_unit', curation_concern: curation_concern, f: f %>
+
       <div class="row">
         <div class="span6">
-          <%= f.input :description, 
-                      as: :text, 
-                      required: true, 
+          <%= f.input :description,
+                      as: :text,
+                      required: true,
                       input_html: { class: 'input-xxxlarge validate-me', rows: '14' } %>
         </div>
         <%= render 'form_input_help_block', help_text: I18n.t('sufia.work.input_field.description.help', work_type: curation_concern.human_readable_type) %>

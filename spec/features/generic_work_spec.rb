@@ -23,6 +23,7 @@ describe 'Creating a generic work' do
       classify_what_you_are_uploading 'Generic Work'
       within '#new_generic_work' do
         fill_in "Title", with: "My title"
+        fill_in "Description", with: "My description"
         fill_in "External link", with: "http://www.youtube.com/watch?v=oHg5SJYRHA0"
         select(Sufia.config.cc_licenses.keys.first.dup, from: I18n.translate('sufia.field_label.rights'))
         check("I have read and accept the distribution license agreement")
@@ -148,4 +149,3 @@ describe 'When I click on the link to create a work: ' do
     page.should have_tag("input", value: "Man, Iron")
   end
 end
-

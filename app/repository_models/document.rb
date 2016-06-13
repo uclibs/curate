@@ -12,12 +12,12 @@ class Document < ActiveFedora::Base
     %i(description language)
   end
 
-  include CurationConcern::WithCollegeAndDepartment
-  has_attributes :unit, :unit_attributes, datastream: :descMetadata, multiple: true
-
   include ActiveFedora::RegisteredAttributes
 
   has_metadata "descMetadata", type: DocumentDatastream
+
+  include CurationConcern::WithCollegeAndDepartment
+  has_attributes :unit, :unit_attributes, datastream: :descMetadata, multiple: true
 
   include CurationConcern::RemotelyIdentifiedByDoi::Attributes
 
@@ -58,8 +58,8 @@ class Document < ActiveFedora::Base
 
   attribute :creator,
     datastream: :descMetadata, multiple: true
-  
-  attribute :date_modified, 
+
+  attribute :date_modified,
     datastream: :descMetadata, multiple: false
 
   attribute :date_uploaded,
