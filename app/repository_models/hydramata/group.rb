@@ -28,7 +28,9 @@ class Hydramata::Group < ActiveFedora::Base
     candidate.add_relationship(:is_member_of, self)
     candidate.save!
     self.create_role(candidate, role)
-    CurateManager.queue_change(depositor, 'added_to_group', descMetadata.pid.to_s, candidate[:email][0])
+    unless is_no_new_or_removed_members?(depositor, candidate[:email][0])
+      CurateManager.queue_change(depositor, 'added_to_group', descMetadata.pid.to_s, candidate[:email][0])
+    end
   end
 
   def remove_member(candidate)
@@ -43,7 +45,9 @@ class Hydramata::Group < ActiveFedora::Base
     self.remove_relationship(:has_member, candidate)
     self.save!
     self.remove_member_privileges(candidate)
-    CurateManager.queue_change(depositor, 'removed_from_group', descMetadata.pid.to_s, candidate[:email][0])
+    unless is_no_new_or_removed_members?(depositor, candidate[:email][0])
+      CurateManager.queue_change(depositor, 'removed_from_group', descMetadata.pid.to_s, candidate[:email][0])
+    end
   end
 
   def to_s
@@ -60,6 +64,10 @@ class Hydramata::Group < ActiveFedora::Base
     else
       self.group_read_membership(candidate)
     end
+  end
+
+  def is_no_new_or_removed_members?(grantor, grantee)
+    grantor.nil? || grantee.nil?
   end
 
   def group_edit_membership(candidate)

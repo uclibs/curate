@@ -84,14 +84,16 @@ class CurationConcern::WorkPermission
     end
 
     def self.queue_emails_for_editors(editors, work)
-      editors.each do |editor_hash|
-        unless has_processed_key?(editor_hash[1])
-          if is_new_editor?(editor_hash[1])
-            CurateManager.queue_change( work.owner, 'added_as_editor', work.pid, user(editor_hash[1]['id']).email )
-          elsif has_destroy_flag?(editor_hash[1])
-            CurateManager.queue_change( work.owner, 'removed_as_editor', work.pid, user(editor_hash[1]['id']).email )
+      unless editors.nil?
+        editors.each do |editor_hash|
+          unless has_processed_key?(editor_hash[1])
+            if is_new_editor?(editor_hash[1])
+              CurateManager.queue_change( work.owner, 'added_as_editor', work.pid, user(editor_hash[1]['id']).email )
+            elsif has_destroy_flag?(editor_hash[1])
+              CurateManager.queue_change( work.owner, 'removed_as_editor', work.pid, user(editor_hash[1]['id']).email )
+            end
+            editor_hash[1]['_processed'] = ''
           end
-          editor_hash[1]['_processed'] = ''
         end
       end
     end
