@@ -13,6 +13,16 @@ describe 'classify_concerns/new.html.erb' do
     expect(rendered).to match /Image/
   end
 
+  it 'displays theses and disserations with the ETD label' do
+    classes.each do |klass|
+      allow(view).to receive(:can?).with(:create, klass) { true }
+    end
+    allow(view).to receive(:classify_concern) { stub_model(ClassifyConcern)}
+    render
+    expect(rendered).to match /ETD/
+    expect(rendered).to_not match /Thesis or Dissertation/
+  end
+
   it 'hides curation_concerns without access' do
     (classes - [Image]).each do |klass|
       allow(view).to receive(:can?).with(:create, klass) { true }

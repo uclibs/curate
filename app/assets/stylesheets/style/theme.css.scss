@@ -82,3 +82,12 @@
 .modal-collection {
   position: fixed;
 }
+
+#facets li {
+  margin-right: 0px;
+  padding-right: 0px;
+}
+
+#facets li .count {
+  margin-right: 5px;
+}

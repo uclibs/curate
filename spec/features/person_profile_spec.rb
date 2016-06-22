@@ -104,10 +104,6 @@ describe 'Profile for a Person: ' do
     let!(:user) {manager_2.user}
     let!(:person) {manager_2.person}
 
-    let(:etd_manager) {FactoryGirl.create(:account, email: 'etd_manager@example.com', first_name: 'Winston', last_name: 'Churchill')}
-    let!(:user2) {etd_manager.user}
-    let!(:person2) {etd_manager.person}
-
     before do
       login_as(manager_user)
     end
@@ -117,13 +113,6 @@ describe 'Profile for a Person: ' do
       click_button 'keyword-search-submit'
       within('#documents') do
         expect(page).to have_link('Stan Theman') #title
-      end
-
-      visit catalog_index_path
-      fill_in 'Search Curate', with: 'Winston'
-      click_button 'keyword-search-submit'
-      within('#documents') do
-        expect(page).to have_link('Winston Churchill') #title
       end
     end
   end

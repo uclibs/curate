@@ -22,7 +22,7 @@ class Etd < ActiveFedora::Base
   self.human_readable_short_description = "Must be submitted by the UC Graduate School"
 
   class_attribute :human_readable_type
-  self.human_readable_type = "ETD"
+  self.human_readable_type = "Thesis or Dissertation"
 
   has_attributes :unit, :unit_attributes, datastream: :descMetadata, multiple: true
 

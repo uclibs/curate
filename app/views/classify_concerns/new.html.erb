@@ -13,7 +13,11 @@
     <% (order + classify_concern.all_curation_concern_classes).uniq.each do |klass| %>
       <% if can? :create, klass %>
         <li class="work-type">
-          <h3 class="title"><%= klass.human_readable_type %></h3>
+          <% if klass == Etd %>
+            <h3 class="title">ETD</h3>
+          <% else %>
+            <h3 class="title"><%= klass.human_readable_type %></h3>
+          <% end %>
           <p class="short-description"><%= klass.human_readable_short_description %></p>
           <%= link_to 'Add New',
             new_polymorphic_path([:curation_concern, klass]),

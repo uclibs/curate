@@ -34,7 +34,7 @@ describe 'Creating an ETD work' do
 
         select(Sufia.config.cc_licenses.keys.first.dup, from: I18n.translate('sufia.field_label.rights'))
         check("I have read and accept the distribution license agreement")
-        click_button("Create ETD")
+        click_button("Create Thesis or Dissertation")
       end
 
       within ('.etd.attributes') do
@@ -59,9 +59,9 @@ describe 'Creating an ETD work' do
           fill_in "External link", with: "http://www.youtube.com/watch?v=oHg5SJYRHA0"
           select(Sufia.config.cc_licenses.keys.first.dup, from: I18n.translate('sufia.field_label.rights'))
           check("I have read and accept the distribution license agreement")
-          click_button("Create ETD")
+          click_button("Create Thesis or Dissertation")
         end
-        expect(page).to have_selector('h1', text: 'ETD')
+        expect(page).to have_selector('h1', text: 'Thesis or Dissertation')
 
         within ('.linked_resource.attributes') do
           expect(page).to have_link('http://www.youtube.com/watch?v=oHg5SJYRHA0', href: 'http://www.youtube.com/watch?v=oHg5SJYRHA0')
@@ -129,7 +129,7 @@ describe 'Viewing an ETD that is private' do
     login_as(user)
     visit curation_concern_etd_path(work)
     page.should have_content('Unauthorized')
-    page.should have_content('The ETD you have tried to access is private')
+    page.should have_content('The Thesis or Dissertation you have tried to access is private')
     page.should have_content("ID: #{work.pid}")
     page.should_not have_content("Sample work")
   end
