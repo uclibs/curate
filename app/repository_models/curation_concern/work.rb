@@ -40,10 +40,12 @@ module CurationConcern
       assets = self.attached_files_and_links
       unless assets.nil?
         assets.each do |asset|
+          access = file_read_access(asset)
           asset.edit_users = self.edit_users
           asset.read_users = self.read_users
           asset.edit_groups = self.edit_groups
-          asset.read_groups = self.read_groups
+          asset.read_groups = filter_read_groups
+          asset.read_groups += access
           asset.save!
         end
       end
@@ -79,5 +81,21 @@ module CurationConcern
       end
     end
 
+    def filter_read_groups
+      filtered = self.read_groups
+      filtered -= ['public']
+      filtered -= ['registered']
+      filtered
+    end
+
+    def file_read_access(file)
+      if file.read_groups.include?("public")
+        return ["public"]
+      elsif file.read_groups.include?("registered")
+        return ["registered"]
+      else
+        return []
+      end
+    end
   end
 end
