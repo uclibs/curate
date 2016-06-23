@@ -59,7 +59,6 @@ describe "Search for a work" do
       expect(page).to have_selector("#document_#{public_work.noid}")
       expect(page).to_not have_selector("#document_#{private_work.noid}")
     end
-
   end
   context "when logged in" do
     let(:person) { FactoryGirl.create(:person_with_user) }
@@ -80,6 +79,17 @@ describe "Search for a work" do
       end
       href_link = add_member_form_collections_path(collectible_id: "#{Sufia.config.id_namespace}:#{noid}")
       page.should have_link("Add Image to Collection", href: href_link)
+    end
+
+    it "sort options should contain 'title sort'" do
+      create_image
+      create_image
+      visit('/')
+      within('.search-form') do
+        fill_in "Search Curate", with: '*'
+        click_button("keyword-search-submit")
+      end
+      expect(page).to have_select("sort", with_options: ['title ▼'])
     end
   end
 

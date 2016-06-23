@@ -34,6 +34,7 @@ class Collection < ActiveFedora::Base
   def to_solr(solr_doc={}, opts={})
     super(solr_doc, opts)
     Solrizer.set_field(solr_doc, 'generic_type', 'Collection', :facetable)
+    Solrizer.set_field(solr_doc, 'sort_title', sort_title, :stored_sortable)
     solr_doc[Solrizer.solr_name('representative', :stored_searchable)] = self.representative
     solr_doc[Solrizer.solr_name('representative_image_url', :stored_searchable)] = self.representative_image_url
     solr_doc[Solrizer.solr_name('owner_name', :stored_searchable)] = owner_name(solr_doc['edit_access_person_ssim'])
@@ -45,6 +46,15 @@ class Collection < ActiveFedora::Base
   end
 
   private
+
+  def sort_title
+    unless self.title.nil?
+      cleaned_title = self.title.sub(/^(a |an |the )/i, "")
+      cleaned_title.delete!(" .,-?!")
+      cleaned_title.upcase!
+      return cleaned_title
+    end
+  end
 
   def generate_derivatives
     case mime_type

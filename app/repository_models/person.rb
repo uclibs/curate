@@ -120,9 +120,17 @@ class Person < ActiveFedora::Base
     end
   end
 
+  def sorting_name
+    name = "#{self.last_name}, #{self.first_name}"
+    name.upcase!
+    return name unless name.blank? or self.first_name.blank? or self.last_name.blank?
+    user_key
+  end
+
   def to_solr(solr_doc={}, opts={})
     super(solr_doc, opts)
     Solrizer.set_field(solr_doc, 'generic_type', 'Person', :facetable)
+    Solrizer.set_field(solr_doc, 'sort_title', self.sorting_name, :stored_sortable)
 
     solr_doc['read_access_group_ssim'] = self.read_groups
 
