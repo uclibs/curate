@@ -160,6 +160,10 @@ This generator makes the following changes to your application:
     remove_file('app/assets/stylesheets/blacklight.css.scss')
   end
 
+  def add_blacklight_locales
+    template 'blacklight.en.yml', 'config/locales/blacklight.en.yml'
+  end
+
   def run_migrations
     rake "db:migrate"
   end
