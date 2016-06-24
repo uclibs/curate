@@ -69,7 +69,7 @@ class CatalogController < ApplicationController
     # solr field configuration for search results/index views
     config.index.show_link = solr_name("desc_metadata__title", :stored_searchable)
     config.index.record_display_type = "id"
-
+    config.http_method = :post
     # solr field configuration for document/show views
     config.show.html_title = solr_name("desc_metadata__title", :stored_searchable)
     config.show.heading = solr_name("desc_metadata__title", :stored_searchable)
