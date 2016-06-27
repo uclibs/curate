@@ -172,6 +172,21 @@ describe CurationConcern::Work do
       work.synchronize_link_and_file_permissions
       expect(work.generic_files.first.edit_groups.length).to eq(0)
     end
+
+    it 'does not copy visibility read groups' do
+      work.read_groups = ['public']
+      work.save
+      work.reload
+
+      work.generic_files.first.read_groups = []
+      work.generic_files.first.save
+      work.generic_files.first.reload      
+
+      work.synchronize_link_and_file_permissions
+
+      expect(work.read_groups).to eq(['public'])
+      expect(work.generic_files.first.read_groups).to eq([])
+    end
   end
 
   describe '#synchronize_link_and_file_ownership' do
