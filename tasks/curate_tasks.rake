@@ -44,6 +44,9 @@ task :generate do
     gem 'kaminari', github: 'harai/kaminari', branch: 'route_prefix_prototype'
     gem 'browse-everything'
     gem 'clamav'
+    gem 'resque'
+    gem 'resque-scheduler'
+    gem 'change_manager'
 
     group :test do
       gem 'capybara'

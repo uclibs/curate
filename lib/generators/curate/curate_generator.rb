@@ -175,4 +175,9 @@ This generator makes the following changes to your application:
   def create_predicate_mapping
     template 'predicate_mappings.yml', 'config/predicate_mappings.yml'
   end
+
+  def create_change_manager_configs
+    template 'change_manager_config.yml', 'config/change_manager_config.yml'
+    template 'change_types.yml', 'config/change_types.yml'
+  end
 end
