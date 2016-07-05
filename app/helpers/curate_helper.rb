@@ -182,6 +182,7 @@ module CurateHelper
     types = Array.new
     types += Curate.configuration.registered_curation_concern_types
     types.delete("StudentWork")
+    types.delete("Etd")
     types.delete("GenericWork")
     types = (types.sort.collect { |type| type.underscore.humanize.capitalize })
     ## "Generic work" will become "other", so we need to re-add it after the sort is performed

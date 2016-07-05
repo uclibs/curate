@@ -293,8 +293,8 @@ describe ApplicationHelper do
       expect(helper.work_types_for_student_works).to be_an(Array)
     end
 
-    it 'should contain all the work types except student work' do
-      expect(helper.work_types_for_student_works.length).to eq(types.length - 1)
+    it 'should contain all the work types except student work and Etd' do
+      expect(helper.work_types_for_student_works.length).to eq(types.length - 2)
     end
   end
 end

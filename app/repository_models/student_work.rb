@@ -19,7 +19,7 @@ class StudentWork < ActiveFedora::Base
   include CurationConcern::RemotelyIdentifiedByDoi::Attributes
 
   class_attribute :human_readable_short_description
-  self.human_readable_short_description = "Deposit any kind of student work."
+  self.human_readable_short_description = "Deposit any kind of student work (excluding Theses and Dissertations)."
 
   has_attributes :unit, :unit_attributes, datastream: :descMetadata, multiple: true
 
