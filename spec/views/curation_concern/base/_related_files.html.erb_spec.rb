@@ -12,5 +12,17 @@ describe 'curation_concern/base/_related_files.html.erb' do
     
     expect(rendered).to include(download_path(file.noid))
   end
+
+  it 'displays a request button when file_size > 3221225472' do
+  	file = stub_model(GenericFile, audit_stat: true, pid: '1234', file_size: "3221225472")
+    work = stub_model(GenericWork, pid: '5678')
+    work.generic_files += [file]
+    allow(view).to receive(:can?) { true }
+
+    render partial: 'curation_concern/base/related_files',
+      locals: {curation_concern: work, with_actions: true}
+    
+    expect(rendered).to include(new_file_request_path(file.noid))
+  end
 end
 

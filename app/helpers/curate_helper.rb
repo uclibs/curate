@@ -69,9 +69,8 @@ module CurateHelper
         end
       elsif method_name == :owner
         owner_name = Person.find(depositor: curation_concern.owner).first
-        unless owner_name.user.manager?
-          markup << %(<li class="attribute #{method_name}"><a href="/people/#{owner_name.noid}">#{owner_name}</a></li>\n)
-        end
+        owner_pid = owner_name.pid[6..30]
+        markup << %(<li class="attribute #{method_name}"><a href="/people/#{owner_pid}">#{owner_name}</a></li>\n)
       elsif method_name == :unit
         markup << %(<li class="attribute unit">#{curation_concern.college_and_department_display}</li>\n) unless curation_concern.college_and_department_display.nil?
       else
