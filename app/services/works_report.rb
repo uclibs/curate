@@ -13,12 +13,56 @@ class WorksReport < Report
   def self.fields(work = GenericWork.new)
     [
       { pid: work.pid },
-      { title: work.title },
       { owner: work.owner },
       { depositor: work.depositor },
       { edit_users: work.edit_users.join(" ") },
       { editors: work.editor_ids.join(" ") },
       { editor_groups: work.editor_group_ids.join(" ") }
+    ] + attributes(work)
+  end
+
+  def self.attributes(work)
+    all_attributes_list.map do |attribute|
+      if work.class.method_defined? attribute
+        { attribute => work.send(attribute) }
+      else
+        { attribute => nil }
+      end
+    end
+  end
+
+  def self.all_attributes_list
+    %i[
+      abstract
+      advisor
+      alternate_title
+      bibliographic_citation
+      contributor
+      committee_member
+      coverage_spatial
+      coverage_temporal
+      degree
+      date_created
+      creator
+      cultural_context
+      description
+      genre
+      identidier
+      inscription
+      issn
+      journal_title
+      language
+      location
+      material
+      measurement
+      note
+      publisher
+      requires
+      source
+      subject
+      title
+      type
+      visibility
     ]
   end
 
