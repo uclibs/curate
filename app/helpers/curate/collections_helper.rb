@@ -38,8 +38,9 @@ module Curate::CollectionsHelper
   #     When set to false, the creators are not listed.
   def list_items_in_collection(collection, terminate=false, options={})
     content_tag :ul, class: 'collection-listing' do
-      (collection.members.sort_by { |member| member.sortable_title }).inject('') do |output, member|
-        output << member_line_item(collection, member, terminate, options)
+      collection.members_from_solr.inject('') do |output, member|
+        member = OpenStruct.new(member)
+        output << member_line_item_solr(collection, member, terminate, options)
       end.html_safe
     end
   end
@@ -91,6 +92,22 @@ module Curate::CollectionsHelper
     end
   end
 
+  def member_line_item_solr(collection, member, terminate, options={})
+    if can? :read, member.id
+      content_tag :li, class: line_item_class(collection), data: { noid: member.noid_tsi }do
+        markup = member.active_fedora_model_ssi == "Collection" ? collection_line_item(member, terminate, options) : work_line_item_solr(member, options)
+
+        if can? :edit, collection
+          markup << collection_member_actions(collection, member)
+        end
+
+        markup
+      end
+    else
+      ""
+    end
+  end
+
   def line_item_class(collection)
     css_class = 'collection-member'
     css_class << ' with-controls' if can? :edit, collection
@@ -101,6 +118,17 @@ module Curate::CollectionsHelper
     link = link_to work.to_s, polymorphic_path_for_asset(work)
     link = link + ' ' + creators(work) if options.fetch(:display_creators, true)
     link
+  end
+
+  def work_line_item_solr(work, options={})
+    link = link_to work.desc_metadata__title_tesim.pop, work_line_item_solr_path(work)
+    link = link + ' ' + creators_solr(work) if options.fetch(:display_creators, true)
+    link
+  end
+
+  def work_line_item_solr_path(work)
+    model = work.active_fedora_model_ssi.downcase
+    eval("curation_concern_#{model}_path(work.noid_tsi)")
   end
 
   def collection_line_item(collection, terminate, options={})
@@ -119,6 +147,14 @@ module Curate::CollectionsHelper
     end
     list_item << list_items_in_collection(collection, true, options) unless terminate  # limit nesting
     list_item
+  end
+
+  def creators_solr(work)
+    if work.respond_to?(:desc_metadata__creator_tesim)
+      "(#{work.desc_metadata__creator_tesim.to_a.join('; ')})"
+    else
+      ''
+    end
   end
 
   def creators(work)
@@ -156,7 +192,7 @@ module Curate::CollectionsHelper
   end
 
   def actions_for_member(collection, member)
-    link_to remove_member_collections_path(id: collection.to_param, item_id: member.pid), data: { confirm: 'Are you sure you want to remove this item from the collection?' }, method: :put, id: "remove-#{member.noid}", class: 'btn', form_class: 'remove-member' do
+    link_to remove_member_collections_path(id: collection.to_param, item_id: member.id), data: { confirm: 'Are you sure you want to remove this item from the collection?' }, method: :put, id: "remove-#{member.noid_tsi}", class: 'btn', form_class: 'remove-member' do
       raw('<i class="icon-minus"></i> Remove')
     end
   end

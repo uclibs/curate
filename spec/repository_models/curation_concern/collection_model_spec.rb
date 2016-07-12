@@ -52,4 +52,25 @@ describe CurationConcern::CollectionModel do
       expect(collection.sortable_title).to eq("title")
     end
   end
+
+  describe '#members_from_solr' do
+    collection = FactoryGirl.create(:collection, title: "A title")
+    collection2 = FactoryGirl.create(:collection, title: "A subcollection")
+    article = FactoryGirl.create(:article, title: "test collection article")
+    collection.add_member(article)
+
+    it 'returns array of hashes from solr of collection members' do
+      expect(collection.members_from_solr.first["desc_metadata__title_tesim"]).to eq(["test collection article"])
+    end
+
+    it 'returns subcollections' do
+      collection.add_member(collection2)
+      expect(collection.members_from_solr.last["active_fedora_model_ssi"]).to eq("Collection")
+    end
+
+    it 'returns the same member count as fedora' do
+      expect(collection.members.length).to eq(collection.members_from_solr.length)
+    end
+  end
+
 end
