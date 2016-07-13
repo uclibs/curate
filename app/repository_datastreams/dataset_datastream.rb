@@ -7,6 +7,10 @@ class DatasetDatastream < ActiveFedora::NtriplesRDFDatastream
 
     map.bibliographic_citation({in: RDF::DC, to: 'bibliographicCitation'})
 
+    map.college({to: "subject#college", in: RDF::QualifiedDC}) do |index|
+      index.as :stored_searchable, :facetable
+    end
+
     map.contributor(in: RDF::DC) do |index|
       index.as :stored_searchable, :facetable
     end
@@ -35,6 +39,10 @@ class DatasetDatastream < ActiveFedora::NtriplesRDFDatastream
     map.date_uploaded(to: "dateSubmitted", in: RDF::DC) do |index|
       index.type :date
       index.as :stored_sortable
+    end
+
+    map.department({to: "subject#department", in: RDF::QualifiedDC}) do |index|
+      index.as :stored_searchable, :facetable
     end
 
     map.description(in: RDF::DC) do |index|

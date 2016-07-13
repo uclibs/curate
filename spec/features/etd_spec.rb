@@ -26,9 +26,9 @@ describe 'Creating an ETD work' do
         # Special fields
         fill_in "etd_advisor", with: "Ross, Bob"
         fill_in "etd_committee_member", with: "Ross, Bill"
-        find('#etd_unit_attributes_0_college').find(:xpath, 'option[3]').select_option
+        find('#etd_college').find(:xpath, 'option[3]').select_option
           # option[2] = "Arts & Sciences"
-        fill_in "etd_unit_attributes_0_department", with: "Biology"
+        fill_in "etd_department", with: "Biology"
         fill_in "etd_degree", with: "MS"
         fill_in "etd_date_created", with: "2015"
 

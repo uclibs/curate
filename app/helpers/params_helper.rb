@@ -10,8 +10,10 @@ module ParamsHelper
     unless params["f"].nil?
       safe_params["f"] = Hash.new;
       safe_params["f"]["collection_sim"] = params["f"]["collection_sim"]
+      safe_params["f"]["desc_metadata__college_sim"] = params["f"]["desc_metadata__college_sim"]
       safe_params["f"]["desc_metadata__creator_sim"] = params["f"]["desc_metadata__creator_sim"]
       safe_params["f"]["desc_metadata__date_created_sim"] = params["f"]["desc_metadata__date_created_sim"]
+      safe_params["f"]["desc_metadata__department_sim"] = params["f"]["desc_metadata__department_sim"]
       safe_params["f"]["desc_metadata__language_sim"] = params["f"]["desc_metadata__language_sim"]
       safe_params["f"]["desc_metadata__publisher_sim"] = params["f"]["desc_metadata__publisher_sim"]
       safe_params["f"]["desc_metadata__subject_sim"] = params["f"]["desc_metadata__subject_sim"]
@@ -34,8 +36,10 @@ module ParamsHelper
     unless safe_params["f"].nil?
       params["f"] = Hash.new
       params["f"]["collection_sim"] = safe_params["f"]["collection_sim"] unless safe_params["f"]["collection_sim"].nil?
+      params["f"]["desc_metadata__college_sim"] = safe_params["f"]["desc_metadata__college_sim"] unless safe_params["f"]["desc_metadata__college_sim"].nil?
       params["f"]["desc_metadata__creator_sim"] = safe_params["f"]["desc_metadata__creator_sim"] unless safe_params["f"]["desc_metadata__creator_sim"].nil?
       params["f"]["desc_metadata__date_created_sim"] = safe_params["f"]["desc_metadata__date_created_sim"] unless safe_params["f"]["desc_metadata__date_created_sim"].nil?
+      params["f"]["desc_metadata__department_sim"] = safe_params["f"]["desc_metadata__department_sim"] unless safe_params["f"]["desc_metadata__department_sim"].nil?
       params["f"]["desc_metadata__language_sim"] = safe_params["f"]["desc_metadata__language_sim"] unless safe_params["f"]["desc_metadata__language_sim"].nil?
       params["f"]["desc_metadata__publisher_sim"] = safe_params["f"]["desc_metadata__publisher_sim"] unless safe_params["f"]["desc_metadata__publisher_sim"].nil?
       params["f"]["desc_metadata__subject_sim"] = safe_params["f"]["desc_metadata__subject_sim"] unless safe_params["f"]["desc_metadata__subject_sim"].nil?
@@ -65,8 +69,10 @@ module ParamsHelper
     return_404 if params[:per_page] && params[:per_page].to_i < 1
 
     limit_param_length(params[:q], 1000) unless defined?(params[:q]) == nil
+    limit_param_length(params["f"]["desc_metadata__college_sim"], 1000) unless defined?(params["f"]["desc_metadata__college_sim"]) == nil
     limit_param_length(params["f"]["desc_metadata__creator_sim"], 1000) unless defined?(params["f"]["desc_metadata__creator_sim"]) == nil
     limit_param_length(params["f"]["desc_metadata__date_created_sim"], 1000) unless defined?(params["f"]["desc_metadata__date_created_sim"]) == nil
+    limit_param_length(params["f"]["desc_metadata__department_sim"], 1000) unless defined?(params["f"]["desc_metadata__department_sim"]) == nil
     limit_param_length(params["f"]["desc_metadata__language_sim"], 1000) unless defined?(params["f"]["desc_metadata__language_sim"]) == nil
     limit_param_length(params["f"]["desc_metadata__publisher_sim"], 1000) unless defined?(params["f"]["desc_metadata__publisher_sim"]) == nil
     limit_param_length(params["f"]["desc_metadata__subject_sim"], 1000) unless defined?(params["f"]["desc_metadata__subject_sim"]) == nil

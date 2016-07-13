@@ -26,10 +26,10 @@
   <% end %>
 
   <ul class="nav nav-list slide-list" id="facets">
-    <%= render_facet_partials %>
+    <%= render_facet_partials(filtered_facet_field_names) %>
   </ul>
 <% else %>
   <ul class="nav nav-list slide-list" id="facets">
-    <%= render_facet_partials %>
+    <%= render_facet_partials(filtered_facet_field_names) %>
   </ul>
 <% end %>

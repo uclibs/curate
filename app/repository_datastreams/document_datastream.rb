@@ -1,10 +1,14 @@
-class DocumentDatastream < GenericWorkRdfDatastream
+class DocumentDatastream < ActiveFedora::NtriplesRDFDatastream
   map_predicates do |map|
     map.alternate_title(to: "title#alternate", in: RDF::QualifiedDC) do |index|
       index.as :stored_searchable
     end
 
     map.bibliographic_citation({in: RDF::DC, to: 'bibliographicCitation'})
+
+    map.college({to: "subject#college", in: RDF::QualifiedDC}) do |index|
+      index.as :stored_searchable, :facetable
+    end
 
     map.contributor(in: RDF::DC) do |index|
       index.as :stored_searchable, :facetable
@@ -34,6 +38,10 @@ class DocumentDatastream < GenericWorkRdfDatastream
     map.date_uploaded(to: "dateSubmitted", in: RDF::DC) do |index|
       index.type :date
       index.as :stored_sortable
+    end
+
+    map.department({to: "subject#department", in: RDF::QualifiedDC}) do |index|
+      index.as :stored_searchable, :facetable
     end
 
     map.description(in: RDF::DC) do |index|

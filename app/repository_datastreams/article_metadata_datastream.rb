@@ -15,6 +15,10 @@ class ArticleMetadataDatastream < ActiveFedora::NtriplesRDFDatastream
       index.as :stored_searchable, :facetable
     end
 
+    map.college({to: "subject#college", in: RDF::QualifiedDC}) do |index|
+      index.as :stored_searchable, :facetable
+    end
+
     map.coverage_spatial({to: "coverage#spatial", in: RDF::QualifiedDC}) do |index|
       index.as :stored_searchable, :facetable
     end
@@ -39,6 +43,10 @@ class ArticleMetadataDatastream < ActiveFedora::NtriplesRDFDatastream
     map.date_uploaded(to: "dateSubmitted", in: RDF::DC) do |index|
       index.type :date
       index.as :stored_sortable
+    end
+
+    map.department({to: "subject#department", in: RDF::QualifiedDC}) do |index|
+      index.as :stored_searchable, :facetable
     end
 
     map.identifier({to: "identifier#doi", in: RDF::QualifiedDC})
