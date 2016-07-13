@@ -10,12 +10,14 @@ describe Etd do
   it { should have_multivalue_field(:contributor) }
   it { should have_multivalue_field(:coverage_spatial) }
   it { should have_multivalue_field(:coverage_temporal) }
+  it { should have_unique_field(:college) }
   it { should have_multivalue_field(:creator) }
   it { should have_multivalue_field(:committee_member) }
   it { should have_unique_field(:date_created) }
   it { should have_unique_field(:date_modified) }
   it { should have_unique_field(:date_uploaded) }
   it { should have_unique_field(:degree) }
+  it { should have_unique_field(:department) }
   it { should have_unique_field(:genre) }
   it { should have_unique_field(:identifier) }
   it { should have_multivalue_field(:language) }
@@ -27,46 +29,53 @@ describe Etd do
   it { should have_multivalue_field(:subject) }
   it { should have_unique_field(:title) }
 
-  it { should respond_to(:unit) }
-
   it { should have_unique_field(:human_readable_type) }
 
-  describe '#build_unit' do
-    ## not using the subject here because we're calling #build_unit with a FactoryGirl callback
-    let(:new_work) { StudentWork.new }
-    before { new_work.build_unit }
+  describe '#unit_for_display' do
+    context 'with college and department set' do
+      before do
+        subject.stub(:college).and_return("Foo")
+        subject.stub(:department).and_return("Bar")
+      end
 
-    it 'should build a node with a blank college' do
-      expect(new_work.unit.first).to respond_to(:college)
-      expect(new_work.unit.first.college).to be_blank
+      it 'should return both' do
+        expect(subject.unit_for_display).to eq("Foo : Bar")
+      end
     end
 
-    it 'should build a node with a blank department' do
-      expect(new_work.unit.first).to respond_to(:department)
-      expect(new_work.unit.first.department).to be_blank
+    context 'with college and department blank' do
+      before do
+        subject.stub(:college).and_return("")
+        subject.stub(:department).and_return("")
+      end
+
+      it 'should return nil' do
+        expect(subject.unit_for_display).to eq(nil)
+      end
+    end
+
+    context 'with just college set' do
+      before do
+        subject.stub(:college).and_return("Foo")
+        subject.stub(:department).and_return("")
+      end
+
+      it 'should return college' do
+        expect(subject.unit_for_display).to eq("Foo")
+      end
+    end
+
+    context 'with just department set' do
+      before do
+        subject.stub(:college).and_return("")
+        subject.stub(:department).and_return("Bar")
+      end
+
+      it 'should return department' do
+        expect(subject.unit_for_display).to eq("Bar")
+      end
     end
   end
-
-  describe '#college' do
-    before { subject.stub(:unit).and_return([OpenStruct.new(college: ["foo"], department: ["bar"])]) }
-
-    it 'returns the college' do
-      expect(work.college).to eq("foo")
-    end
-
-    it 'returns nil if unit not build' do
-
-    end
-  end
-
-  describe '#department' do
-    before { subject.stub(:unit).and_return([OpenStruct.new(college: ["foo"], department: ["bar"])]) }
-
-    it 'returns a department' do
-      expect(work.department).to eq("bar")
-    end
-  end
-
   describe '#degree_for_display' do
     context 'with college and department set' do
       before do
@@ -78,7 +87,7 @@ describe Etd do
       end
 
       it 'should return both' do
-        expect(work.degree_for_display).to eq("2016, MS, UC, Business : Marketing")
+        expect(subject.degree_for_display).to eq("2016, MS, UC, Business : Marketing")
       end
     end
 
@@ -92,7 +101,7 @@ describe Etd do
       end
 
       it 'should return nil' do
-        expect(work.degree_for_display).to eq(nil)
+        expect(subject.degree_for_display).to eq(nil)
       end
     end
 
@@ -106,7 +115,7 @@ describe Etd do
       end
 
       it 'should return the field' do
-        expect(work.degree_for_display).to eq("2016, MS, UC, Marketing")
+        expect(subject.degree_for_display).to eq("2016, MS, UC, Marketing")
       end
     end
 
@@ -120,7 +129,7 @@ describe Etd do
       end
 
       it 'should return the field' do
-        expect(work.degree_for_display).to eq("2016, MS, UC, Business")
+        expect(subject.degree_for_display).to eq("2016, MS, UC, Business")
       end
     end
 
@@ -134,7 +143,7 @@ describe Etd do
       end
 
       it 'should return the field' do
-        expect(work.degree_for_display).to eq("MS, UC, Business : Marketing")
+        expect(subject.degree_for_display).to eq("MS, UC, Business : Marketing")
       end
     end
 
@@ -148,7 +157,7 @@ describe Etd do
       end
 
       it 'should return the field' do
-        expect(work.degree_for_display).to eq("2016, UC, Business : Marketing")
+        expect(subject.degree_for_display).to eq("2016, UC, Business : Marketing")
       end
     end
 
@@ -162,7 +171,7 @@ describe Etd do
       end
 
       it 'should return the field' do
-        expect(work.degree_for_display).to eq("2016, MS, Business : Marketing")
+        expect(subject.degree_for_display).to eq("2016, MS, Business : Marketing")
       end
     end
   end

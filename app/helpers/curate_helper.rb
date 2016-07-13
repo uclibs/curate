@@ -72,7 +72,7 @@ module CurateHelper
         owner_pid = owner_name.pid[6..30]
         markup << %(<li class="attribute #{method_name}"><a href="/people/#{owner_pid}">#{owner_name}</a></li>\n)
       elsif method_name == :unit
-        markup << %(<li class="attribute unit">#{curation_concern.college_and_department_display}</li>\n) unless curation_concern.college_and_department_display.nil?
+        markup << %(<li class="attribute unit">#{curation_concern.unit_for_display}</li>\n) unless curation_concern.unit_for_display.nil?
       else
         markup << %(<li class="attribute #{method_name}">#{h(value).gsub(/\n/, '<br/>')}</li>\n)
       end
@@ -185,5 +185,26 @@ module CurateHelper
     types = (types.sort.collect { |type| type.underscore.humanize.capitalize })
     ## "Generic work" will become "other", so we need to re-add it after the sort is performed
     types << "Generic Work"
+  end
+  def current_user_college
+    current_user.college
+  end
+
+  def current_user_department
+    current_user.department
+  end
+
+  def filtered_facet_field_names
+    ## only show department if college is set in params
+    cache = facet_field_names
+    if params["f"].nil? 
+      cache.delete("desc_metadata__department_sim") 
+      return cache
+    end
+    if params["f"]["desc_metadata__college_sim"].nil? 
+      cache.delete("desc_metadata__department_sim") 
+      return cache
+    end
+    cache
   end
 end

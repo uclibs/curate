@@ -57,6 +57,26 @@ module Curate
         ""
       end
 
+      def college
+        return "Other" if self.ucdepartment.nil?
+        COLLEGE_AND_DEPARTMENT["current_colleges"].keys.each do |key|
+          if self.ucdepartment.downcase.start_with?(key + " ")
+            return COLLEGE_AND_DEPARTMENT["current_colleges"][key]["label"]
+          end
+        end
+        "Other"
+      end
+
+      def department
+        return "Unknown" if self.ucdepartment.nil?
+        COLLEGE_AND_DEPARTMENT["current_colleges"].keys.each do |key|
+          if self.ucdepartment.downcase.start_with?(key + " ")
+            return self.ucdepartment.downcase.sub!(key + " ", "").titleize
+          end
+        end
+        "Unknown"
+      end
+
       def groups
         person.group_pids
       end

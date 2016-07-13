@@ -24,12 +24,6 @@ class Etd < ActiveFedora::Base
   class_attribute :human_readable_type
   self.human_readable_type = "ETD"
 
-  has_attributes :unit, :unit_attributes, datastream: :descMetadata, multiple: true
-
-  def build_unit
-    descMetadata.unit = [EtdDatastream::Unit.new(RDF::Repository.new)]
-  end
-
   self.indefinite_article = 'an'
 
   attribute :abstract,
@@ -42,6 +36,9 @@ class Etd < ActiveFedora::Base
     datastream: :descMetadata, multiple: true
 
   attribute :bibliographic_citation,
+    datastream: :descMetadata, multiple: false
+
+  attribute :college,
     datastream: :descMetadata, multiple: false
 
   attribute :contributor,
@@ -69,6 +66,9 @@ class Etd < ActiveFedora::Base
     datastream: :descMetadata, multiple: false
 
   attribute :degree,
+    datastream: :descMetadata, multiple: false
+
+  attribute :department,
     datastream: :descMetadata, multiple: false
 
   attribute :genre,
@@ -119,25 +119,6 @@ class Etd < ActiveFedora::Base
     default: "Text"
 
   attribute :files, multiple: true, form: {as: :file}
-
-  def to_solr(solr_doc = {})
-    super
-    solr_doc[Solrizer.solr_name('desc_metadata__college', :stored_searchable)] = college
-    solr_doc[Solrizer.solr_name('desc_metadata__college', :facetable)] = college
-    solr_doc[Solrizer.solr_name('desc_metadata__department', :stored_searchable)] = department
-    solr_doc[Solrizer.solr_name('desc_metadata__department', :facetable)] = department
-    solr_doc
-  end
-
-  def college
-    return self.unit.first.college.first unless self.unit.blank?
-    nil
-  end
-
-  def department
-    return self.unit.first.department.first unless self.unit.blank?
-    nil
-  end
 
   def degree_for_display
     field = []

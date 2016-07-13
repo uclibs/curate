@@ -8,8 +8,6 @@ class CurationConcern::EtdsController < CurationConcern::GenericWorksController
     curation_concern.readers.build
     curation_concern.editor_groups.build
     curation_concern.reader_groups.build
-
-    curation_concern.build_unit if curation_concern.unit.blank?
   end
 
   private
