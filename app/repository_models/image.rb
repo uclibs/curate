@@ -41,12 +41,18 @@ class Image < ActiveFedora::Base
     ds.attribute :bibliographic_citation,
       multiple: false
 
+    ds.attribute :college,
+      multiple: false
+
     ds.attribute :creator,
       multiple: true,
       validates: { multi_value_presence: { message: "You must have a creator." } }
 
     ds.attribute :date_created,
       multiple: false
+
+    attribute :department,
+     multiple: false
 
     ds.attribute :description,
       multiple: false
@@ -125,4 +131,19 @@ class Image < ActiveFedora::Base
   attribute :files,
     multiple: true, form: {as: :file}, label: "Upload Files"
 
+  def unit_for_display
+		if self.college.blank?
+			if self.department.blank?
+				nil
+			else
+				self.department
+			end
+		else
+			if self.department.blank?
+				self.college
+			else
+				self.college + " : " + self.department
+			end
+		end
+	end
 end

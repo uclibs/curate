@@ -10,6 +10,10 @@ class StudentWorkRdfDatastream < ActiveFedora::NtriplesRDFDatastream
 
     map.bibliographic_citation({in: RDF::DC, to: 'bibliographicCitation'})
 
+    map.college({to: "subject#college", in: RDF::QualifiedDC}) do |index|
+      index.as :stored_searchable, :facetable
+    end
+
     map.contributor(in: RDF::DC) do |index|
       index.as :stored_searchable, :facetable
     end
@@ -42,6 +46,10 @@ class StudentWorkRdfDatastream < ActiveFedora::NtriplesRDFDatastream
     map.date_uploaded(to: "dateSubmitted", in: RDF::DC) do |index|
       index.type :date
       index.as :stored_sortable
+    end
+
+    map.department({to: "subject#department", in: RDF::QualifiedDC}) do |index|
+      index.as :stored_searchable, :facetable
     end
 
     map.description(in: RDF::DC) do |index|
@@ -90,32 +98,6 @@ class StudentWorkRdfDatastream < ActiveFedora::NtriplesRDFDatastream
 
     map.type(in: RDF::DC) do |index|
       index.as :stored_searchable, :facetable
-    end
-
-    map.unit(to: "subject#unit", in: RDF::QualifiedDC, class_name: 'Unit')
-  end
-
-  accepts_nested_attributes_for :unit
-  class Unit
-    include ActiveFedora::RdfObject
-    map_predicates do |map|
-      map.college({ to: 'subject#college', in: RDF::QualifiedDC }) do |index|
-        index.type :text
-        index.as :stored_searchable, :facetable
-      end
-
-      map.department({ to: 'subject#department', in: RDF::QualifiedDC }) do |index|
-        index.type :text
-        index.as :stored_searchable, :facetable
-      end
-    end
-
-    def persisted?
-      rdf_subject.present?
-    end
-
-    def id
-      rdf_subject.to_s if persisted?
     end
   end
 end
