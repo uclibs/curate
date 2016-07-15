@@ -8,4 +8,8 @@ module GenericFileHelper
     can?(:read, gf) ? gf.filename : "File"
   end
 
+  def manager_deposit?(gf)
+  	Person.find(depositor: curation_concern.depositor).first.user.manager?
+  end
+
 end
