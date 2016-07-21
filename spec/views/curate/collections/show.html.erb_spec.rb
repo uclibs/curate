@@ -1,8 +1,8 @@
 require 'spec_helper'
 
 describe 'curate/collections/show.html.erb' do
-  let(:parent_collection) { FactoryGirl.build(:collection, title: "Top Level Collection") }
-  let(:child_collection) { FactoryGirl.build(:collection, title: "Inner Level Collection") }
+  let(:parent_collection) { FactoryGirl.create(:collection, title: "Top Level Collection") }
+  let(:child_collection) { FactoryGirl.create(:collection, title: "Inner Level Collection") }
 
   it "displays the parent/child relationship between nested collections" do
     parent_collection.add_member(child_collection)
