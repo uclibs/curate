@@ -9,8 +9,10 @@
       <td><%= curation_concern.filename %></td>
     </tr>
     <tr>
-      <th>Depositor</th>
-      <td><%= curation_concern.depositor %></td>
+      <% unless manager_deposit?(curation_concern) %>
+        <th>Depositor</th>
+        <td><%= curation_concern.depositor %></td>
+      <% end %>
     </tr>
     <tr>
       <th>Date Uploaded</th>
