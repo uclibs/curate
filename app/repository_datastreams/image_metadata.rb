@@ -61,7 +61,9 @@ class ImageMetadata < ActiveFedora::NtriplesRDFDatastream
 
     map.material(in: RDF::Image)
 
-    map.note({to: 'description#note', in: RDF::QualifiedDC})
+    map.note({to: 'description#note', in: RDF::QualifiedDC}) do |index|
+      index.as :stored_searchable
+    end
 
     map.publisher(in: RDF::DC) do |index|
       index.as :stored_searchable, :facetable

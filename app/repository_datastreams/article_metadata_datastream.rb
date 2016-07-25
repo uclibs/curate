@@ -54,7 +54,9 @@ class ArticleMetadataDatastream < ActiveFedora::NtriplesRDFDatastream
       index.as :stored_searchable, :facetable
     end
   
-    map.note({to: 'description', in: RDF::DC})
+    map.note({to: 'description', in: RDF::DC}) do |index|
+      index.as :stored_searchable
+    end
   
     map.permissions({in: RDF::DC, to: 'accessRights'})
   
