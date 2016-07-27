@@ -5,7 +5,7 @@
     <%= render :partial => 'curate/collections/thumbnail_display', locals: {document: @collection} %>
   <% end %>
   <h1> <%= @collection.title %> </h1>
-  <p>Collection submitted by: <%= link_owner(@collection).html_safe %></p>
+  <p>Collection submitted by: <%= link_owner.html_safe %></p>
   <p><%= link_to('Search within this collection',
            catalog_index_path({"f"=>{"collection_sim"=>[@collection.pid]}}),
            class: 'btn') %></p>
@@ -38,7 +38,12 @@
   <%= list_items_in_collection(@collection) %>
 </div>
 
-<%= render 'parent_collections_list' %>
+<% @collection.collections.each do |collection| %>
+  <% if can?(:read, collection) %>
+    <%= render 'parent_collections_list' %>
+    <% break %>
+  <% end %>
+<% end %>
 
 <div class="page-link">
   <% this_page = Curate.configuration.application_root_url + polymorphic_path(@collection) %>

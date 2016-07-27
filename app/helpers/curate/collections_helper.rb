@@ -38,9 +38,17 @@ module Curate::CollectionsHelper
   #     When set to false, the creators are not listed.
   def list_items_in_collection(collection, terminate=false, options={})
     content_tag :ul, class: 'collection-listing' do
-      (collection.members.sort_by { |member| member.sortable_title }).inject('') do |output, member|
-        output << member_line_item(collection, member, terminate, options)
-      end.html_safe
+      if collection.is_a?(ProfileSection)
+        collection.members.inject('') do |output, member|
+          output << member_line_item(collection, member, terminate, options)
+        end.html_safe
+      else
+        collection = Collection.find(collection.id) if collection.class == OpenStruct
+        collection.members_from_solr.inject('') do |output, member|
+          member = OpenStruct.new(member)
+          output << member_line_item_solr(collection, member, terminate, options)
+        end.html_safe
+      end
     end
   end
 
@@ -91,6 +99,22 @@ module Curate::CollectionsHelper
     end
   end
 
+  def member_line_item_solr(collection, member, terminate, options={})
+    if can? :read, member.id
+      content_tag :li, class: line_item_class(collection), data: { noid: member.noid_tsi }do
+        markup = member.active_fedora_model_ssi == "Collection" ? collection_line_item_solr(member, terminate, options) : work_line_item_solr(member, options)
+
+        if can? :edit, collection
+          markup << collection_member_actions_solr(collection, member)
+        end
+
+        markup
+      end
+    else
+      ""
+    end
+  end
+
   def line_item_class(collection)
     css_class = 'collection-member'
     css_class << ' with-controls' if can? :edit, collection
@@ -101,6 +125,17 @@ module Curate::CollectionsHelper
     link = link_to work.to_s, polymorphic_path_for_asset(work)
     link = link + ' ' + creators(work) if options.fetch(:display_creators, true)
     link
+  end
+
+  def work_line_item_solr(work, options={})
+    link = link_to work.desc_metadata__title_tesim.pop, work_line_item_solr_path(work)
+    link = link + ' ' + creators_solr(work) if options.fetch(:display_creators, true)
+    link
+  end
+
+  def work_line_item_solr_path(work)
+    model = work.active_fedora_model_ssi.underscore
+    eval("curation_concern_#{model}_path(work.noid_tsi)")
   end
 
   def collection_line_item(collection, terminate, options={})
@@ -121,6 +156,32 @@ module Curate::CollectionsHelper
     list_item
   end
 
+  def collection_line_item_solr(collection, terminate, options={})
+    # A collection listed as a terminal (terminate is true) member of another collection gets a
+    # normal-sized (<p>) font versus a collection heading-sized (<h3>) font.
+    headertag = terminate ? :p : :h3
+    list_item = content_tag headertag, class: 'collection-section-heading' do
+      if collection.is_a?(ProfileSection)
+        collection.to_s
+      else
+        link_to collection.desc_metadata__title_tesim.first, "/collections/#{collection.id}"
+      end
+    end
+    if collection.desc_metadata__description_tesim.present?
+      list_item << content_tag( :div, collection.desc_metadata__description_tesim.first, class: 'collection-section-description')
+    end
+    list_item << list_items_in_collection(collection, true, options) unless terminate  # limit nesting
+    list_item
+  end
+ 
+  def creators_solr(work)
+    if work.respond_to?(:desc_metadata__creator_tesim)
+      "(#{work.desc_metadata__creator_tesim.to_a.join('; ')})"
+    else
+      ''
+    end
+  end
+
   def creators(work)
     if work.respond_to?(:creator)
       "(#{work.creator.to_a.join('; ')})"
@@ -129,7 +190,7 @@ module Curate::CollectionsHelper
     end
   end
 
-  def link_owner(collection)
+  def link_owner
     owner_name = Person.find(depositor: @collection.edit_users.first).first
     owner_pid = owner_name.pid[6..30] 
     link = "<a href='/people/#{owner_pid}'>#{owner_name}</a>"
@@ -142,6 +203,17 @@ module Curate::CollectionsHelper
         markup << actions_for_profile_section(collection, member)
       else
         actions_for_member(collection, member)
+      end
+    end
+  end
+
+  def collection_member_actions_solr(collection, member)
+    content_tag :span, class: 'collection-member-actions' do
+      if member.respond_to?(:members)
+        markup = actions_for_member_solr(collection, member)
+        markup << actions_for_profile_section(collection, member)
+      else
+        actions_for_member_solr(collection, member)
       end
     end
   end
@@ -161,5 +233,10 @@ module Curate::CollectionsHelper
     end
   end
 
+  def actions_for_member_solr(collection, member)
+    link_to remove_member_collections_path(id: collection.to_param, item_id: member.id), data: { confirm: 'Are you sure you want to remove this item from the collection?' }, method: :put, id: "remove-#{member.noid_tsi}", class: 'btn', form_class: 'remove-member' do
+      raw('<i class="icon-minus"></i> Remove')
+    end
+  end
 end
 

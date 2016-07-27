@@ -15,6 +15,10 @@ class Collection < ActiveFedora::Base
 
   before_save :add_profile_image, :only => [ :create, :update ]
 
+  def members_from_solr
+    ActiveFedora::Base.find_with_conditions({ collection_sim: self.pid }, { rows: [2000], sort: ['sort_title_ssi asc'] })
+  end
+
   def can_be_member_of_collection?(collection)
     collection == self ? false : true
   end
