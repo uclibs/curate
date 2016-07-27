@@ -83,6 +83,9 @@ class Curate::CollectionsController < ApplicationController
 
   def add_member
     if @collection && @collection.add_member(@collectible)
+      item = ActiveFedora::Base.find(params[:collectible_id], cast:true)
+      item.save
+      @collection.save
       flash[:notice] = "\"#{@collectible}\" has been added to \"#{@collection}\""
     else
       flash[:error] = 'Unable to add item to collection.'
@@ -94,6 +97,7 @@ class Curate::CollectionsController < ApplicationController
     @collection = ActiveFedora::Base.find(params[:id], cast: true)
     item = ActiveFedora::Base.find(params[:item_id], cast:true)
     @collection.remove_member(item)
+    ActiveFedora::Base.find(params[:item_id], cast:true).save
     redirect_to params.fetch(:redirect_to) { collection_path(params[:id]) }
   end
 

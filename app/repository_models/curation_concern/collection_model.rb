@@ -35,6 +35,20 @@ module CurationConcern
     def to_solr(solr_doc={}, opts={})
       super
       Solrizer.set_field(solr_doc, 'generic_type', human_readable_type, :facetable)
+      index_collection_pids(solr_doc)
+      solr_doc
+    end
+
+    def index_collection_pids(solr_doc)
+      solr_doc[Solrizer.solr_name(:collection, :facetable)] ||= []
+      solr_doc[Solrizer.solr_name(:collection)] ||= []
+      self.collection_ids.each do |collection_id|
+        collection_obj = ActiveFedora::Base.load_instance_from_solr(collection_id)
+        if collection_obj.is_a?(Collection)
+          solr_doc[Solrizer.solr_name(:collection, :facetable)] << collection_id
+          solr_doc[Solrizer.solr_name(:collection)] << collection_id
+        end
+      end
       solr_doc
     end
 
