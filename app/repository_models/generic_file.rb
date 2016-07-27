@@ -71,6 +71,12 @@ class GenericFile < ActiveFedora::Base
     obj.representative = self.pid
     obj.save
   end
+  
+  before_save :set_title_if_blank
+
+    def set_title_if_blank
+      self.title = [self.filename] if self.title == [""]
+    end
 
   private
   def check_and_clear_parent_representative
