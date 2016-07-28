@@ -25,6 +25,6 @@ class Report
   end
 
   def self.report_row(object)
-    fields(object).collect { |field| field.values[0] }   
+    fields(object).collect { |field| field.values.join("|").gsub(/\n/, " ") }   
   end
 end
