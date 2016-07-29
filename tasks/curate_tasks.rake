@@ -47,7 +47,6 @@ task :generate do
     gem 'resque'
     gem 'resque-scheduler'
     gem 'change_manager'
-    gem 'turbolinks', '2.5.3'
 
     group :test do
       gem 'capybara'
