@@ -37,8 +37,13 @@
       </div>
     <div class="span12 form-actions">
       <%- if curation_concern.new_record? -%>
-        <%= f.button :submit, "Create #{curation_concern.human_readable_type}", class: 'btn btn-primary require-contributor-agreement'  %>
+      <div class="span3">  
+        <%= f.button :submit, "Create #{curation_concern.human_readable_type}", class: 'btn btn-primary require-contributor-agreement', id: 'submit_work'  %>
         <%= link_to 'Cancel', root_path, class: 'btn btn-link' %>
+      </div>
+      <div class="span8 pull-right" id="spinner-wrapper">
+        &nbsp;
+      </div>
       <%- else -%>
         <%= f.button :submit, "Update #{curation_concern.human_readable_type}", class: 'btn btn-primary require-contributor-agreement'  %>
         <%= link_to 'Cancel', polymorphic_path([:curation_concern, curation_concern]), class: 'btn btn-link' %>

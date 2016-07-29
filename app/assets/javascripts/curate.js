@@ -46,6 +46,7 @@
 //= require lodash
 //= require license-selector
 //= require select-license
+//= require spin
 //
 // Initialize plugins and Bootstrap dropdowns on jQuery's ready event as well as
 // Turbolinks's page change event.

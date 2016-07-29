@@ -15,6 +15,7 @@
     <%= javascript_include_tag 'application' %>
     <%= javascript_include_tag 'modernizr' %>
     <%= javascript_include_tag 'required_form_validate' %>
+
   </head>
   <% if controller.class.ancestors.include?(CurationConcern::BaseController) && controller.action_name == 'new' %>
     <body data-no-turbolink="false">
