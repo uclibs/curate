@@ -44,6 +44,14 @@ describe GenericFile do
     expect(persisted_generic_file.to_s).to eq(File.basename(__FILE__))
   end
 
+
+ it 'has file_name as its title when title is blank' do
+      persisted_generic_file.title = [""]
+      persisted_generic_file.save!
+      expect(persisted_generic_file.to_s).to eq(File.basename(__FILE__))
+    end
+  
+
   context '#latest_version' do
     subject { described_class.new.latest_version }
     it { should respond_to :created_on }
