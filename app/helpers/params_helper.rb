@@ -11,6 +11,7 @@ module ParamsHelper
       safe_params["f"] = Hash.new;
       safe_params["f"]["collection_sim"] = params["f"]["collection_sim"]
       safe_params["f"]["desc_metadata__creator_sim"] = params["f"]["desc_metadata__creator_sim"]
+      safe_params["f"]["desc_metadata__date_created_sim"] = params["f"]["desc_metadata__date_created_sim"]
       safe_params["f"]["desc_metadata__language_sim"] = params["f"]["desc_metadata__language_sim"]
       safe_params["f"]["desc_metadata__publisher_sim"] = params["f"]["desc_metadata__publisher_sim"]
       safe_params["f"]["desc_metadata__subject_sim"] = params["f"]["desc_metadata__subject_sim"]
@@ -34,6 +35,7 @@ module ParamsHelper
       params["f"] = Hash.new
       params["f"]["collection_sim"] = safe_params["f"]["collection_sim"] unless safe_params["f"]["collection_sim"].nil?
       params["f"]["desc_metadata__creator_sim"] = safe_params["f"]["desc_metadata__creator_sim"] unless safe_params["f"]["desc_metadata__creator_sim"].nil?
+      params["f"]["desc_metadata__date_created_sim"] = safe_params["f"]["desc_metadata__date_created_sim"] unless safe_params["f"]["desc_metadata__date_created_sim"].nil?
       params["f"]["desc_metadata__language_sim"] = safe_params["f"]["desc_metadata__language_sim"] unless safe_params["f"]["desc_metadata__language_sim"].nil?
       params["f"]["desc_metadata__publisher_sim"] = safe_params["f"]["desc_metadata__publisher_sim"] unless safe_params["f"]["desc_metadata__publisher_sim"].nil?
       params["f"]["desc_metadata__subject_sim"] = safe_params["f"]["desc_metadata__subject_sim"] unless safe_params["f"]["desc_metadata__subject_sim"].nil?
@@ -64,6 +66,7 @@ module ParamsHelper
 
     limit_param_length(params[:q], 1000) unless defined?(params[:q]) == nil
     limit_param_length(params["f"]["desc_metadata__creator_sim"], 1000) unless defined?(params["f"]["desc_metadata__creator_sim"]) == nil
+    limit_param_length(params["f"]["desc_metadata__date_created_sim"], 1000) unless defined?(params["f"]["desc_metadata__date_created_sim"]) == nil
     limit_param_length(params["f"]["desc_metadata__language_sim"], 1000) unless defined?(params["f"]["desc_metadata__language_sim"]) == nil
     limit_param_length(params["f"]["desc_metadata__publisher_sim"], 1000) unless defined?(params["f"]["desc_metadata__publisher_sim"]) == nil
     limit_param_length(params["f"]["desc_metadata__subject_sim"], 1000) unless defined?(params["f"]["desc_metadata__subject_sim"]) == nil
