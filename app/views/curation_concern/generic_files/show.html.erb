@@ -6,11 +6,15 @@
 <%= render "attributes", curation_concern: curation_concern %>
 
 <% if curation_concern.filename[".pdf"] %>
-	<%= link_to 'Download Adobe Acrobat Reader', 'https://get.adobe.com/reader/otherversions/', :target => "_blank"%>
+  <%= link_to 'Download Adobe Acrobat Reader', 'https://get.adobe.com/reader/otherversions/', :target => "_blank"%>
 <% end %>
 
   <div class="form-actions">
-    <%= link_to "Download this File", download_path(curation_concern), class: 'btn btn-primary' %>
+    <%- if curation_concern.file_size.first.to_i < Curate.configuration.max_file_size -%>
+      <%= link_to 'Download', download_path(curation_concern.noid),{class: 'btn', title: "Download #{curation_concern.to_s.inspect}", :target => "_blank"}%>
+    <%- else -%>
+      <%= link_to 'Request', new_file_request_path(pid: curation_concern.noid) ,{class: 'btn', title: "Request #{curation_concern.to_s.inspect}", :target => "_blank"}%>
+    <%- end -%>
     <% if can? :edit, curation_concern %>
       <%= link_to "Edit this File", edit_polymorphic_path([:curation_concern, curation_concern]), class: 'btn btn-primary'  %>
     <% end %>
