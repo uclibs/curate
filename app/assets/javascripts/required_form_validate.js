@@ -36,7 +36,7 @@ function validateAllFields() {
 	if (valid) {
 		var spinner = new Spinner().spin();
 		$('#spinner-wrapper').append(spinner.el);
-		document.forms['new_work_form'].submit();
+		document.forms['new_input_form'].submit();
 		return true;
 	}
 	else return false;
