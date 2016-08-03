@@ -26,6 +26,12 @@ module Curate
       @search_config ||= "search_config not set"
     end
 
+    # Configure the max file size for download
+    attr_writer :max_file_size
+    def max_file_size
+      @max_file_size || (raise RuntimeError.new("Make sure to set your Curate.configuration.max_file_size"))
+    end
+
     # Configure the application root url.
     attr_writer :application_root_url
     def application_root_url
