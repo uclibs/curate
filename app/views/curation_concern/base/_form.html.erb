@@ -1,4 +1,4 @@
-<%= simple_form_for [:curation_concern, curation_concern], html: { onsubmit: 'event.preventDefault(); validateAllFields();', name: "new_work_form" } do |f| %>
+<%= simple_form_for [:curation_concern, curation_concern], html: { onsubmit: 'event.preventDefault(); validateAllFields();', name: "new_input_form" } do |f| %>
   
   <% if f.error_notification -%>
     <div class="alert alert-error fade in">
