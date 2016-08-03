@@ -22,7 +22,7 @@ describe 'curation_concern/base/_related_files.html.erb' do
     render partial: 'curation_concern/base/related_files',
       locals: {curation_concern: work, with_actions: true}
     
-    expect(rendered).to include(new_file_request_path(file.noid))
+    expect(rendered).to have_content("Request")
   end
 end
 
