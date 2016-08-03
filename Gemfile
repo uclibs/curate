@@ -11,6 +11,7 @@ gemspec
 # your gem to rubygems.org.
 #
 #
+gem 'turbolinks', '2.5.3'
 
 gem 'coveralls', require: false
 gem 'simplecov', require: false
