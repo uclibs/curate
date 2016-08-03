@@ -34,7 +34,9 @@ function validateAllFields() {
 		stripWhiteSpace(inputs[i].value);
 	}
 	if (valid) {
-		document.forms['new_work_form'].submit();
+		var spinner = new Spinner().spin();
+		$('#spinner-wrapper').append(spinner.el);
+		document.forms['new_input_form'].submit();
 		return true;
 	}
 	else return false;

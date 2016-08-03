@@ -1,4 +1,4 @@
-<%= simple_form_for [:curation_concern, curation_concern] do |f| %>
+<%= simple_form_for [:curation_concern, curation_concern], html: { onsubmit: 'event.preventDefault(); validateAllFields();', name: "new_input_form" } do |f| %>
   <div class="row">
     <div class="span6">
       <fieldset class="required">
@@ -29,11 +29,21 @@
 
   <div class="row">
     <div class="span12 form-actions">
+      <div class="span3">
+
       <%= f.submit(
         (curation_concern.persisted? ? "Update Attached File" : %(Attach to #{parent.human_readable_type})),
-        class: 'btn btn-primary'
+        class: 'btn btn-primary', id: 'attach_file'
       ) %>
       <%= link_to 'Cancel', polymorphic_path([:curation_concern, parent]), class: 'btn btn-link' %>
+
+      </div>
+
+      <div class="span8 pull-right" id="spinner-wrapper">
+       &nbsp;
+      </div>
+
     </div>
+
   </div>
 <% end %>
