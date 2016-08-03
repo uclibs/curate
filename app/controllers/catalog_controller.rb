@@ -84,6 +84,10 @@ class CatalogController < ApplicationController
     config.add_facet_field solr_name("human_readable_type", :facetable), label: "Type of Work", limit: 5
     config.add_facet_field solr_name(:desc_metadata__creator, :facetable), label: "Creator", helper_method: :creator_name_from_pid, limit: 5
 
+    ##
+    ## IMPORTANT: if you add any additional facets, also add the param to the params_helper
+    ##
+
     config.add_facet_field solr_name("desc_metadata__tag", :facetable), label: "Keyword", limit: 5
     config.add_facet_field solr_name("desc_metadata__subject", :facetable), label: "Subject", limit: 5
     config.add_facet_field solr_name("desc_metadata__language", :facetable), label: "Language", limit: 5
