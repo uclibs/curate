@@ -57,11 +57,37 @@ module Curate
         ""
       end
 
+      def college
+        return "Other" if self.ucdepartment.nil?
+        user_colleges.keys.each do |key|
+          if self.ucdepartment.downcase.start_with?(key + " ")
+            return user_colleges[key]["label"]
+          end
+        end
+        "Other"
+      end
+
+      def department
+        return "Unknown" if self.ucdepartment.nil?
+        user_colleges.keys.each do |key|
+          if self.ucdepartment.downcase.start_with?(key + " ")
+            return self.ucdepartment[/(?<=\s).*/]
+          end
+        end
+        self.ucdepartment
+      end
+
       def groups
         person.group_pids
       end
 
       private
+
+      def user_colleges
+        COLLEGE_AND_DEPARTMENT["current_colleges_for_degrees"].merge(
+          COLLEGE_AND_DEPARTMENT["additional_current_colleges"]
+        )
+      end
 
       def load_etd_managers
         etd_manager_config = "#{::Rails.root}/config/etd_manager_usernames.yml"

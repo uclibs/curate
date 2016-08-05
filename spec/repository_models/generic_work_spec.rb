@@ -8,7 +8,54 @@ describe GenericWork do
   it_behaves_like 'has_common_solr_fields'
 
   it { should have_unique_field(:human_readable_type) }
+  it { should have_unique_field(:college) }
+  it { should have_unique_field(:department) }
 
+  describe '#unit_for_display' do
+    context 'with college and department set' do
+      before do
+        subject.stub(:college).and_return("Foo")
+        subject.stub(:department).and_return("Bar")
+      end
+
+      it 'should return both' do
+        expect(subject.unit_for_display).to eq("Foo : Bar")
+      end
+    end
+
+    context 'with college and department blank' do
+      before do
+        subject.stub(:college).and_return("")
+        subject.stub(:department).and_return("")
+      end
+
+      it 'should return nil' do
+        expect(subject.unit_for_display).to eq(nil)
+      end
+    end
+
+    context 'with just college set' do
+      before do
+        subject.stub(:college).and_return("Foo")
+        subject.stub(:department).and_return("")
+      end
+
+      it 'should return college' do
+        expect(subject.unit_for_display).to eq("Foo")
+      end
+    end
+
+    context 'with just department set' do
+      before do
+        subject.stub(:college).and_return("")
+        subject.stub(:department).and_return("Bar")
+      end
+
+      it 'should return department' do
+        expect(subject.unit_for_display).to eq("Bar")
+      end
+    end
+  end
   context '#rights' do
     it 'has a default value' do
       GenericWork.new.rights.should == 'All rights reserved'

@@ -237,10 +237,10 @@ describe ApplicationHelper do
     helper.auto_link_without_protocols("google.com").should have_link("http://google.com")
   end
 
-  describe '#sorted_college_list' do
+  describe '#sorted_college_list_for_degrees' do
     before do
       stub_const("COLLEGE_AND_DEPARTMENT",
-                  {"current_colleges"=> 
+                  {"current_colleges_for_degrees"=> 
                     {
                       "ceas"=>{"label"=>"Engineering"},
                       "com"=>{"label"=>"College of Medicine"},
@@ -249,19 +249,50 @@ describe ApplicationHelper do
                   } 
                 )
     end
+
     it "should return an array" do
-      expect(helper.sorted_college_list).to be_an(Array) 
+      expect(helper.sorted_college_list_for_degrees).to be_an(Array) 
     end
 
-    it "should contain all the colleges, plus 'other'" do
-      expect(helper.sorted_college_list.length).to eq(COLLEGE_AND_DEPARTMENT["current_colleges"].length + 1)
+    it "should contain all the colleges for degrees, plus 'other'" do
+      expect(helper.sorted_college_list_for_degrees).to eq(
+       ['Arts & Sciences','College of Medicine','Engineering','Other']
+      )
+    end
+  end
+
+  describe '#sorted_college_list_for_generic_works' do
+    before do
+      stub_const("COLLEGE_AND_DEPARTMENT",
+                  {"current_colleges_for_degrees"=> 
+                    {
+                      "ceas"=>{"label"=>"Engineering"},
+                      "com"=>{"label"=>"Arts & Sciences"},
+                    },
+                   "additional_current_colleges"=> 
+                    {
+                      "ucl"=>{"label"=>"Libraries"},
+                      "ucba"=>{"label"=>"Blue Ash College"},
+                    },
+                  }
+                )
+    end
+
+    it "should return an array" do
+      expect(helper.sorted_college_list_for_degrees).to be_an(Array) 
+    end
+
+    it "should contain all the colleges for degrees, plus additional colleges, plus 'other'" do
+      expect(helper.sorted_college_list_for_generic_works).to eq(
+       ['Arts & Sciences','Blue Ash College','Engineering','Libraries','Other']
+      )
     end
   end
 
   describe '#sorted_college_list_for_etds' do
     before do
       stub_const("COLLEGE_AND_DEPARTMENT",
-                  {"current_colleges"=> 
+                  {"current_colleges_for_degrees"=> 
                     {
                       "ceas"=>{"label"=>"One"},
                       "com"=>{"label"=>"Two"},

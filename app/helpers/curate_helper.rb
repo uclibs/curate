@@ -73,7 +73,7 @@ module CurateHelper
           markup << %(<li class="attribute #{method_name}"><a href="/people/#{owner_name.noid}">#{owner_name}</a></li>\n)
         end
       elsif method_name == :unit
-        markup << %(<li class="attribute unit">#{curation_concern.college_and_department_display}</li>\n) unless curation_concern.college_and_department_display.nil?
+        markup << %(<li class="attribute unit">#{curation_concern.unit_for_display}</li>\n) unless curation_concern.unit_for_display.nil?
       else
         markup << %(<li class="attribute #{method_name}">#{h(value).gsub(/\n/, '<br/>')}</li>\n)
       end
@@ -168,14 +168,23 @@ module CurateHelper
     auto_link(link, :all)
   end
 
-  def sorted_college_list
-    COLLEGE_AND_DEPARTMENT["current_colleges"].keys.collect do |k|
-      COLLEGE_AND_DEPARTMENT["current_colleges"][k]["label"]
+  def sorted_college_list_for_degrees
+    COLLEGE_AND_DEPARTMENT["current_colleges_for_degrees"].keys.collect do |k|
+      COLLEGE_AND_DEPARTMENT["current_colleges_for_degrees"][k]["label"]
+    end.sort << "Other"
+  end
+
+  def sorted_college_list_for_generic_works
+    list = COLLEGE_AND_DEPARTMENT["current_colleges_for_degrees"].merge(
+      COLLEGE_AND_DEPARTMENT["additional_current_colleges"]
+    )
+    list.keys.collect do |k|
+      list[k]["label"]
     end.sort << "Other"
   end
 
   def sorted_college_list_for_etds
-    sorted_college_list + COLLEGE_AND_DEPARTMENT["legacy_colleges"]
+    sorted_college_list_for_degrees + COLLEGE_AND_DEPARTMENT["legacy_colleges"]
   end
 
   def work_types_for_student_works
@@ -187,5 +196,26 @@ module CurateHelper
     types = (types.sort.collect { |type| type.underscore.humanize.capitalize })
     ## "Generic work" will become "other", so we need to re-add it after the sort is performed
     types << "Generic Work"
+  end
+  def current_user_college
+    current_user.college
+  end
+
+  def current_user_department
+    current_user.department
+  end
+
+  def filtered_facet_field_names
+    ## only show department if college is set in params
+    cache = facet_field_names
+    if params["f"].nil? 
+      cache.delete("desc_metadata__department_sim") 
+      return cache
+    end
+    if params["f"]["desc_metadata__college_sim"].nil? 
+      cache.delete("desc_metadata__department_sim") 
+      return cache
+    end
+    cache
   end
 end

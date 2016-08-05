@@ -25,7 +25,7 @@ describe 'Creating a student work' do
       find('#student_work_type').find(:xpath, 'option[1]').select_option
         # option[2] = "Article"
       fill_in "Advisor", with: "Ross, Bob"
-      find('#student_work_unit_attributes_0_college').find(:xpath, 'option[3]').select_option
+      find('#student_work_college').find(:xpath, 'option[3]').select_option
         # option[2] = "Arts & Sciences"
       fill_in "Program or Department", with: "Biology"
       fill_in "Degree", with: "BS"

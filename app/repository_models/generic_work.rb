@@ -27,6 +27,9 @@ class GenericWork < ActiveFedora::Base
   attribute :bibliographic_citation,
     datastream: :descMetadata, multiple: false
 
+  attribute :college,
+    datastream: :descMetadata, multiple: false
+
   attribute :contributor,
     datastream: :descMetadata, multiple: true
 
@@ -46,6 +49,9 @@ class GenericWork < ActiveFedora::Base
     datastream: :descMetadata, multiple: false
 
   attribute :date_uploaded,
+    datastream: :descMetadata, multiple: false
+
+  attribute :department,
     datastream: :descMetadata, multiple: false
 
   attribute :description,
@@ -91,4 +97,20 @@ class GenericWork < ActiveFedora::Base
     validates: { presence: { message: 'Your article must have a title.' } }
 
   attribute :files, multiple: true, form: {as: :file}
+
+  def unit_for_display
+		if self.college.blank?
+			if self.department.blank?
+				nil
+			else
+				self.department
+			end
+		else
+			if self.department.blank?
+				self.college
+			else
+				self.college + " : " + self.department
+			end
+		end
+	end
 end
