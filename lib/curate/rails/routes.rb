@@ -45,6 +45,7 @@ module ActionDispatch::Routing
 
       resources :welcome_page, only: [:new, :create]
       resources :help_requests, only: [:new, :create]
+      resources :file_requests, only: [:new, :create]
       resources :classify_concerns, only: [:new, :create]
 
       match "change_owner" => "change_owner#update", via: :post, as: "change_owner"

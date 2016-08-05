@@ -10,6 +10,7 @@ Curate.configure do |config|
   # # You can override curate's antivirus runner by configuring a lambda (or
   # # object that responds to call)
   # config.default_antivirus_instance = lambda {|filename| … }
+  config.max_file_size = 3221225472
 
   # # Used for constructing permanent URLs
   config.application_root_url = 'bamboo_application_url'

@@ -70,8 +70,14 @@
                 )%>
               <%- end -%><!-- endif -->
     <%- end -%><!-- end actions if -->
+            <!-- 3221225472 is the amount of bytes in 3gb. If we can download larger files in the future, this number
+                  should be changed -->
             <%- if can?(:read, generic_file) -%>
-              <%= link_to 'Download', download_path(generic_file.noid),{class: 'btn', title: "Download #{generic_file.to_s.inspect}", :target => "_blank"}%>
+              <%- if generic_file.file_size.first.to_i < Curate.configuration.max_file_size -%>
+                <%= link_to 'Download', download_path(generic_file.noid),{class: 'btn', title: "Download #{generic_file.to_s.inspect}", :target => "_blank"}%>
+              <%- else -%>
+                <%= link_to 'Request', new_file_request_path(pid: generic_file.noid) ,{class: 'btn', title: "Request #{generic_file.to_s.inspect}", :target => "_blank"}%>
+              <%- end -%>
             <%- end -%>
     </div>
     <!-- actions bar ends -->

@@ -1,0 +1,49 @@
+<% content_for :page_title, "#{application_name} Request a file" %>
+<%= render 'shared/header' %>
+<%= render 'shared/flash_message' %>
+
+<div class="container">
+  <div class="row">
+    <div class="span12">
+
+      <h2>Request a file <script src='https://www.google.com/recaptcha/api.js'></script> </h2>
+
+      <p>Scholar@UC is unable to support the download of files larger than <%=number_to_human_size(Curate.configuration.max_file_size, precision: 5 )%>. The Scholar@UC team will follow-up with you to arrange delivery of the file after you submit this form.</p>
+
+      <form method="post" action="/file_requests" name="requestForm" id="requestForm">
+
+        <%= token_tag %>
+
+        <% defined?(current_user.user_key) ? username = current_user.name : useremail = '' %>
+
+        <p>
+          <label for="name" class="col-sm-2 control-label">Your Name:</label>
+          <input style="width:40%;min-width:200px;" type="text" class="form-control" id="name" name="name" value = "<%= username %>" required autofocus autocomplete="on">
+        </p>
+
+        <% defined?(current_user.user_key) ? useremail = current_user.user_key : useremail = '' %>
+
+        <p>
+          <label for="email" class="col-sm-2 control-label">Your Email:</label>
+          <input style="width:40%;min-width:200px;" type="email" class="form-control" id="email" name="email" value="<%= useremail %>" required  autocomplete="on">
+        </p>
+
+        <p>
+          <label for="file_name" class="col-sm-2 control-label">File to request:</label>
+          <label class="col-sm-2 control-label"> <%= @file_name + " (" + @file_pid + ")"%> </label>
+          <input type="hidden" name="file_pid" value=<%= @file_pid %> >
+        </p>
+        
+        <% if current_user.blank? %>
+          <div class="g-recaptcha" data-sitekey= "<%=CAPTCHA_SERVER['site_key']%>"></div>
+        <% end %>
+
+        <button  style="margin-top: 15px; width: 60px; border: 1px solid black;" class="btn btn-lg btn-primary make-me-not-blue" type="submit">Send</button>
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<%= render 'footer' %>
