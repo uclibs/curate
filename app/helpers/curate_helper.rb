@@ -131,9 +131,9 @@ module CurateHelper
   #           a collection of Ohs.  The array would contain the value of b as the key and the value of e as the corresponding value.
   #           The collection of Ohs is in the variable ohList.
   #           ohArray = objects_to_array(ohList, 'b', 'e')
-  def objects_to_array(collection, key_method, value_method)
+  def objects_to_array(collection, key_method, value_method1, value_method2, value_method3)
     returnArray = collection.map do |element|
-      [get_value_for(element, key_method), get_value_for(element, value_method)]
+      [get_value_for(element, key_method), get_value_for(element, value_method1), get_value_for(element, value_method2), get_value_for(element, value_method3)]
     end
   end
 
