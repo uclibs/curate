@@ -51,7 +51,7 @@ class Image < ActiveFedora::Base
     ds.attribute :date_created,
       multiple: false
 
-    attribute :department,
+    ds.attribute :department,
      multiple: false
 
     ds.attribute :description,
