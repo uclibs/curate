@@ -6,7 +6,7 @@
   <% end %>
   <h1> <%= @collection.title %> </h1>
   <p>Collection submitted by: <%= link_owner.html_safe %></p>
-  <p><%= link_to('Search within this collection',
+  <p><%= link_to('Browse this collection',
            catalog_index_path({"f"=>{"collection_sim"=>[@collection.pid]}}),
            class: 'btn') %></p>
 <% end %>
