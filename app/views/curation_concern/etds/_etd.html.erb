@@ -19,7 +19,7 @@
 
         <% if solr_doc.has?('desc_metadata__abstract_tesim') %>
           <dt>Abstract:</dt>
-          <dd><%= truncate(render_index_field_value(document: solr_doc, field: 'desc_metadata__abstract_tesim'), length: 150) %></dd>
+          <dd><%= truncate(solr_doc['desc_metadata__abstract_tesim'].first.html_safe, length: 150) %></dd>
         <% end %>
       </dl>
     </div>
