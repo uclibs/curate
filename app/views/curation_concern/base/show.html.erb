@@ -27,8 +27,10 @@
         <%= link_to "Attach a File", new_curation_concern_generic_file_path(curation_concern), class: 'btn btn-primary' %>
         <%= link_to "Add an External Link", new_curation_concern_linked_resource_path(curation_concern), class: 'btn btn-primary' %>
       <% end %>
-      <% if collector %>
-        <%= render 'add_to_collection_gui', collectible: curation_concern, button_class: 'btn btn-primary' %>
+      <% unless current_user.nil? %>
+        <% if collector && curation_concern.edit_users.include?(current_user.email) %>
+          <%= render 'add_to_collection_gui', collectible: curation_concern, button_class: 'btn btn-primary' %>
+        <% end %>
       <% end %>
     </div>
   </div>
