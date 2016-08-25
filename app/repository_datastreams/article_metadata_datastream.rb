@@ -9,7 +9,9 @@ class ArticleMetadataDatastream < ActiveFedora::NtriplesRDFDatastream
       index.as :stored_searchable
     end
 
-    map.bibliographic_citation({in: RDF::DC, to: 'bibliographicCitation'})
+    map.bibliographic_citation({in: RDF::DC, to: 'bibliographicCitation'}) do |index|
+       index.as :stored_searchable
+    end
 
     map.contributor(in: RDF::DC) do |index|
       index.as :stored_searchable, :facetable
@@ -49,9 +51,14 @@ class ArticleMetadataDatastream < ActiveFedora::NtriplesRDFDatastream
       index.as :stored_searchable, :facetable
     end
 
-    map.identifier({to: "identifier#doi", in: RDF::QualifiedDC})
+    map.identifier({to: "identifier#doi", in: RDF::QualifiedDC}) do |index|
+      index.as :stored_searchable
+    end
 
-    map.issn({to: "identifier#issn", in: RDF::QualifiedDC})
+    map.issn({to: "identifier#issn", in: RDF::QualifiedDC}) do |index|
+      index.as :stored_searchable
+    end
+
 
     map.journal_title(to: "source", in: RDF::DC) do |index|
       index.type :text
@@ -66,7 +73,10 @@ class ArticleMetadataDatastream < ActiveFedora::NtriplesRDFDatastream
       index.as :stored_searchable
     end
   
-    map.permissions({in: RDF::DC, to: 'accessRights'})
+    map.permissions({in: RDF::DC, to: 'accessRights'}) do |index|
+      index.as :stored_searchable
+    end
+
   
     map.publisher({in: RDF::DC}) do |index|
       index.as :stored_searchable, :facetable
