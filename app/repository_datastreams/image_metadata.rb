@@ -7,7 +7,9 @@ class ImageMetadata < ActiveFedora::NtriplesRDFDatastream
       index.as :stored_searchable
     end
 
-    map.bibliographic_citation({in: RDF::DC, to: 'bibliographicCitation'})
+    map.bibliographic_citation({in: RDF::DC, to: 'bibliographicCitation'}) do |index|
+      index.as :stored_searchable
+    end
 
     map.college({to: "subject#college", in: RDF::QualifiedDC}) do |index|
       index.as :stored_searchable, :facetable
@@ -29,7 +31,9 @@ class ImageMetadata < ActiveFedora::NtriplesRDFDatastream
       index.as :stored_searchable, :facetable
     end
 
-    map.cultural_context(in: RDF::Image)
+    map.cultural_context(in: RDF::Image) do |index|
+      index.as :stored_searchable
+    end
 
     map.date_created(:to => "date#created", :in => RDF::QualifiedDC) do |index|
       index.as :stored_searchable, :facetable
@@ -38,14 +42,19 @@ class ImageMetadata < ActiveFedora::NtriplesRDFDatastream
     map.date_modified(to: "modified", in: RDF::DC) do |index|
       index.type :date
       index.as :stored_sortable
+      index.as :stored_searchable
     end
 
-    map.date_photographed(in: RDF::Image)
+    map.date_photographed(in: RDF::Image) do |index|
+      index.as :stored_searchable
+    end
 
     map.date_uploaded(to: "dateSubmitted", in: RDF::DC) do |index|
       index.type :date
       index.as :stored_sortable
+      index.as :stored_searchable
     end
+
 
     map.department({to: "subject#department", in: RDF::QualifiedDC}) do |index|
       index.as :stored_searchable, :facetable
@@ -59,15 +68,25 @@ class ImageMetadata < ActiveFedora::NtriplesRDFDatastream
       index.as :stored_searchable, :facetable
     end
 
-    map.identifier({to: "identifier#doi", in: RDF::QualifiedDC})
+    map.identifier({to: "identifier#doi", in: RDF::QualifiedDC}) do |index|
+      index.as :stored_searchable
+    end
 
-    map.inscription(in: RDF::Image)
+    map.inscription(in: RDF::Image) do |index|
+      index.as :stored_searchable
+    end
 
-    map.location(in: RDF::Image)
+    map.location(in: RDF::Image) do |index|
+      index.as :stored_searchable
+    end
 
-    map.measurements(in: RDF::Image)
+    map.measurements(in: RDF::Image) do |index|
+      index.as :stored_searchable
+    end
 
-    map.material(in: RDF::Image)
+    map.material(in: RDF::Image) do |index|
+      index.as :stored_searchable
+    end
 
     map.note({to: 'description#note', in: RDF::QualifiedDC}) do |index|
       index.as :stored_searchable
@@ -81,13 +100,17 @@ class ImageMetadata < ActiveFedora::NtriplesRDFDatastream
       index.as :stored_searchable, :facetable
     end
 
-    map.requires({in: RDF::DC})
+    map.requires({in: RDF::DC}) do |index|
+      index.as :stored_searchable
+    end
 
     map.rights(in: RDF::DC) do |index|
       index.as :stored_searchable, :facetable
     end
 
-    map.source(in: RDF::Image)
+    map.source(in: RDF::Image) do |index|
+      index.as :stored_searchable
+    end
 
     map.subject(in: RDF::DC) do |index|
       index.as :stored_searchable, :facetable
