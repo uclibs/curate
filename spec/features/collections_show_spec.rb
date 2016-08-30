@@ -55,8 +55,8 @@ describe "Collections show view: " do
 
   let(:collection_pid_html) { collection.pid.sub(/:/, '%3A') }
   let(:search_within_collection_link) { "/catalog?f%5Bcollection_sim%5D%5B%5D=#{collection_pid_html}" }
-  it "shows a link to search within the collection" do
+  it "shows a link to browse the collection" do
     visit collection_path(collection.pid)
-    page.body.should have_link("Search within this collection", href: search_within_collection_link)
+    page.body.should have_link("Browse this collection", href: search_within_collection_link)
   end
 end
