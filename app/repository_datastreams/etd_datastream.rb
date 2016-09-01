@@ -13,7 +13,9 @@ class EtdDatastream < ActiveFedora::NtriplesRDFDatastream
       index.as :stored_searchable
     end
 
-    map.bibliographic_citation({in: RDF::DC, to: 'bibliographicCitation'})
+    map.bibliographic_citation({in: RDF::DC, to: 'bibliographicCitation'}) do |index|
+      index.as :stored_searchable
+    end
 
     map.college({to: "subject#college", in: RDF::QualifiedDC}) do |index|
       index.as :stored_searchable, :facetable
@@ -61,7 +63,9 @@ class EtdDatastream < ActiveFedora::NtriplesRDFDatastream
       index.as :stored_sortable
     end
 
-    map.identifier({to: "identifier#doi", in: RDF::QualifiedDC})
+    map.identifier({to: "identifier#doi", in: RDF::QualifiedDC}) do |index|
+      index.as :stored_searchable
+    end
 
     map.genre({to: "type#genre", in: RDF::QualifiedDC}) do |index|
       index.as :stored_searchable, :facetable
@@ -83,13 +87,17 @@ class EtdDatastream < ActiveFedora::NtriplesRDFDatastream
       index.as :stored_searchable, :facetable
     end
 
-    map.requires({in: RDF::DC})
+    map.requires({in: RDF::DC}) do |index|
+      index.as :stored_searchable
+    end
 
     map.rights(:in => RDF::DC) do |index|
       index.as :stored_searchable, :facetable
     end
 
-    map.source({in: RDF::DC})
+    map.source({in: RDF::DC}) do |index|
+      index.as :stored_searchable
+    end
 
     map.subject(in: RDF::DC) do |index|
       index.type :text

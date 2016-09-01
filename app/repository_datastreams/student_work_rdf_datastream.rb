@@ -41,11 +41,13 @@ class StudentWorkRdfDatastream < ActiveFedora::NtriplesRDFDatastream
     map.date_modified(to: "modified", in: RDF::DC) do |index|
       index.type :date
       index.as :stored_sortable
+      index.as :stored_searchable
     end
 
     map.date_uploaded(to: "dateSubmitted", in: RDF::DC) do |index|
       index.type :date
       index.as :stored_sortable
+      index.as :stored_searchable
     end
 
     map.department({to: "subject#department", in: RDF::QualifiedDC}) do |index|
@@ -85,7 +87,9 @@ class StudentWorkRdfDatastream < ActiveFedora::NtriplesRDFDatastream
       index.as :stored_searchable, :facetable
     end
 
-    map.source({in: RDF::DC})
+    map.source({in: RDF::DC})do |index|
+      index.as :stored_searchable
+    end
 
     map.subject(in: RDF::DC) do |index|
       index.type :text
