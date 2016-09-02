@@ -115,9 +115,11 @@ module CurateHelper
       return asset
     end
   end
+
   def polymorphic_path_for_asset(asset)
     return polymorphic_path(polymorphic_path_args(asset))
   end
+  
   def edit_polymorphic_path_for_asset(asset)
     return edit_polymorphic_path(polymorphic_path_args(asset))
   end
@@ -131,6 +133,7 @@ module CurateHelper
   #           a collection of Ohs.  The array would contain the value of b as the key and the value of e as the corresponding value.
   #           The collection of Ohs is in the variable ohList.
   #           ohArray = objects_to_array(ohList, 'b', 'e')
+
   def objects_to_array(collection, key_method, value_method)
     returnArray = collection.map do |element|
       [get_value_for(element, key_method), get_value_for(element, value_method)]
@@ -167,16 +170,7 @@ module CurateHelper
     link = (url =~ /\A(?i)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?\z/) ? 'http://' + url : url
     auto_link(link, :all)
   end
-#new code
-  def sorted_college_list_for_degrees
-    list = COLLEGE_AND_DEPARTMENT["current_colleges_for_degrees"].merge(
-      COLLEGE_AND_DEPARTMENT["additional_current_colleges"]
-    )
-    list.keys.collect do |k|
-      list[k]["label"]
-    end.sort << "Other"
-end
-#end new
+
   def sorted_college_list_for_generic_works
     list = COLLEGE_AND_DEPARTMENT["current_colleges_for_degrees"].merge(
       COLLEGE_AND_DEPARTMENT["additional_current_colleges"]
@@ -185,13 +179,16 @@ end
       list[k]["label"]
     end.sort << "Other"
   end
-#--------
-def sorted_college_list_for_degrees_new
-    COLLEGE_AND_DEPARTMENT["current_colleges_for_degrees"].keys.collect do |k|
-      COLLEGE_AND_DEPARTMENT["current_colleges_for_degrees"][k]["label"]
+
+  def sorted_college_list_for_degrees
+    list = COLLEGE_AND_DEPARTMENT["current_colleges_for_degrees"].merge(
+      COLLEGE_AND_DEPARTMENT["additional_current_colleges"]
+    )
+    list.keys.collect do |k|
+      list[k]["label"]
     end.sort << "Other"
-end
-#------
+  end
+
   def sorted_college_list_for_etds
     sorted_college_list_for_degrees_new + COLLEGE_AND_DEPARTMENT["legacy_colleges"]
   end
@@ -205,7 +202,8 @@ end
     types = (types.sort.collect { |type| type.underscore.humanize.capitalize })
     ## "Generic work" will become "other", so we need to re-add it after the sort is performed
     types << "Generic Work"
-  end
+  end 
+  
   def current_user_college
     current_user.college
   end

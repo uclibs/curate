@@ -243,20 +243,25 @@ describe ApplicationHelper do
                   {"current_colleges_for_degrees"=> 
                     {
                       "ceas"=>{"label"=>"Engineering"},
-                      "com"=>{"label"=>"College of Medicine"},
-                      "a&s"=>{"label"=>"Arts & Sciences"}
-                    }
-                  } 
+                      "com"=>{"label"=>"Arts & Sciences"},
+                    },
+                   "additional_current_colleges"=> 
+                    {
+                      "ucl"=>{"label"=>"Libraries"},
+                      "ucba"=>{"label"=>"Blue Ash College"},
+                    },
+                  }
                 )
     end
+
 
     it "should return an array" do
       expect(helper.sorted_college_list_for_degrees).to be_an(Array) 
     end
 
-    it "should contain all the colleges for degrees, plus 'other'" do
+    it "should contain all the colleges for degrees, plus additional colleges, 'other'" do
       expect(helper.sorted_college_list_for_degrees).to eq(
-       ['Arts & Sciences','College of Medicine','Engineering','Other']
+       ['Arts & Sciences','Blue Ash College','Engineering','Libraries','Other']
       )
     end
   end
