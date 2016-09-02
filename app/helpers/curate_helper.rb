@@ -167,16 +167,8 @@ module CurateHelper
     link = (url =~ /\A(?i)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?\z/) ? 'http://' + url : url
     auto_link(link, :all)
   end
-#new code
-  def sorted_college_list_for_degrees
-    list = COLLEGE_AND_DEPARTMENT["current_colleges_for_degrees"].merge(
-      COLLEGE_AND_DEPARTMENT["additional_current_colleges"]
-    )
-    list.keys.collect do |k|
-      list[k]["label"]
-    end.sort << "Other"
-end
-#end new
+
+
   def sorted_college_list_for_generic_works
     list = COLLEGE_AND_DEPARTMENT["current_colleges_for_degrees"].merge(
       COLLEGE_AND_DEPARTMENT["additional_current_colleges"]
@@ -185,16 +177,23 @@ end
       list[k]["label"]
     end.sort << "Other"
   end
-#--------
+    def sorted_college_list_for_degrees
+    list = COLLEGE_AND_DEPARTMENT["current_colleges_for_degrees"].merge(
+      COLLEGE_AND_DEPARTMENT["additional_current_colleges"]
+    )
+    list.keys.collect do |k|
+      list[k]["label"]
+    end.sort << "Other"
+end
+  def sorted_college_list_for_etds
+    sorted_college_list_for_degrees_new + COLLEGE_AND_DEPARTMENT["legacy_colleges"]
+  end
+
 def sorted_college_list_for_degrees_new
     COLLEGE_AND_DEPARTMENT["current_colleges_for_degrees"].keys.collect do |k|
       COLLEGE_AND_DEPARTMENT["current_colleges_for_degrees"][k]["label"]
     end.sort << "Other"
 end
-#------
-  def sorted_college_list_for_etds
-    sorted_college_list_for_degrees_new + COLLEGE_AND_DEPARTMENT["legacy_colleges"]
-  end
 
   def work_types_for_student_works
     types = Array.new
