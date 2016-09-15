@@ -206,4 +206,45 @@ describe CurationConcern::Work do
       expect(work.generic_files.last.owner).to eq(new_owner_email)
     end
   end
+
+  describe "#to_solr" do
+    describe "sorting" do
+      let(:work) { FactoryGirl.build(:generic_work) }
+
+      describe "sort_title_ssi" do
+        it "removes leading spaces" do
+          work.stub(:title).and_return("  I start with a space")
+          expect(work.to_solr["sort_title_ssi"]).to eq("I START WITH A SPACE")
+        end
+
+        it "removes leading articles" do
+          work.stub(:title).and_return("The the is first")
+          expect(work.to_solr["sort_title_ssi"]).to eq("THE IS FIRST")
+        end
+
+        it "removes non alphanumeric characters" do
+          work.stub(:title).and_return("Title* 30! Sure& $has$ a &lot& of ^^^punctuation!!!!")
+          expect(work.to_solr["sort_title_ssi"]).to eq("TITLE 30 SURE HAS A LOT OF PUNCTUATION")
+        end
+
+        it "removes double spaces" do
+          work.stub(:title).and_return("This  title has      extra   spaces")
+          expect(work.to_solr["sort_title_ssi"]).to eq("THIS TITLE HAS EXTRA SPACES")
+        end
+
+        it "upcases everything" do
+          work.stub(:title).and_return("i should be uppercase")
+          expect(work.to_solr["sort_title_ssi"]).to eq("I SHOULD BE UPPERCASE")
+        end
+        
+        it "adds leading 0s as needed" do
+          work.stub(:title).and_return("1) Is the first title")
+          expect(work.to_solr["sort_title_ssi"]).to eq("00000000000000000001 IS THE FIRST TITLE")
+
+          work.stub(:title).and_return("111) Is the eleventy-first title")
+          expect(work.to_solr["sort_title_ssi"]).to eq("00000000000000000111 IS THE ELEVENTYFIRST TITLE")
+        end
+      end
+    end
+  end
 end

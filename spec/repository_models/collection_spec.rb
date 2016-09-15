@@ -111,4 +111,42 @@ describe Collection do
     end
   end
 
+  describe "sorting" do
+    let(:collection) { FactoryGirl.build(:collection) }
+
+    describe "sort_title_ssi" do
+      it "removes leading spaces" do
+        collection.stub(:title).and_return("  I start with a space")
+        expect(collection.to_solr["sort_title_ssi"]).to eq("I START WITH A SPACE")
+      end
+
+      it "removes leading articles" do
+        collection.stub(:title).and_return("The the is first")
+        expect(collection.to_solr["sort_title_ssi"]).to eq("THE IS FIRST")
+      end
+
+      it "removes non alphanumeric characters" do
+        collection.stub(:title).and_return("Title* 30! Sure& $has$ a &lot& of ^^^punctuation!!!!")
+        expect(collection.to_solr["sort_title_ssi"]).to eq("TITLE 30 SURE HAS A LOT OF PUNCTUATION")
+      end
+
+      it "removes double spaces" do
+        collection.stub(:title).and_return("This  title has      extra   spaces")
+        expect(collection.to_solr["sort_title_ssi"]).to eq("THIS TITLE HAS EXTRA SPACES")
+      end
+
+      it "upcases everything" do
+        collection.stub(:title).and_return("i should be uppercase")
+        expect(collection.to_solr["sort_title_ssi"]).to eq("I SHOULD BE UPPERCASE")
+      end
+      
+      it "adds leading 0s as needed" do
+        collection.stub(:title).and_return("1) Is the first title")
+        expect(collection.to_solr["sort_title_ssi"]).to eq("00000000000000000001 IS THE FIRST TITLE")
+
+        collection.stub(:title).and_return("111) Is the eleventy-first title")
+        expect(collection.to_solr["sort_title_ssi"]).to eq("00000000000000000111 IS THE ELEVENTYFIRST TITLE")
+      end
+    end
+  end
 end
