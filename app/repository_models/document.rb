@@ -65,9 +65,6 @@ class Document < ActiveFedora::Base
   attribute :date_uploaded,
     datastream: :descMetadata, multiple: false
 
-  attribute :degree,
-    datastream: :descMetadata, multiple: false
-
   attribute :department,
     datastream: :descMetadata, multiple: false
 
