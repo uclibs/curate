@@ -19,6 +19,7 @@ current_colleges_for_degrees:
     label: 'Nursing'
   pharm:
     label: 'Pharmacy'
+
 additional_current_colleges:
   clermont:
     label: 'Clermont College'
@@ -28,8 +29,10 @@ additional_current_colleges:
     label: 'Blue Ash College'
   ucl:
     label: 'Libraries'
+    
 legacy_colleges:
   - "Business Administration"
   - "Education"
   - "Engineering"
+
   - "Interdisciplinary"

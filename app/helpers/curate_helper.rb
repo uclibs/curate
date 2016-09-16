@@ -168,11 +168,6 @@ module CurateHelper
     auto_link(link, :all)
   end
 
-  def sorted_college_list_for_degrees
-    COLLEGE_AND_DEPARTMENT["current_colleges_for_degrees"].keys.collect do |k|
-      COLLEGE_AND_DEPARTMENT["current_colleges_for_degrees"][k]["label"]
-    end.sort << "Other"
-  end
 
   def sorted_college_list_for_generic_works
     list = COLLEGE_AND_DEPARTMENT["current_colleges_for_degrees"].merge(
@@ -182,10 +177,23 @@ module CurateHelper
       list[k]["label"]
     end.sort << "Other"
   end
-
+    def sorted_college_list_for_degrees
+    list = COLLEGE_AND_DEPARTMENT["current_colleges_for_degrees"].merge(
+      COLLEGE_AND_DEPARTMENT["additional_current_colleges"]
+    )
+    list.keys.collect do |k|
+      list[k]["label"]
+    end.sort << "Other"
+end
   def sorted_college_list_for_etds
-    sorted_college_list_for_degrees + COLLEGE_AND_DEPARTMENT["legacy_colleges"]
+    sorted_college_list_for_degrees_new + COLLEGE_AND_DEPARTMENT["legacy_colleges"]
   end
+
+def sorted_college_list_for_degrees_new
+    COLLEGE_AND_DEPARTMENT["current_colleges_for_degrees"].keys.collect do |k|
+      COLLEGE_AND_DEPARTMENT["current_colleges_for_degrees"][k]["label"]
+    end.sort << "Other"
+end
 
   def work_types_for_student_works
     types = Array.new
