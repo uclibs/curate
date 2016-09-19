@@ -238,7 +238,7 @@ describe ApplicationHelper do
   end
 
   describe '#sorted_college_list_for_degrees' do
-    before do
+  before do
       stub_const("COLLEGE_AND_DEPARTMENT",
                   {"current_colleges_for_degrees"=> 
                     {
@@ -256,10 +256,14 @@ describe ApplicationHelper do
 
 
     it "should return an array" do
-      expect(helper.sorted_college_list_for_degrees).to be_an(Array) 
+     expect(helper.sorted_college_list_for_degrees).to be_an(Array) 
     end
 
+<<<<<<< HEAD
     it "should contain all the colleges for degrees, plus additional colleges, 'other'" do
+=======
+    it "should contain all the colleges for degrees, plus additional collectes, 'other'" do
+>>>>>>> d6b1b063a927e0e603957282b5cc8855633555e6
       expect(helper.sorted_college_list_for_degrees).to eq(
        ['Arts & Sciences','Blue Ash College','Engineering','Libraries','Other']
       )
