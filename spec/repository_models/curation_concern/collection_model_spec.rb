@@ -45,14 +45,6 @@ describe CurationConcern::CollectionModel do
     end
   end
 
-  describe '#sortable_title' do
-    let(:collection) { FactoryGirl.create(:collection, title: "A title") }
-
-    it 'filters articles from the beginning of titles' do
-      expect(collection.sortable_title).to eq("title")
-    end
-  end
-
   describe '#members_from_solr' do
     let(:collection) { FactoryGirl.create(:collection, title: "A title") }
     let(:collection2) { FactoryGirl.create(:collection, title: "A subcollection") }
@@ -83,26 +75,28 @@ describe CurationConcern::CollectionModel do
   end
 
   describe '#to_solr' do  
-    let(:collection) { FactoryGirl.create(:collection) }
-    let(:reloaded_collection) { Collection.find(collection.pid) }
+    describe "indexing" do
+      let(:collection) { FactoryGirl.create(:collection) }
+      let(:reloaded_collection) { Collection.find(collection.pid) }
 
-    let(:subcollection) { FactoryGirl.create(:collection) }
-    let(:reloaded_subcollection) { Collection.find(subcollection.pid) }
+      let(:subcollection) { FactoryGirl.create(:collection) }
+      let(:reloaded_subcollection) { Collection.find(subcollection.pid) }
 
-    let(:user) { FactoryGirl.create(:person_with_user)  }
-    let(:profile) { user.profile }
-    let(:reloaded_profile){ Profile.find(profile.pid)  }
+      let(:user) { FactoryGirl.create(:person_with_user)  }
+      let(:profile) { user.profile }
+      let(:reloaded_profile){ Profile.find(profile.pid)  }
 
-    it 'indexes collection when member of a collection' do
-      collection.add_member(subcollection)
-      reloaded_collection.members.should == [subcollection]
-      reloaded_subcollection.to_solr["collection_sim"].should == [collection.pid]
-    end
+      it 'indexes collection when member of a collection' do
+        collection.add_member(subcollection)
+        reloaded_collection.members.should == [subcollection]
+        reloaded_subcollection.to_solr["collection_sim"].should == [collection.pid]
+      end
 
-    it 'does not index profile whem member of a profile' do
-      profile.add_member(subcollection)
-      reloaded_profile.members.should == [subcollection]  
-      reloaded_subcollection.to_solr["collection_sim"].should_not == [profile.pid]
+      it 'does not index profile whem member of a profile' do
+        profile.add_member(subcollection)
+        reloaded_profile.members.should == [subcollection]  
+        reloaded_subcollection.to_solr["collection_sim"].should_not == [profile.pid]
+      end
     end
   end
 end

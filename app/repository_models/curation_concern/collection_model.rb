@@ -28,10 +28,6 @@ module CurationConcern
       self.title.present? ? title : "No Title"
     end
 
-    def sortable_title
-      title.sub(/^(the|a|an)\s+/i, '').downcase
-    end
-
     def to_solr(solr_doc={}, opts={})
       super
       Solrizer.set_field(solr_doc, 'generic_type', human_readable_type, :facetable)
@@ -74,6 +70,21 @@ module CurationConcern
       false
     end
 
+    def sort_title
+      unless self.title.nil?
+        cleaned_title = self.title.sub(/^\s+/i, "") # remove leading spaces
+        cleaned_title.gsub!(/[^\w\s]/, "") # remove punctuation; preserve spaces and A-z 0-9
+        cleaned_title.gsub!(/\s{2,}/, " ") # remove multiple spaces
+        cleaned_title.sub!(/^(a |an |the )/i, "") # remove leading english articles
+        cleaned_title.upcase! #upcase everything
+        add_leading_zeros_to cleaned_title
+      end
+    end
 
+    def add_leading_zeros_to(title)
+      leading_number = title.match(/^\d+/)
+      return title if leading_number.nil?
+      title.sub(/^\d+/, leading_number[0].rjust(20, "0"))
+    end
   end
 end
