@@ -27,7 +27,9 @@
         </li>
       </script>
       <ul class="listing">
-
+      <li class="field-wrapper input-append float">
+        <input id="owner_editor_field" class="input-xlarge hidden" type="text" value="" disabled/>
+      </li>
       <%= f.fields_for :editors do |editor| %>
         <li class="field-wrapper input-append">
           <%= editor.hidden_field :id %>

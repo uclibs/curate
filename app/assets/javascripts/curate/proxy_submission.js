@@ -37,4 +37,12 @@ function updateCollDept(){
     $('select[id$=_college]').val(ownerCollege);
     $('input[id$=_department]').val(ownerDept);
 }
-  
+
+function renderOwnerField() {
+  var ownerName = $("[id*='_owner'] option:selected").text();
+  var ownerField = $('#owner_editor_field');
+  if (ownerName != 'Myself' && ownerName != '') { 
+    ownerField[0].value = ownerName;
+    ownerField.removeClass('hidden');
+  } else { ownerField.addClass('hidden'); }
+}

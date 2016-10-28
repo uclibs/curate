@@ -11,7 +11,7 @@
             <%= f.select :owner, 
                          (objects_to_array(current_user.can_make_deposits_for, 'name', 'user_key', 'department', 'college').unshift(['Myself', current_user.user_key, current_user.department, current_user.college])).map { |g| [g[0], g[1], { 'data-dept' => g[2] }, { 'data-college' => g[3] }] },
                          { include_blank: true }, 
-                         { class: 'input-xxlarge', onChange: 'updateCreators(); updateCollDept();'} %>
+                         { class: 'input-xxlarge', onChange: 'updateCreators(); updateCollDept(); renderOwnerField();'} %>
           <% end %>
         </fieldset>
       <% elsif !(curation_concern.owner == current_user.user_key) %>
