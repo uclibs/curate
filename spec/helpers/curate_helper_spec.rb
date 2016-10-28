@@ -269,7 +269,7 @@ describe ApplicationHelper do
                       "ceas"=>{"label"=>"Engineering"},
                       "com"=>{"label"=>"Arts & Sciences"},
                     },
-                   "additional_current_colleges"=> 
+                   "additional_current_colleges_library"=> 
                     {
                       "ucl"=>{"label"=>"Libraries"},
                       "ucba"=>{"label"=>"Blue Ash College"},
@@ -282,7 +282,7 @@ describe ApplicationHelper do
       expect(helper.sorted_college_list_for_degrees).to be_an(Array) 
     end
 
-    it "should contain all the colleges for degrees, plus additional colleges, plus 'other'" do
+    it "should contain all the colleges for degrees, plus additional colleges library, plus 'other'" do
       expect(helper.sorted_college_list_for_generic_works).to eq(
        ['Arts & Sciences','Blue Ash College','Engineering','Libraries','Other']
       )

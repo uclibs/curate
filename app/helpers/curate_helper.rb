@@ -176,7 +176,7 @@ module CurateHelper
 
   def sorted_college_list_for_generic_works
     list = COLLEGE_AND_DEPARTMENT["current_colleges_for_degrees"].merge(
-      COLLEGE_AND_DEPARTMENT["additional_current_colleges"]
+      COLLEGE_AND_DEPARTMENT["additional_current_colleges_library"]
     )
     list.keys.collect do |k|
       list[k]["label"]
@@ -185,6 +185,15 @@ module CurateHelper
 
   def sorted_college_list_for_etds
     sorted_college_list_for_degrees + COLLEGE_AND_DEPARTMENT["legacy_colleges"]
+  end
+
+  def sorted_college_list_for_student_works
+      list = COLLEGE_AND_DEPARTMENT["current_colleges_for_degrees"].merge(
+      COLLEGE_AND_DEPARTMENT["additional_current_colleges"]
+    )
+    list.keys.collect do |k|
+      list[k]["label"]
+    end.sort << "Other"
   end
 
   def work_types_for_student_works
