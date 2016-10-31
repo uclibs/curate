@@ -11,7 +11,9 @@ class CurationConcern::GenericFilesController < CurationConcern::BaseController
   before_filter :parent
   before_filter :cloud_resources_valid?, only: :create
   before_filter :authorize_edit_parent_rights!, except: [:show]
-  before_filter :scan_viral_files, only: [:create, :update]
+  if defined?(ClamAV)
+    before_filter :scan_viral_files, only: [:create, :update]
+  end
 
   def scan_viral_files
     good_files = []
@@ -65,7 +67,7 @@ class CurationConcern::GenericFilesController < CurationConcern::BaseController
 
   def create
     curation_concern.batch = parent
-    if attributes_for_actor["file"] || attributes_for_actor["cloud_resources"] 
+    if attributes_for_actor["file"] || attributes_for_actor["cloud_resources"]
       if actor.create
         curation_concern.update_parent_representative_if_empty(parent)
         respond_with([:curation_concern, parent])
