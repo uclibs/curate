@@ -152,4 +152,4 @@ We are working on this and have more to come.
 This software has been developed by and is brought to you by the Hydra community.  Learn more at the
 [Project Hydra website](http://projecthydra.org)
 
-![Project Hydra Logo](https://github.com/uvalib/libra-oa/blob/a6564a9e5c13b7873dc883367f5e307bf715d6cf/public/images/powered_by_hydra.png?raw=true)
+![Project Hydra Logo](http://sufia.io/assets/images/hydra_logo.png)
