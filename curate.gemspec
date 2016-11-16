@@ -25,7 +25,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "rails", "~>4.0.2"
   s.add_dependency "breach-mitigation-rails"
-  s.add_dependency 'sufia-models', '~>3.4.0'
+  s.add_dependency 'sufia-models'
 #  s.add_dependency 'hydra', '6.1.0.rc8'
   s.add_dependency 'hydra-file_characterization', ">= 0.2.3"
   s.add_dependency 'hydra-batch-edit', '~> 1.1.1'
@@ -46,10 +46,11 @@ Gem::Specification.new do |s|
   s.add_dependency 'virtus'
   s.add_dependency 'rails_autolink'
   s.add_dependency 'rubydora', '~> 1.7.4'
-  s.add_dependency 'google_drive', '1.0.6'
-  s.add_dependency 'google-api-client', '0.8.6'
-  s.add_dependency 'browse-everything','0.9.1'
+  s.add_dependency 'google_drive'
+  s.add_dependency 'google-api-client'
+  s.add_dependency 'browse-everything'
   s.add_dependency 'httparty'
+  s.add_dependency 'kaltura'
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency "rspec-rails", '~> 2.14.0'
   s.add_development_dependency "factory_girl_rails", '~>4.2.0'
