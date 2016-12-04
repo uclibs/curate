@@ -42,7 +42,7 @@ task :generate do
     gemfile_content = <<-EOV
     gem 'curate', :path=>'../../../#{File.expand_path('../../', __FILE__).split('/').last}'
     gem 'kaminari', github: 'harai/kaminari', branch: 'route_prefix_prototype'
-    gem 'browse-everything'
+    gem 'browse-everything', git: 'https://github.com/uclibs/browse-everything.git', :branch => 'base/kaltura'
     gem 'clamav'
     gem 'resque'
     gem 'resque-scheduler'

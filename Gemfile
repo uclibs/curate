@@ -12,6 +12,7 @@ gemspec
 #
 #
 gem 'turbolinks', '2.5.3'
+gem 'browse-everything', git: 'https://github.com/uclibs/browse-everything.git', :branch => 'base/kaltura'
 
 gem 'coveralls', require: false
 gem 'simplecov', require: false
