@@ -46,7 +46,7 @@ task :generate do
     gem 'clamav'
     gem 'resque'
     gem 'resque-scheduler'
-    gem 'change_manager'
+    gem 'change_manager', '1.0.0'
     gem 'rake', '11.2.2'
 
     group :test do
