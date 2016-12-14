@@ -47,6 +47,7 @@ task :generate do
     gem 'resque'
     gem 'resque-scheduler'
     gem 'change_manager'
+    gem 'rake', '11.2.2'
 
     group :test do
       gem 'capybara'
@@ -78,6 +79,7 @@ task :generate do
     system_with_command_output("cp config/college_and_department.yml #{DUMMY_APP}/config")
     Bundler.with_clean_env do
       within_test_app do
+        system_with_command_output("bundle update rake")
         system_with_command_output("bundle update turbolinks")
         system_with_command_output("bundle install")
         system_with_command_output("rails generate test_app")

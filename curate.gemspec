@@ -50,6 +50,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'google-api-client', '0.8.6'
   s.add_dependency 'browse-everything','0.9.1'
   s.add_dependency 'httparty'
+  s.add_dependency 'rake', '11.2.2'
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency "rspec-rails", '~> 2.14.0'
   s.add_development_dependency "factory_girl_rails", '~>4.2.0'
