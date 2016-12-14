@@ -12,6 +12,7 @@ gemspec
 #
 #
 gem 'turbolinks', '2.5.3'
+gem 'rake', '11.2.2'
 
 gem 'coveralls', require: false
 gem 'simplecov', require: false
