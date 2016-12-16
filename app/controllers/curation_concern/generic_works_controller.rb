@@ -1,7 +1,9 @@
 class CurationConcern::GenericWorksController < CurationConcern::BaseController
   respond_to(:html)
   with_themed_layout '1_column'
-  before_filter :remove_viral_files, only: [:create]
+  if defined?(ClamAV)
+    before_filter :remove_viral_files, only: [:create]
+  end
 
   def remove_viral_files
     viral_files = []

@@ -43,7 +43,7 @@ task :generate do
     gem 'curate', :path=>'../../../#{File.expand_path('../../', __FILE__).split('/').last}'
     gem 'kaminari', github: 'harai/kaminari', branch: 'route_prefix_prototype'
     gem 'browse-everything'
-    gem 'clamav'
+#    gem 'clamav'
     gem 'resque'
     gem 'resque-scheduler'
     gem 'change_manager', '1.0.0'

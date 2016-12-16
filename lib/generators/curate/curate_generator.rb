@@ -117,7 +117,7 @@ This generator makes the following changes to your application:
   end
 
   def create_clamav_initializer
-    create_file('config/initializers/clamav.rb', "ClamAV.instance.loaddb()")
+    create_file('config/initializers/clamav.rb', "ClamAV.instance.loaddb() if defined? ClamAV")
   end
 
   def create_recipients_list
