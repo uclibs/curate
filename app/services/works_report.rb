@@ -17,7 +17,9 @@ class WorksReport < Report
       { depositor: work.depositor },
       { edit_users: work.edit_users.join(" ") },
       { editors: work.editor_ids.join(" ") },
-      { editor_groups: work.editor_group_ids.join(" ") }
+      { editor_groups: work.editor_group_ids.join(" ") },
+      { readers: work.reader_ids.join(" ") },
+      { reader_groups: work.reader_group_ids.join(" ") }
     ] + attributes(work)
   end
 
@@ -37,11 +39,13 @@ class WorksReport < Report
       advisor
       alternate_title
       bibliographic_citation
+      college
       contributor
       committee_member
       coverage_spatial
       coverage_temporal
       degree
+      department
       date_created
       creator
       cultural_context
