@@ -1,4 +1,5 @@
 require 'csv'
+require 'date'
 
 def header(row)
   labels = row.collect do |label|
@@ -55,23 +56,24 @@ def tmp(path)
   "/tmp/" + filename(path)
 end
 
+def timestamp
+  @timestamp ||= DateTime.now.strftime('%s')
+end
+
 def new_work_upload_log
-  location = File.join(Rails.root, 'tmp', 'work_upload_log.csv')
-  system("rm -f #{location}")
+  location = File.join(Rails.root, 'tmp', "#{timestamp}-work_upload_log.csv")
   system("touch #{location}")
   CSV.open(location, "wb") << ["DRC Handle", "Date Migrated", "DRC Record URL", "Scholar PID", "Scholar Owner", "Email Sent (Y/N)", "Fixity Check", "Notes"]
 end
 
 def new_work_update_log
-  location = File.join(Rails.root, 'tmp', 'work_update_log.csv')
-  system("rm -f #{location}")
+  location = File.join(Rails.root, 'tmp', "#{timestamp}-work_update_log.csv")
   system("touch #{location}")
   CSV.open(location, "wb") << ["pid", "status"]
 end
 
 def new_file_upload_log
-  location = File.join(Rails.root, 'tmp', 'file__upload_log.csv')
-  system("rm -f #{location}")
+  location = File.join(Rails.root, 'tmp', "#{timestamp}-file__upload_log.csv")
   system("touch #{location}")
   CSV.open(location, "wb") << ["Handle", "DRC File URL", "Scholar File URI"]
 end
