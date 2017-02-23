@@ -44,10 +44,10 @@ task :generate do
     gem 'kaminari', github: 'harai/kaminari', branch: 'route_prefix_prototype'
     gem 'browse-everything'
 #    gem 'clamav'
-    gem 'resque'
     gem 'resque-scheduler'
     gem 'change_manager', '1.0.0'
     gem 'rake', '11.2.2'
+    gem 'resque', '1.26.0'
 
     group :test do
       gem 'capybara'
@@ -80,6 +80,7 @@ task :generate do
     Bundler.with_clean_env do
       within_test_app do
         system_with_command_output("bundle update rake")
+        system_with_command_output("bundle update resque")
         system_with_command_output("bundle update turbolinks")
         system_with_command_output("bundle install")
         system_with_command_output("rails generate test_app")
