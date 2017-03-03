@@ -17,7 +17,9 @@ class WorksReport < Report
       { depositor: work.depositor },
       { edit_users: work.edit_users.join(" ") },
       { editors: work.editor_ids.join(" ") },
-      { editor_groups: work.editor_group_ids.join(" ") }
+      { editor_groups: work.editor_group_ids.join(" ") },
+      { readers: work.reader_ids.join(" ") },
+      { reader_groups: work.reader_group_ids.join(" ") }
     ] + attributes(work)
   end
 
