@@ -12,13 +12,33 @@ class WorksReport < Report
 
   def self.fields(work = GenericWork.new)
     [
+      { work_type: work.class.to_s.underscore },
       { pid: work.pid },
-      { owner: work.owner },
-      { depositor: work.depositor },
-      { edit_users: work.edit_users.join(" ") },
-      { editors: work.editor_ids.join(" ") },
-      { editor_groups: work.editor_group_ids.join(" ") }
+      { submitter_email: work.owner },
+      { proxy_depositor: proxy_deposit_test(work) },
+      { editor_emails: gather_all_editors(work) },
+      { reader_emails: gather_all_readers(work) },
+      { related_works: work.related_work_ids.join("|") },
+      { collections: work.collections.map(&:pid).join("|") },
+      { representative: work.representative },
+      { files: work.generic_files.map(&:pid).join("|") }
     ] + attributes(work)
+  end
+
+  def self.proxy_deposit_test(work)
+    work.depositor == work.owner ? nil : work.depositor
+  end
+
+  def self.gather_all_editors(work)
+    (work.edit_groups.map do |group_id|
+      Hydramata::Group.find(group_id).members.map { |m| m.email }
+    end << work.edit_users).flatten.uniq
+  end
+
+  def self.gather_all_readers(work)
+    ((work.read_groups - ["public", "registered"]).map do |group_id|
+      Hydramata::Group.find(group_id).members.map { |m| m.email }
+    end << work.read_users).flatten.uniq
   end
 
   def self.attributes(work)
@@ -42,14 +62,19 @@ class WorksReport < Report
       committee_member
       coverage_spatial
       coverage_temporal
+      date_modified
+      date_uploaded
       degree
       department
       date_created
       creator
       cultural_context
       description
+      embargo_release_date
+      existing_identifier
       genre
-      identidier
+      identifier
+      identifier_url
       inscription
       issn
       journal_title
@@ -60,6 +85,7 @@ class WorksReport < Report
       note
       publisher
       requires
+      rights
       source
       subject
       title
